@@ -1,0 +1,321 @@
+{
+  "openapi": "3.0.2",
+  "info": {
+    "title": "Quiz Api",
+    "version": "1"
+  },
+  "servers": [
+    {
+      "url": "https://{environtment}.quiz",
+      "variables": {
+        "environtment": {
+          "default": "dev",
+          "enum": ["dev", "qa", "prod"]
+        }
+      }
+    }
+  ],
+  "paths": {
+    "/quiz": {
+      "get": {
+        "tags": ["quiz"],
+        "summary": "Ambil semua data quiz",
+        "description": "Dapatkan semua data quiz",
+        "responses": {
+          "200": {
+            "description": "Sukses mendapatkan semua data quiz",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/200-get-all"
+                },
+                "examples": {
+                  "success": {
+                    "$ref": "#/components/examples/200-get-all"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/404"
+                },
+                "examples": {
+                  "failed": {
+                    "$ref": "#/components/examples/404"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/quiz/{id}": {
+      "get": {
+        "tags": ["quiz"],
+        "summary": "Ambil 1 data quiz",
+        "description": "Ambil 1 data quiz berdasarkan id",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/id-quiz"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Sukses ambil 1 data quiz",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/200-get-one"
+                },
+                "examples": {
+                  "success": {
+                    "$ref": "#/components/examples/200-get-one"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Gagal ambil 1 data quiz",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/404"
+                },
+                "examples": {
+                  "failed": {
+                    "$ref": "#/components/examples/404"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "parameters": {
+      "id-quiz": {
+        "name": "id",
+        "in": "path",
+        "required": true,
+        "description": "id quiz sebagai parameter",
+        "schema": {
+          "type": "integer",
+          "minLength": 1
+        }
+      }
+    },
+    "schemas": {
+      "200-get-all": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer"
+          },
+          "success": {
+            "type": "boolean"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/data"
+            }
+          }
+        }
+      },
+      "200-get-one": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer"
+          },
+          "success": {
+            "type": "boolean"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "$ref": "#/components/schemas/data"
+          }
+        }
+      },
+      "data": {
+        "type": "object",
+        "properties": {
+          "quiz_id": {
+            "type": "integer"
+          },
+          "quiz_title": {
+            "type": "string"
+          },
+          "quiz_start": {
+            "type": "string"
+          },
+          "quiz_end": {
+            "type": "string"
+          },
+          "quiz_active": {
+            "type": "boolean"
+          },
+          "quiz_question": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "question_id": {
+                  "type": "integer"
+                },
+                "question_text": {
+                  "type": "string"
+                },
+                "opt_1": {
+                  "type": "string"
+                },
+                "opt_2": {
+                  "type": "string"
+                },
+                "opt_3": {
+                  "type": "string"
+                },
+                "opt_4": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "required": ["quiz_id"]
+      },
+      "404": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer"
+          },
+          "success": {
+            "type": "boolean"
+          },
+          "errors": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "examples": {
+      "200-get-all": {
+        "description": "Contoh response berhasil mendapatkan semua data quiz",
+        "value": {
+          "code": 200,
+          "success": true,
+          "message": "Sukses mendapatkan semua data quiz",
+          "data": [
+            {
+              "quiz_id": 1,
+              "quiz_title": "Tantangan tebak nama ibu kota",
+              "quiz_start": "2 januari 2023",
+              "quiz_end": "3 januari 2023",
+              "quiz_active": true,
+              "quiz_question": [
+                {
+                  "question_id": 1,
+                  "question_text": "Siapakah ibu kota riau?",
+                  "opt_1": "lala",
+                  "opt_2": "lili",
+                  "opt_3": "lulu",
+                  "opt_4": "lolo"
+                },
+                {
+                  "question_id": 2,
+                  "question_text": "Siapakah ibu kota jawa tengah",
+                  "opt_1": "nana",
+                  "opt_2": "nini",
+                  "opt_3": "nunu",
+                  "opt_4": "nono"
+                }
+              ]
+            },
+            {
+              "quiz_id": 2,
+              "quiz_title": "Tantangan tebak gubernur",
+              "quiz_start": "5 februari 2023",
+              "quiz_end": "6 februari 2023",
+              "quiz_active": false,
+              "quiz_question": [
+                {
+                  "question_id": 1,
+                  "question_text": "Siapakah gubernur riau selanjutnya?",
+                  "opt_1": "lala",
+                  "opt_2": "lili",
+                  "opt_3": "lulu",
+                  "opt_4": "lolo"
+                },
+                {
+                  "question_id": 2,
+                  "question_text": "Siapakah gubernur jawa tengah selanjutnya?",
+                  "opt_1": "nana",
+                  "opt_2": "nini",
+                  "opt_3": "nunu",
+                  "opt_4": "nono"
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "200-get-one": {
+        "description": "Contoh response sukses ambil 1 data quiz",
+        "value": {
+          "code": 200,
+          "success": true,
+          "message": "Sukses mendapatkan 1 data quiz",
+          "data": {
+            "quiz_id": 1,
+            "quiz_title": "Tantangan tebak nama ibu kota",
+            "quiz_start": "2 januari 2023",
+            "quiz_end": "3 januari 2023",
+            "quiz_active": true,
+            "quiz_question": [
+              {
+                "question_id": 1,
+                "question_text": "Siapakah ibu kota riau?",
+                "opt_1": "lala",
+                "opt_2": "lili",
+                "opt_3": "lulu",
+                "opt_4": "lolo"
+              },
+              {
+                "question_id": 2,
+                "question_text": "Siapakah ibu kota jawa tengah",
+                "opt_1": "nana",
+                "opt_2": "nini",
+                "opt_3": "nunu",
+                "opt_4": "nono"
+              }
+            ]
+          }
+        }
+      },
+      "404": {
+        "description": "Contoh response gagal mendapatkan data",
+        "value": {
+          "code": 404,
+          "success": false,
+          "message": "Data yang anda cari tidak ditemukan",
+          "details": "Pastikan url yang anda gunakan benar dan data yang anda cari ada didalam sistem."
+        }
+      }
+    }
+  }
+}

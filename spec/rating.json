@@ -1,0 +1,367 @@
+{
+  "openapi": "3.0.2",
+  "info": {
+    "title": "Rating Api",
+    "version": "1"
+  },
+  "servers": [
+    {
+      "url": "https://{environtment}.rating",
+      "variables": {
+        "environtment": {
+          "default": "dev",
+          "enum": ["dev", "qa", "prod"]
+        }
+      }
+    }
+  ],
+  "paths": {
+    "/rating": {
+      "get": {
+        "tags": ["rating"],
+        "summary": "Dapatkan semua jenis rating",
+        "description": "Dapatkan semua jenis rating pada artikel",
+        "responses": {
+          "200": {
+            "description": "Sukses mendapatkan semua data rating",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/200-get-all"
+                },
+                "examples": {
+                  "success": {
+                    "$ref": "#/components/examples/200-get-all"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/404"
+                },
+                "examples": {
+                  "failed": {
+                    "$ref": "#/components/examples/404"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["rating"],
+        "summary": "Menambah rating artikel",
+        "description": "Menambah rating pada artikel yang dibaca dengan ip address",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/201"
+              },
+              "examples": {
+                "192.168.88.1": {
+                  "$ref": "#/components/examples/192.168.88.1"
+                },
+                "192.168.77.3": {
+                  "$ref": "#/components/examples/192.168.77.3"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Sukses menambah rating artikel",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/201"
+                },
+                "examples": {
+                  "success": {
+                    "$ref": "#/components/examples/201"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/rating/{id}": {
+      "get": {
+        "tags": ["rating"],
+        "summary": "Ambil 1 data jawaban kuis",
+        "description": "Ambil 1 data jawaban kuis berdasarkan id",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/id-rating"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Sukses ambil 1 data jawaban kuis",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/200-get-one"
+                },
+                "examples": {
+                  "success": {
+                    "$ref": "#/components/examples/200-get-one"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Gagal ambil 1 data jawaban kuis",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/404"
+                },
+                "examples": {
+                  "failed": {
+                    "$ref": "#/components/examples/404"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "parameters": {
+      "id-rating": {
+        "name": "id",
+        "in": "path",
+        "required": true,
+        "description": "id rating sebagai parameter",
+        "schema": {
+          "type": "number",
+          "minLength": 1
+        }
+      }
+    },
+    "schemas": {
+      "200-get-all": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer"
+          },
+          "success": {
+            "type": "boolean"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/data"
+            }
+          }
+        }
+      },
+      "200-get-one": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer"
+          },
+          "success": {
+            "type": "boolean"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "$ref": "#/components/schemas/data"
+          }
+        }
+      },
+      "data": {
+        "type": "object",
+        "properties": {
+          "rating_id": {
+            "type": "integer"
+          },
+          "rating_object": {
+            "type": "string"
+          },
+          "rating_object_id": {
+            "type": "integer"
+          },
+          "highest": {
+            "type": "integer"
+          },
+          "high": {
+            "type": "integer"
+          },
+          "medium": {
+            "type": "integer"
+          },
+          "low": {
+            "type": "integer"
+          },
+          "lowest": {
+            "type": "integer"
+          }
+        },
+        "required": ["rating_id"]
+      },
+      "201": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer"
+          },
+          "success": {
+            "type": "boolean"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "rating_ip_id": {
+                "type": "integer"
+              },
+              "rating_ip": {
+                "type": "string"
+              },
+              "rating_object": {
+                "type": "string"
+              },
+              "rating_object_id": {
+                "type": "integer"
+              },
+              "rating_type": {
+                "type": "string"
+              }
+            },
+            "required": ["rating_ip_id"]
+          }
+        }
+      },
+      "404": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer"
+          },
+          "success": {
+            "type": "boolean"
+          },
+          "errors": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "examples": {
+      "200-get-all": {
+        "description": "Contoh response berhasil mendapatkan semua data rating",
+        "value": {
+          "code": 200,
+          "success": true,
+          "message": "Sukses mendapatkan semua data rating",
+          "data": [
+            {
+              "rating_id": 1,
+              "rating_object": "post",
+              "rating_object_id": 3,
+              "highest": 40,
+              "high": 50,
+              "medium": 30,
+              "low": 10,
+              "lowest": 40
+            },
+            {
+              "rating_id": 2,
+              "rating_object": "post",
+              "rating_object_id": 3,
+              "highest": 20,
+              "high": 20,
+              "medium": 20,
+              "low": 20,
+              "lowest": 20
+            }
+          ]
+        }
+      },
+      "200-get-one": {
+        "description": "Contoh response berhasil mendapatkan 1 data rating",
+        "value": {
+          "code": 200,
+          "success": true,
+          "message": "Sukses mendapatkan 1 data rating",
+          "data": {
+            "rating_id": 1,
+            "rating_object": "post",
+            "rating_object_id": 3,
+            "highest": 40,
+            "high": 50,
+            "medium": 30,
+            "low": 10,
+            "lowest": 40
+          }
+        }
+      },
+      "201": {
+        "description": "Contoh response sukses menambah rating artikel",
+        "value": {
+          "code": 201,
+          "success": true,
+          "message": "Sukses menambah rating pada artikel 1",
+          "data": {
+            "rating_ip_id": 1,
+            "rating_ip": "192.168.88.1",
+            "rating_object": "post",
+            "rating_object_id": 1,
+            "rating_type": "high"
+          }
+        }
+      },
+      "192.168.88.1": {
+        "description": "Contoh request body dengan ip address 192.168.88.1",
+        "value": {
+          "rating_ip": "192.168.88.1",
+          "rating_object": "post",
+          "rating_object_id": 1,
+          "rating_type": "high"
+        }
+      },
+      "192.168.77.3": {
+        "description": "Contoh request body dengan ip address 192.168.77.3",
+        "value": {
+          "rating_ip": "192.168.77.3",
+          "rating_object": "post",
+          "rating_object_id": 1,
+          "rating_type": "low"
+        }
+      },
+      "404": {
+        "description": "Contoh response gagal mendapatkan data",
+        "value": {
+          "code": 404,
+          "success": false,
+          "message": "Data yang anda cari tidak ditemukan",
+          "details": "Pastikan url yang anda gunakan benar dan data yang anda cari ada didalam sistem."
+        }
+      }
+    }
+  }
+}

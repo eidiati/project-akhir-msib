@@ -1,0 +1,212 @@
+{
+  "openapi": "3.0.2",
+  "info": {
+    "title": "Contact Api",
+    "version": "1"
+  },
+  "servers": [
+    {
+      "url": "https://{environtment}.contact",
+      "variables": {
+        "environtment": {
+          "default": "dev",
+          "enum": ["dev", "qa", "prod"]
+        }
+      }
+    }
+  ],
+  "paths": {
+    "/contact": {
+      "get": {
+        "tags": ["contact"],
+        "summary": "Ambil semua data kontak",
+        "description": "Dapatkan semua data kontak",
+        "responses": {
+          "200": {
+            "description": "Sukses mendapatkan semua data kontak",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/200"
+                },
+                "examples": {
+                  "success": {
+                    "$ref": "#/components/examples/200"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/404"
+                },
+                "examples": {
+                  "failed": {
+                    "$ref": "#/components/examples/404"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/contact/{id}": {
+      "get": {
+        "tags": ["contact"],
+        "summary": "Ambil 1 data kontak",
+        "description": "Ambil 1 data kontak berdasarkan id",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/id-contact"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Sukses ambil 1 data kontak",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/200"
+                },
+                "examples": {
+                  "success": {
+                    "description": "Contoh response sukses ambil 1 data kontak",
+                    "value": {
+                      "code": 200,
+                      "success": true,
+                      "message": "Sukses mendapatkan 1 data kontak",
+                      "data": {
+                        "contact_id": 1,
+                        "contact_title": "alamat",
+                        "contact_name": "Jl. Subrantas No. 188 Panam. Pekanbaru, Riau.",
+                        "contact_logo": "https://free-svg/alamat"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Gagal ambil 1 data kontak",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/404"
+                },
+                "examples": {
+                  "failed": {
+                    "$ref": "#/components/examples/404"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "parameters": {
+      "id-contact": {
+        "name": "id",
+        "in": "path",
+        "required": true,
+        "description": "id contact sebagai parameter",
+        "schema": {
+          "type": "number",
+          "minLength": 1
+        }
+      }
+    },
+    "schemas": {
+      "200": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer"
+          },
+          "success": {
+            "type": "boolean"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "contact_id": {
+                  "type": "number"
+                },
+                "contact_title": {
+                  "type": "string"
+                },
+                "contact_name": {
+                  "type": "string"
+                },
+                "contact_logo": {
+                  "type": "string"
+                }
+              },
+              "required": ["contact_id"]
+            }
+          }
+        }
+      },
+      "404": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer"
+          },
+          "success": {
+            "type": "boolean"
+          },
+          "errors": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "examples": {
+      "200": {
+        "description": "Contoh response berhasil mendapatkan semua data kontak",
+        "value": {
+          "code": 200,
+          "success": true,
+          "message": "Sukses mendapatkan semua data kontak",
+          "data": [
+            {
+              "contact_id": 1,
+              "contact_title": "alamat",
+              "contact_name": "Jl. Subrantas No. 188 Panam. Pekanbaru, Riau.",
+              "contact_logo": "https://free-svg/alamat"
+            },
+            {
+              "contact_id": 2,
+              "contact_title": "no hp",
+              "contact_name": "0812345678",
+              "contact_logo": "https://free-svg/no-hp"
+            }
+          ]
+        }
+      },
+      "404": {
+        "description": "Contoh response gagal mendapatkan data",
+        "value": {
+          "code": 404,
+          "success": false,
+          "message": "Data yang anda cari tidak ditemukan",
+          "details": "Pastikan url yang anda gunakan benar dan data yang anda cari ada didalam sistem."
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,355 @@
+{
+  "openapi": "3.0.2",
+  "info": {
+    "title": "Quiz Answer Api",
+    "version": "1"
+  },
+  "servers": [
+    {
+      "url": "https://{environtment}.answer",
+      "variables": {
+        "environtment": {
+          "default": "dev",
+          "enum": ["dev", "qa", "prod"]
+        }
+      }
+    }
+  ],
+  "paths": {
+    "/answer": {
+      "get": {
+        "tags": ["answer"],
+        "summary": "Dapatkan semua data jawaban quiz",
+        "description": "Dapatkan semua data jawaban quiz",
+        "responses": {
+          "200": {
+            "description": "Sukses mendapatkan semua data jawaban quiz",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/200-get-all"
+                },
+                "examples": {
+                  "success": {
+                    "$ref": "#/components/examples/200-get-all"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/404"
+                },
+                "examples": {
+                  "failed": {
+                    "$ref": "#/components/examples/404"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["answer"],
+        "summary": "Menambah jawaban quiz",
+        "description": "Menambah jawaban quiz berdasarkan participant_id",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/201"
+              },
+              "examples": {
+                "iwal": {
+                  "$ref": "#/components/examples/iwal"
+                },
+                "sonya": {
+                  "$ref": "#/components/examples/sonya"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Sukses menambah jawaban quiz",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/201"
+                },
+                "examples": {
+                  "success": {
+                    "$ref": "#/components/examples/201"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/answer/{id}": {
+      "get": {
+        "tags": ["answer"],
+        "summary": "Ambil 1 data jawaban kuis",
+        "description": "Ambil 1 data jawaban kuis berdasarkan id",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/id-answer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Sukses ambil 1 data jawaban kuis",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/200-get-one"
+                },
+                "examples": {
+                  "success": {
+                    "$ref": "#/components/examples/200-get-one"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Gagal ambil 1 data jawaban kuis",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/404"
+                },
+                "examples": {
+                  "failed": {
+                    "$ref": "#/components/examples/404"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "parameters": {
+      "id-answer": {
+        "name": "id",
+        "in": "path",
+        "required": true,
+        "description": "id jawaban kuis sebagai parameter",
+        "schema": {
+          "type": "number",
+          "minLength": 1
+        }
+      }
+    },
+    "schemas": {
+      "200-get-all": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer"
+          },
+          "success": {
+            "type": "boolean"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/data"
+            }
+          }
+        }
+      },
+      "200-get-one": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer"
+          },
+          "success": {
+            "type": "boolean"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "$ref": "#/components/schemas/data"
+          }
+        }
+      },
+      "201": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer"
+          },
+          "success": {
+            "type": "boolean"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "answer_id": {
+                "type": "integer"
+              },
+              "participant_id": {
+                "type": "integer"
+              },
+              "quiz_id": {
+                "type": "integer"
+              },
+              "question_id": {
+                "type": "integer"
+              },
+              "quiz_answer": {
+                "type": "integer"
+              },
+              "point": {
+                "type": "integer"
+              }
+            },
+            "required": ["answer_id"]
+          }
+        }
+      },
+      "data": {
+        "type": "object",
+        "properties": {
+          "answer_id": {
+            "type": "integer"
+          },
+          "participant_id": {
+            "type": "integer"
+          },
+          "quiz_id": {
+            "type": "integer"
+          },
+          "question_id": {
+            "type": "integer"
+          },
+          "quiz_answer": {
+            "type": "integer"
+          }
+        },
+        "required": ["answer_id"]
+      },
+      "404": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer"
+          },
+          "success": {
+            "type": "boolean"
+          },
+          "errors": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "examples": {
+      "200-get-all": {
+        "description": "Contoh response berhasil mendapatkan semua data ",
+        "value": {
+          "code": 200,
+          "success": true,
+          "message": "Sukses mendapatkan semua data ",
+          "data": [
+            {
+              "answer_id": 1,
+              "participant_id": 1,
+              "quiz_id": 1,
+              "question_id": 1,
+              "quiz_answer": 2
+            },
+            {
+              "answer_id": 1,
+              "participant_id": 1,
+              "quiz_id": 1,
+              "question_id": 1,
+              "quiz_answer": 2
+            }
+          ]
+        }
+      },
+      "200-get-one": {
+        "description": "Contoh response berhasil mendapatkan 1 data jawaban kuis",
+        "value": {
+          "code": 200,
+          "success": true,
+          "message": "Sukses mendapatkan 1 data jawaban kuis ",
+          "data": {
+            "answer_id": 1,
+            "participant_id": 1,
+            "quiz_id": 1,
+            "question_id": 1,
+            "quiz_answer": 2
+          }
+        }
+      },
+      "201": {
+        "description": "Contoh response sukses menambah jawaban quiz",
+        "value": {
+          "code": 201,
+          "success": true,
+          "message": "Sukses menambah jawaban quiz",
+          "data": {
+            "answer_id": 1,
+            "participant_id": 1,
+            "quiz_id": 1,
+            "question_id": 1,
+            "quiz_answer": 2,
+            "point": 40
+          }
+        }
+      },
+      "iwal": {
+        "description": "Contoh request body dengan participant_id 1",
+        "value": {
+          "participant_id": 1,
+          "quiz_id": 1,
+          "question_id": 1,
+          "quiz_answer": 2,
+          "point": 40
+        }
+      },
+      "sonya": {
+        "description": "Contoh request body dengan participant_id 2",
+        "value": {
+          "participant_id": 2,
+          "quiz_id": 1,
+          "question_id": 1,
+          "quiz_answer": 4,
+          "point": 70
+        }
+      },
+      "404": {
+        "description": "Contoh response gagal mendapatkan data",
+        "value": {
+          "code": 404,
+          "success": false,
+          "message": "Data yang anda cari tidak ditemukan",
+          "details": "Pastikan url yang anda gunakan benar dan data yang anda cari ada didalam sistem."
+        }
+      }
+    }
+  }
+}

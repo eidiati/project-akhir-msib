@@ -1,0 +1,341 @@
+{
+  "openapi": "3.0.2",
+  "info": {
+    "title": "Archive Post Api",
+    "version": "1"
+  },
+  "servers": [
+    {
+      "url": "https://{environtment}.archive-post",
+      "variables": {
+        "environtment": {
+          "default": "dev",
+          "enum": ["dev", "qa", "prod"]
+        }
+      }
+    }
+  ],
+  "paths": {
+    "/archive-post": {
+      "get": {
+        "tags": ["archive-post"],
+        "summary": "Ambil semua data arsip berita",
+        "description": "Dapatkan semua data arsip berita",
+        "responses": {
+          "200": {
+            "description": "Sukses mendapatkan semua data arsip berita",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/200-get-all"
+                },
+                "examples": {
+                  "success": {
+                    "$ref": "#/components/examples/200-get-all"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/404"
+                },
+                "examples": {
+                  "failed": {
+                    "$ref": "#/components/examples/404"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/archive-post/{id}": {
+      "get": {
+        "tags": ["archive-post"],
+        "summary": "Ambil 1 data arsip berita",
+        "description": "Ambil 1 data arsip berita berdasarkan id",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/id-archive-post"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Sukses ambil 1 data arsip berita",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/200-get-one"
+                },
+                "examples": {
+                  "success": {
+                    "description": "Contoh response sukses ambil 1 data arsip berita",
+                    "value": {
+                      "code": 200,
+                      "success": true,
+                      "message": "Sukses mendapatkan 1 data arsip berita",
+                      "data": {
+                        "archive_id": "1",
+                        "archive_name": "info pelalawan",
+                        "archive_image": "pelalawan.png",
+                        "archive_posts": [
+                          {
+                            "post_id": 1,
+                            "post_title": "article pelalawan 1",
+                            "post_content": "lorem ipsum dolor sit amet",
+                            "medium_thumbnail": "tes.png",
+                            "post_url": "https://lancangkuning/tes",
+                            "author_name": "iwal"
+                          },
+                          {
+                            "post_id": 2,
+                            "post_title": "article pelalawan 2",
+                            "post_content": "lorem ipsum dolor sit amet",
+                            "medium_thumbnail": "tes2.png",
+                            "post_url": "https://lancangkuning/tes2",
+                            "author_name": "sonya"
+                          }
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Gagal ambil 1 data arsip berita",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/404"
+                },
+                "examples": {
+                  "failed": {
+                    "$ref": "#/components/examples/404"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "parameters": {
+      "id-archive-post": {
+        "name": "id",
+        "in": "path",
+        "required": true,
+        "description": "id archive-post sebagai parameter",
+        "schema": {
+          "type": "number",
+          "minLength": 1
+        }
+      }
+    },
+    "schemas": {
+      "200-get-all": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer"
+          },
+          "success": {
+            "type": "boolean"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "archive_id": {
+                  "type": "integer"
+                },
+                "archive_name": {
+                  "type": "string"
+                },
+                "archive_image": {
+                  "type": "string"
+                },
+                "archive_posts": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "post_id": {
+                        "type": "integer"
+                      },
+                      "post_title": {
+                        "type": "string"
+                      },
+                      "post_content": {
+                        "type": "string"
+                      },
+                      "medium_thumbnail": {
+                        "type": "string"
+                      },
+                      "post_url": {
+                        "type": "string"
+                      },
+                      "author_name": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              },
+              "required": ["archive_id"]
+            }
+          }
+        }
+      },
+      "200-get-one": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer"
+          },
+          "success": {
+            "type": "boolean"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "archive_id": {
+                "type": "integer"
+              },
+              "archive_name": {
+                "type": "string"
+              },
+              "archive_image": {
+                "type": "string"
+              },
+              "archive_posts": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "post_id": {
+                      "type": "integer"
+                    },
+                    "post_title": {
+                      "type": "string"
+                    },
+                    "post_content": {
+                      "type": "string"
+                    },
+                    "medium_thumbnail": {
+                      "type": "string"
+                    },
+                    "post_url": {
+                      "type": "string"
+                    },
+                    "author_name": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            },
+            "required": ["archive_id"]
+          }
+        }
+      },
+      "404": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer"
+          },
+          "success": {
+            "type": "boolean"
+          },
+          "errors": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "examples": {
+      "200-get-all": {
+        "description": "Contoh response berhasil mendapatkan semua data arsip berita",
+        "value": {
+          "code": 200,
+          "success": true,
+          "message": "Sukses mendapatkan semua data arsip berita",
+          "data": [
+            {
+              "archive_id": "1",
+              "archive_name": "info pelalawan",
+              "archive_image": "pelalawan.png",
+              "archive_posts": [
+                {
+                  "post_id": 1,
+                  "post_title": "article pelalawan 1",
+                  "post_content": "lorem ipsum dolor sit amet",
+                  "medium_thumbnail": "tes.png",
+                  "post_url": "https://lancangkuning/tes",
+                  "author_name": "iwal"
+                },
+                {
+                  "post_id": 2,
+                  "post_title": "article pelalawan 2",
+                  "post_content": "lorem ipsum dolor sit amet",
+                  "medium_thumbnail": "tes2.png",
+                  "post_url": "https://lancangkuning/tes2",
+                  "author_name": "sonya"
+                }
+              ]
+            },
+            {
+              "archive_id": "2",
+              "archive_name": "info pekanbaru",
+              "archive_image": "pekanbaru.png",
+              "archive_posts": [
+                {
+                  "post_id": 1,
+                  "post_title": "article pekanbaru 1",
+                  "post_content": "lorem ipsum dolor sit amet",
+                  "medium_thumbnail": "tes.png",
+                  "post_url": "https://lancangkuning/tes",
+                  "author_name": "iwal"
+                },
+                {
+                  "post_id": 2,
+                  "post_title": "article pekanbaru 2",
+                  "post_content": "lorem ipsum dolor sit amet",
+                  "medium_thumbnail": "tes2.png",
+                  "post_url": "https://lancangkuning/tes2",
+                  "author_name": "sonya"
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "404": {
+        "description": "Contoh response gagal mendapatkan data",
+        "value": {
+          "code": 404,
+          "success": false,
+          "message": "Data yang anda cari tidak ditemukan",
+          "details": "Pastikan url yang anda gunakan benar dan data yang anda cari ada didalam sistem."
+        }
+      }
+    }
+  }
+}

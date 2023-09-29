@@ -1,0 +1,366 @@
+{
+  "openapi": "3.0.2",
+  "info": {
+    "title": "Contact Us Api",
+    "version": "1"
+  },
+  "servers": [
+    {
+      "url": "https://{environtment}.contact-us",
+      "variables": {
+        "environtment": {
+          "default": "dev",
+          "enum": ["dev", "qa", "prod"]
+        }
+      }
+    }
+  ],
+  "paths": {
+    "/contact-us": {
+      "get": {
+        "tags": ["contact-us"],
+        "summary": "Ambil semua data yang telah menghubungi lancangkuning",
+        "description": "Dapatkan semua data contact us lancangkuning",
+        "responses": {
+          "200": {
+            "description": "Sukses mendapatkan semua data yang telah menghubungi lancangkuning",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/200-get-all"
+                },
+                "examples": {
+                  "success": {
+                    "$ref": "#/components/examples/200-get-all"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/404"
+                },
+                "examples": {
+                  "failed": {
+                    "$ref": "#/components/examples/404"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["contact-us"],
+        "summary": "Menambah data yang menghubungi lancangkuning",
+        "description": "Menambah data contact us lancangkuning",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/201"
+              },
+              "examples": {
+                "iwal28": {
+                  "$ref": "#/components/examples/iwal28"
+                },
+                "sonya33": {
+                  "$ref": "#/components/examples/sonya33"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Sukses menambah data yang menghubungi lancangkuning",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/201"
+                },
+                "examples": {
+                  "success": {
+                    "$ref": "#/components/examples/201"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/contact-us/{id}": {
+      "get": {
+        "tags": ["contact-us"],
+        "summary": "Ambil 1 data yang menghubungi lancangkuning",
+        "description": "Ambil 1 data contact us lancangkuning berdasarkan id",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/id-contact-us"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Sukses ambil 1 data yang menghubungi lancangkuning",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/200-get-one"
+                },
+                "examples": {
+                  "success": {
+                    "description": "Contoh response sukses ambil 1 data yang menghubungi lancangkuning",
+                    "value": {
+                      "code": 200,
+                      "success": true,
+                      "message": "Sukses mendapatkan 1 data yang menghubungi lancangkuning",
+                      "data": {
+                        "contact-us_id": 1,
+                        "username": "iwal28",
+                        "email": "iwal@gmail.com",
+                        "message": "lorem ipsum dolor sit amet"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Gagal ambil 1 data contact-us",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/404"
+                },
+                "examples": {
+                  "failed": {
+                    "$ref": "#/components/examples/404"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "parameters": {
+      "id-contact-us": {
+        "name": "id",
+        "in": "path",
+        "required": true,
+        "description": "id contact us sebagai parameter",
+        "schema": {
+          "type": "number",
+          "minLength": 1
+        }
+      }
+    },
+    "schemas": {
+      "200-get-all": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer"
+          },
+          "success": {
+            "type": "boolean"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "contact-us_id": {
+                  "type": "number"
+                },
+                "username": {
+                  "type": "string"
+                },
+                "email": {
+                  "type": "string"
+                },
+                "subject": {
+                  "type": "string"
+                },
+                "message": {
+                  "type": "string"
+                },
+                "post_id": {
+                  "type": "number"
+                }
+              },
+              "required": ["contact-us_id"]
+            }
+          }
+        }
+      },
+      "200-get-one": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer"
+          },
+          "success": {
+            "type": "boolean"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "contact-us_id": {
+                "type": "number"
+              },
+              "username": {
+                "type": "string"
+              },
+              "email": {
+                "type": "string"
+              },
+              "subject": {
+                "type": "string"
+              },
+              "message": {
+                "type": "string"
+              },
+              "post_id": {
+                "type": "number"
+              }
+            },
+            "required": ["contact-us_id"]
+          }
+        }
+      },
+      "201": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer"
+          },
+          "success": {
+            "type": "boolean"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "username": {
+                "type": "string"
+              },
+              "email": {
+                "type": "string"
+              },
+              "subject": {
+                "type": "string"
+              },
+              "message": {
+                "type": "string"
+              },
+              "post_id": {
+                "type": "number"
+              }
+            },
+            "required": ["username", "email", "message"]
+          }
+        }
+      },
+      "404": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer"
+          },
+          "success": {
+            "type": "boolean"
+          },
+          "errors": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "examples": {
+      "200-get-all": {
+        "description": "Contoh response berhasil mendapatkan semua data yang menghubungi lancangkuning",
+        "value": {
+          "code": 200,
+          "success": true,
+          "message": "Sukses mendapatkan semua data yang menghubungi lancangkuning",
+          "data": [
+            {
+              "contact-us_id": 1,
+              "username": "iwal28",
+              "email": "iwal@gmail.com",
+              "subject": "lorem",
+              "message": "lorem ipsum dolor sit amet"
+            },
+            {
+              "contact-us_id": 2,
+              "username": "sonya33",
+              "email": "sonya@gmail.com",
+              "subject": "lorem",
+              "message": "lorem ipsum dolor sit amet"
+            }
+          ]
+        }
+      },
+      "201": {
+        "description": "Contoh response berhasil menghubungi lancangkuning",
+        "value": {
+          "code": 201,
+          "success": true,
+          "message": "Sukses menambahkan data contact us",
+          "data": {
+            "contact-us_id": 1,
+            "username": "iwal28",
+            "email": "iwal@gmail.com",
+            "subject": "lorem",
+            "message": "lorem ipsum dolor sit amet"
+          }
+        }
+      },
+      "iwal28": {
+        "description": "Contoh request body dengan username iwal28",
+        "value": {
+          "username": "iwal28",
+          "email": "iwal@gmail.com",
+          "subject": "lorem",
+          "message": "lorem ipsum dolor sit amet"
+        }
+      },
+      "sonya33": {
+        "description": "Contoh request body dengan username sonya33",
+        "value": {
+          "username": "sonya33",
+          "email": "sonya@gmail.com",
+          "subject": "lorem",
+          "message": "lorem ipsum dolor sit amet"
+        }
+      },
+      "404": {
+        "description": "Contoh response gagal mendapatkan data",
+        "value": {
+          "code": 404,
+          "success": false,
+          "message": "Data yang anda cari tidak ditemukan",
+          "details": "Pastikan url yang anda gunakan benar dan data yang anda cari ada didalam sistem."
+        }
+      }
+    }
+  }
+}

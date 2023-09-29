@@ -1,0 +1,317 @@
+{
+  "openapi": "3.0.2",
+  "info": {
+    "title": "Comment Api",
+    "version": "1"
+  },
+  "servers": [
+    {
+      "url": "https://{environtment}.comment",
+      "variables": {
+        "environtment": {
+          "default": "dev",
+          "enum": ["dev", "qa", "prod"]
+        }
+      }
+    }
+  ],
+  "paths": {
+    "/comment": {
+      "get": {
+        "tags": ["comment"],
+        "summary": "Ambil semua data komentar",
+        "description": "Dapatkan semua data komentar",
+        "responses": {
+          "200": {
+            "description": "Sukses mendapatkan semua data komentar",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/200"
+                },
+                "examples": {
+                  "success": {
+                    "$ref": "#/components/examples/200"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/404"
+                },
+                "examples": {
+                  "failed": {
+                    "$ref": "#/components/examples/404"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["comment"],
+        "summary": "Menambah komentar artikel",
+        "description": "Menambah komentar pada artikel yang dibaca",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/201"
+              },
+              "examples": {
+                "iwal28": {
+                  "$ref": "#/components/examples/iwal28"
+                },
+                "sonya33": {
+                  "$ref": "#/components/examples/sonya33"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Sukses menambah komentar artikel",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/201"
+                },
+                "examples": {
+                  "success": {
+                    "$ref": "#/components/examples/201"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/comment/{id}": {
+      "get": {
+        "tags": ["comment"],
+        "summary": "Ambil 1 data komentar",
+        "description": "Ambil 1 data komentar berdasarkan id",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/id-comment"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Sukses ambil 1 data komentar",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/200"
+                },
+                "examples": {
+                  "success": {
+                    "description": "Contoh response sukses ambil 1 data komentar",
+                    "value": {
+                      "code": 200,
+                      "success": true,
+                      "message": "Sukses mendapatkan 1 data komentar",
+                      "data": {
+                        "comment_id": 1,
+                        "comment_username": "iwal28",
+                        "comment_email": "iwal@gmail.com",
+                        "comment_content": "lorem ipsum dolor sit amet"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Gagal ambil 1 data comment",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/404"
+                },
+                "examples": {
+                  "failed": {
+                    "$ref": "#/components/examples/404"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "parameters": {
+      "id-comment": {
+        "name": "id",
+        "in": "path",
+        "required": true,
+        "description": "id komentar sebagai parameter",
+        "schema": {
+          "type": "number",
+          "minLength": 1
+        }
+      }
+    },
+    "schemas": {
+      "200": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer"
+          },
+          "success": {
+            "type": "boolean"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "comment_id": {
+                  "type": "number"
+                },
+                "comment_username": {
+                  "type": "string"
+                },
+                "comment_email": {
+                  "type": "string"
+                },
+                "comment_content": {
+                  "type": "string"
+                },
+                "post_id": {
+                  "type": "number"
+                }
+              },
+              "required": ["comment_id"]
+            }
+          }
+        }
+      },
+      "201": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer"
+          },
+          "success": {
+            "type": "boolean"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "comment_username": {
+                "type": "string"
+              },
+              "comment_email": {
+                "type": "string"
+              },
+              "comment_content": {
+                "type": "string"
+              },
+              "post_id": {
+                "type": "number"
+              }
+            },
+            "required": ["comment_username", "comment_email", "comment_content"]
+          }
+        }
+      },
+      "404": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer"
+          },
+          "success": {
+            "type": "boolean"
+          },
+          "errors": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "examples": {
+      "200": {
+        "description": "Contoh response berhasil mendapatkan semua data komentar",
+        "value": {
+          "code": 200,
+          "success": true,
+          "message": "Sukses mendapatkan semua data komentar",
+          "data": [
+            {
+              "comment_id": 1,
+              "comment_username": "iwal28",
+              "comment_email": "iwal@gmail.com",
+              "comment_content": "lorem ipsum dolor sit amet"
+            },
+            {
+              "comment_id": 2,
+              "comment_username": "sonya33",
+              "comment_email": "sonya@gmail.com",
+              "comment_content": "lorem ipsum dolor sit amet"
+            }
+          ]
+        }
+      },
+      "201": {
+        "description": "Contoh response berhasil membuat komentar",
+        "value": {
+          "code": 201,
+          "success": true,
+          "message": "Sukses menambahkan komen pada artikel 1",
+          "data": {
+            "comment_id": 1,
+            "comment_username": "iwal28",
+            "comment_email": "iwal@gmail.com",
+            "comment_content": "lorem ipsum dolor sit amet"
+          }
+        }
+      },
+      "iwal28": {
+        "description": "Contoh request body dengan username iwal28",
+        "value": {
+          "comment_username": "iwal28",
+          "comment_email": "iwal@gmail.com",
+          "comment_content": "lorem ipsum dolor sit amet"
+        }
+      },
+      "sonya33": {
+        "description": "Contoh request body dengan username sonya33",
+        "value": {
+          "comment_username": "sonya33",
+          "comment_email": "sonya@gmail.com",
+          "comment_content": "lorem ipsum dolor sit amet"
+        }
+      },
+      "404": {
+        "description": "Contoh response gagal mendapatkan data",
+        "value": {
+          "code": 404,
+          "success": false,
+          "message": "Data yang anda cari tidak ditemukan",
+          "details": "Pastikan url yang anda gunakan benar dan data yang anda cari ada didalam sistem."
+        }
+      }
+    }
+  }
+}

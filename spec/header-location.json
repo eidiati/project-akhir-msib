@@ -1,0 +1,212 @@
+{
+  "openapi": "3.0.2",
+  "info": {
+    "title": "Location Api",
+    "version": "1"
+  },
+  "servers": [
+    {
+      "url": "https://{environtment}.location",
+      "variables": {
+        "environtment": {
+          "default": "dev",
+          "enum": ["dev", "qa", "prod"]
+        }
+      }
+    }
+  ],
+  "paths": {
+    "/location": {
+      "get": {
+        "tags": ["location"],
+        "summary": "Ambil semua data lokasi",
+        "description": "Dapatkan semua data lokasi",
+        "responses": {
+          "200": {
+            "description": "Sukses mendapatkan semua data lokasi",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/200"
+                },
+                "examples": {
+                  "success": {
+                    "$ref": "#/components/examples/200"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/404"
+                },
+                "examples": {
+                  "failed": {
+                    "$ref": "#/components/examples/404"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/location/{id}": {
+      "get": {
+        "tags": ["location"],
+        "summary": "Ambil 1 data lokasi",
+        "description": "Ambil 1 data lokasi berdasarkan id",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/id-location"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Sukses ambil 1 data lokasi",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/200"
+                },
+                "examples": {
+                  "success": {
+                    "description": "Contoh response sukses ambil 1 data lokasi",
+                    "value": {
+                      "code": 200,
+                      "success": true,
+                      "message": "Sukses mendapatkan 1 data lokasi",
+                      "data": {
+                        "location_id": 1,
+                        "location_city": "pekanbaru",
+                        "location_province": "Riau",
+                        "location_country": "Indonesia"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Gagal ambil 1 data lokasi",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/404"
+                },
+                "examples": {
+                  "failed": {
+                    "$ref": "#/components/examples/404"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "parameters": {
+      "id-location": {
+        "name": "id",
+        "in": "path",
+        "required": true,
+        "description": "id location sebagai parameter",
+        "schema": {
+          "type": "number",
+          "minLength": 1
+        }
+      }
+    },
+    "schemas": {
+      "200": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer"
+          },
+          "success": {
+            "type": "boolean"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "location_id": {
+                  "type": "number"
+                },
+                "location_city": {
+                  "type": "string"
+                },
+                "location_province": {
+                  "type": "string"
+                },
+                "location_country": {
+                  "type": "string"
+                }
+              },
+              "required": ["location_id"]
+            }
+          }
+        }
+      },
+      "404": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer"
+          },
+          "success": {
+            "type": "boolean"
+          },
+          "errors": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "examples": {
+      "200": {
+        "description": "Contoh response berhasil mendapatkan semua data lokasi",
+        "value": {
+          "code": 200,
+          "success": true,
+          "message": "Sukses mendapatkan semua data lokasi",
+          "data": [
+            {
+              "location_id": 1,
+              "location_city": "Pekanbaru",
+              "location_province": "Riau",
+              "location_country": "Indonesia"
+            },
+            {
+              "location_id": 1,
+              "location_city": "Duri",
+              "location_province": "Riau",
+              "location_country": "Indonesia"
+            }
+          ]
+        }
+      },
+      "404": {
+        "description": "Contoh response gagal mendapatkan data",
+        "value": {
+          "code": 404,
+          "success": false,
+          "message": "Data yang anda cari tidak ditemukan",
+          "details": "Pastikan url yang anda gunakan benar dan data yang anda cari ada didalam sistem."
+        }
+      }
+    }
+  }
+}

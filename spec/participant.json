@@ -1,0 +1,331 @@
+{
+  "openapi": "3.0.2",
+  "info": {
+    "title": "participant Api",
+    "version": "1"
+  },
+  "servers": [
+    {
+      "url": "https://{environtment}.participant",
+      "variables": {
+        "environtment": {
+          "default": "dev",
+          "enum": ["dev", "qa", "prod"]
+        }
+      }
+    }
+  ],
+  "paths": {
+    "/participant": {
+      "get": {
+        "tags": ["participant"],
+        "summary": "Ambil semua data partisipasi",
+        "description": "Dapatkan semua data partisipasi",
+        "responses": {
+          "200": {
+            "description": "Sukses mendapatkan semua data partisipasi",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/200-get-all"
+                },
+                "examples": {
+                  "success": {
+                    "$ref": "#/components/examples/200-get-all"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/404"
+                },
+                "examples": {
+                  "failed": {
+                    "$ref": "#/components/examples/404"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["participant"],
+        "summary": "Menambah participant",
+        "description": "Menambah participant dengan nama dan no hp",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/201"
+              },
+              "examples": {
+                "iwal": {
+                  "$ref": "#/components/examples/iwal"
+                },
+                "sonya": {
+                  "$ref": "#/components/examples/sonya"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Sukses Menambah participant",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/201"
+                },
+                "examples": {
+                  "success": {
+                    "$ref": "#/components/examples/201"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/participant/{id}": {
+      "get": {
+        "tags": ["participant"],
+        "summary": "Ambil 1 data partisipasi",
+        "description": "Ambil 1 data partisipasi berdasarkan id",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/id-participant"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Sukses ambil 1 data partisipasi",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/200-get-one"
+                },
+                "examples": {
+                  "success": {
+                    "$ref": "#/components/examples/200-get-one"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Gagal ambil 1 data partisipasi",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/404"
+                },
+                "examples": {
+                  "failed": {
+                    "$ref": "#/components/examples/404"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "parameters": {
+      "id-participant": {
+        "name": "id",
+        "in": "path",
+        "required": true,
+        "description": "id participant sebagai parameter",
+        "schema": {
+          "type": "integer",
+          "minLength": 1
+        }
+      }
+    },
+    "schemas": {
+      "200-get-all": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer"
+          },
+          "success": {
+            "type": "boolean"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/data"
+            }
+          }
+        }
+      },
+      "200-get-one": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer"
+          },
+          "success": {
+            "type": "boolean"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "$ref": "#/components/schemas/data"
+          }
+        }
+      },
+      "data": {
+        "type": "object",
+        "properties": {
+          "participant_id": {
+            "type": "integer"
+          },
+          "participant_name": {
+            "type": "string"
+          },
+          "participant_phone": {
+            "type": "string"
+          },
+          "participant_password": {
+            "type": "string"
+          },
+          "participant_active": {
+            "type": "boolean"
+          }
+        },
+        "required": ["participant_id"]
+      },
+      "201": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer"
+          },
+          "success": {
+            "type": "boolean"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "$ref": "#/components/schemas/data"
+          }
+        }
+      },
+      "404": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer"
+          },
+          "success": {
+            "type": "boolean"
+          },
+          "errors": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "examples": {
+      "200-get-all": {
+        "description": "Contoh response berhasil mendapatkan semua data partisipasi",
+        "value": {
+          "code": 200,
+          "success": true,
+          "message": "Sukses mendapatkan semua data partisipasi",
+          "data": [
+            {
+              "participant_id": 1,
+              "participant_name": "iwal",
+              "participant_phone": "081234567892",
+              "participant_password": "iwal123",
+              "participant_active": true
+            },
+            {
+              "participant_id": 2,
+              "participant_name": "sonya",
+              "participant_phone": "082222111133",
+              "participant_password": "sonya123",
+              "participant_active": true
+            }
+          ]
+        }
+      },
+      "200-get-one": {
+        "description": "Contoh response sukses ambil 1 data partisipasi",
+        "value": {
+          "code": 200,
+          "success": true,
+          "message": "Sukses mendapatkan 1 data partisipasi",
+          "data": {
+            "participant_id": 1,
+            "participant_name": "iwal",
+            "participant_phone": "081234567892",
+            "participant_password": "iwal123",
+            "participant_active": true
+          }
+        }
+      },
+      "201": {
+        "description": "Contoh response sukses Menambah participant",
+        "value": {
+          "code": 201,
+          "success": true,
+          "message": "Sukses Menambah participant",
+          "data": {
+            "participant_id": 1,
+            "participant_name": "iwal",
+            "participant_phone": "081234567892",
+            "participant_password": "iwal123",
+            "participant_active": true
+          }
+        }
+      },
+      "iwal": {
+        "description": "Contoh request body dengan nama iwal",
+        "value": {
+          "participant_name": "iwal",
+          "participant_phone": "081234567892",
+          "participant_password": "iwal123",
+          "participant_active": true
+        }
+      },
+      "sonya": {
+        "description": "Contoh request body dengan nama sonya",
+        "value": {
+          "participant_name": "sonya",
+          "participant_phone": "082222111133",
+          "participant_password": "sonya123",
+          "participant_active": true
+        }
+      },
+      "404": {
+        "description": "Contoh response gagal mendapatkan data",
+        "value": {
+          "code": 404,
+          "success": false,
+          "message": "Data yang anda cari tidak ditemukan",
+          "details": "Pastikan url yang anda gunakan benar dan data yang anda cari ada didalam sistem."
+        }
+      }
+    }
+  }
+}

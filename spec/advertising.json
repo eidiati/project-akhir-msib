@@ -1,0 +1,248 @@
+{
+  "openapi": "3.0.2",
+  "info": {
+    "title": "Advertising Api",
+    "version": "1"
+  },
+  "servers": [
+    {
+      "url": "https://{environtment}.advertising",
+      "variables": {
+        "environtment": {
+          "default": "dev",
+          "enum": ["dev", "qa", "prod"]
+        }
+      }
+    }
+  ],
+  "paths": {
+    "/advertising": {
+      "get": {
+        "tags": ["advertising"],
+        "summary": "Ambil semua data iklan",
+        "description": "Dapatkan semua data iklan",
+        "responses": {
+          "200": {
+            "description": "Sukses mendapatkan semua data iklan",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/200"
+                },
+                "examples": {
+                  "success": {
+                    "$ref": "#/components/examples/200"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/404"
+                },
+                "examples": {
+                  "failed": {
+                    "$ref": "#/components/examples/404"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/advertising/{id}": {
+      "get": {
+        "tags": ["advertising"],
+        "summary": "Ambil 1 data iklan",
+        "description": "Ambil 1 data iklan berdasarkan id",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/id-advertising"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Sukses ambil 1 data iklan",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/200"
+                },
+                "examples": {
+                  "success": {
+                    "description": "Contoh response sukses ambil 1 data iklan",
+                    "value": {
+                      "code": 200,
+                      "success": true,
+                      "message": "Sukses mendapatkan 1 data iklan",
+                      "data": {
+                        "ads_id": 1,
+                        "ads_name": "Advertising 1",
+                        "ads_position": "atas",
+                        "ads_desc": "Lorem ipsum dolor sit amet.",
+                        "ads_image": "tes.png",
+                        "ads_mobile_image": "tes.png",
+                        "ads_link": "https://advertising/1",
+                        "ads_start": "4 september 2023, senin",
+                        "ads_end": "5 september 2023, selasa",
+                        "ads_sequence": 1
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Gagal ambil 1 data iklan",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/404"
+                },
+                "examples": {
+                  "failed": {
+                    "$ref": "#/components/examples/404"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "parameters": {
+      "id-advertising": {
+        "name": "id",
+        "in": "path",
+        "required": true,
+        "description": "id advertising sebagai parameter",
+        "schema": {
+          "type": "number",
+          "minLength": 1
+        }
+      }
+    },
+    "schemas": {
+      "200": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer"
+          },
+          "success": {
+            "type": "boolean"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "ads_id": {
+                  "type": "number"
+                },
+                "ads_name": {
+                  "type": "string"
+                },
+                "ads_position": {
+                  "type": "string"
+                },
+                "ads_desc": {
+                  "type": "string"
+                },
+                "ads_image": {
+                  "type": "string"
+                },
+                "ads_mobile_image": {
+                  "type": "string"
+                },
+                "ads_link": {
+                  "type": "string"
+                },
+                "ads_start": {
+                  "type": "string"
+                },
+                "ads_end": {
+                  "type": "string"
+                },
+                "ads_sequence": {
+                  "type": "number"
+                }
+              },
+              "required": ["ads_id"]
+            }
+          }
+        }
+      },
+      "404": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer"
+          },
+          "success": {
+            "type": "boolean"
+          },
+          "errors": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "examples": {
+      "200": {
+        "description": "Contoh response berhasil mendapatkan semua data iklan",
+        "value": {
+          "code": 200,
+          "success": true,
+          "message": "Sukses mendapatkan semua data iklan",
+          "data": [
+            {
+              "ads_id": 1,
+              "ads_name": "Advertising 1",
+              "ads_position": "atas",
+              "ads_desc": "Lorem ipsum dolor sit amet.",
+              "ads_image": "tes.png",
+              "ads_mobile_image": "tes.png",
+              "ads_link": "https://advertising/1",
+              "ads_start": "4 september 2023, senin",
+              "ads_end": "5 september 2023, selasa",
+              "ads_sequence": 1
+            },
+            {
+              "ads_id": 2,
+              "ads_name": "Advertising 2",
+              "ads_position": "bawah",
+              "ads_desc": "Lorem ipsum dolor sit amet.",
+              "ads_image": "tes.png",
+              "ads_mobile_image": "tes.png",
+              "ads_link": "https://advertising/1",
+              "ads_start": "6 september 2023, rabu",
+              "ads_end": "7 september 2023, kamis",
+              "ads_sequence": 1
+            }
+          ]
+        }
+      },
+      "404": {
+        "description": "Contoh response gagal mendapatkan data",
+        "value": {
+          "code": 404,
+          "success": false,
+          "message": "Data yang anda cari tidak ditemukan",
+          "details": "Pastikan url yang anda gunakan benar dan data yang anda cari ada didalam sistem."
+        }
+      }
+    }
+  }
+}

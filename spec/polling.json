@@ -1,0 +1,403 @@
+{
+  "openapi": "3.0.2",
+  "info": {
+    "title": "Polling Api",
+    "version": "1"
+  },
+  "servers": [
+    {
+      "url": "https://{environtment}.polling",
+      "variables": {
+        "environtment": {
+          "default": "dev",
+          "enum": ["dev", "qa", "prod"]
+        }
+      }
+    }
+  ],
+  "paths": {
+    "/polling": {
+      "get": {
+        "tags": ["polling"],
+        "summary": "Ambil semua data survey",
+        "description": "Dapatkan semua data survey",
+        "responses": {
+          "200": {
+            "description": "Sukses mendapatkan semua data survey",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/200-get-all"
+                },
+                "examples": {
+                  "success": {
+                    "$ref": "#/components/examples/200"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/404"
+                },
+                "examples": {
+                  "failed": {
+                    "$ref": "#/components/examples/404"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["polling"],
+        "summary": "Menambah survey",
+        "description": "Menambah survey dengan ip address",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/201"
+              },
+              "examples": {
+                "192.168.88.1": {
+                  "$ref": "#/components/examples/192.168.88.1"
+                },
+                "192.168.77.3": {
+                  "$ref": "#/components/examples/192.168.77.3"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Sukses menambah survey",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/201"
+                },
+                "examples": {
+                  "success": {
+                    "$ref": "#/components/examples/201"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/polling/{id}": {
+      "get": {
+        "tags": ["polling"],
+        "summary": "Ambil 1 data survey",
+        "description": "Ambil 1 data survey berdasarkan id",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/id-polling"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Sukses ambil 1 data survey",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/200-get-one"
+                },
+                "examples": {
+                  "success": {
+                    "description": "Contoh response sukses ambil 1 data survey",
+                    "value": {
+                      "code": 200,
+                      "success": true,
+                      "message": "Sukses mendapatkan 1 data survey",
+                      "data": {
+                        "poll_id": 1,
+                        "poll_title": "polling & survey calon bupati dan wakin bupati indragiri hulu 2023",
+                        "poll_start": "2 januari 2023",
+                        "poll_end": "3 januari 2023",
+                        "poll_active": true,
+                        "poll_opt": [
+                          {
+                            "opt_id": 1,
+                            "opt_text": "yori agung",
+                            "opt_image": "yoriagung.png",
+                            "opt_count": 0
+                          },
+                          {
+                            "opt_id": 2,
+                            "opt_text": "bayu setiawan",
+                            "opt_image": "bayu.png",
+                            "opt_count": 10
+                          }
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Gagal ambil 1 data survey",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/404"
+                },
+                "examples": {
+                  "failed": {
+                    "$ref": "#/components/examples/404"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "parameters": {
+      "id-polling": {
+        "name": "id",
+        "in": "path",
+        "required": true,
+        "description": "id survey sebagai parameter",
+        "schema": {
+          "type": "integer",
+          "minLength": 1
+        }
+      }
+    },
+    "schemas": {
+      "200-get-all": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer"
+          },
+          "success": {
+            "type": "boolean"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/data"
+            }
+          }
+        }
+      },
+      "200-get-one": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer"
+          },
+          "success": {
+            "type": "boolean"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "$ref": "#/components/schemas/data"
+          }
+        }
+      },
+      "data": {
+        "type": "object",
+        "properties": {
+          "poll_id": {
+            "type": "integer"
+          },
+          "poll_title": {
+            "type": "string"
+          },
+          "poll_start": {
+            "type": "string"
+          },
+          "poll_end": {
+            "type": "string"
+          },
+          "poll_active": {
+            "type": "boolean"
+          },
+          "poll_opt": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "opt_id": {
+                  "type": "integer"
+                },
+                "opt_text": {
+                  "type": "string"
+                },
+                "opt_image": {
+                  "type": "string"
+                },
+                "opt_count": {
+                  "type": "integer"
+                }
+              },
+              "required": ["opt_id"]
+            }
+          }
+        },
+        "required": ["poll_id"]
+      },
+      "201": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer"
+          },
+          "success": {
+            "type": "boolean"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "poll_ip_id": {
+                "type": "integer"
+              },
+              "ip_address": {
+                "type": "string"
+              },
+              "poll_id": {
+                "type": "integer"
+              },
+              "opt_id": {
+                "type": "integer"
+              }
+            },
+            "required": ["rating_ip_id"]
+          }
+        }
+      },
+      "404": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer"
+          },
+          "success": {
+            "type": "boolean"
+          },
+          "errors": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "examples": {
+      "200": {
+        "description": "Contoh response berhasil mendapatkan semua data survey",
+        "value": {
+          "code": 200,
+          "success": true,
+          "message": "Sukses mendapatkan semua data survey",
+          "data": [
+            {
+              "poll_id": 1,
+              "poll_title": "polling & survey calon bupati dan wakin bupati indragiri hulu 2023",
+              "poll_start": "2 januari 2023",
+              "poll_end": "3 januari 2023",
+              "poll_active": true,
+              "poll_opt": [
+                {
+                  "opt_id": 1,
+                  "opt_text": "yori agung",
+                  "opt_image": "yoriagung.png",
+                  "opt_count": 0
+                },
+                {
+                  "opt_id": 2,
+                  "opt_text": "bayu setiawan",
+                  "opt_image": "bayu.png",
+                  "opt_count": 10
+                }
+              ]
+            },
+            {
+              "poll_id": 2,
+              "poll_title": "polling & survey calon bupati dan wakin bupati bengkalis 2023",
+              "poll_start": "5 februari 2023",
+              "poll_end": "6 februari 2023",
+              "poll_active": false,
+              "poll_opt": [
+                {
+                  "opt_id": 1,
+                  "opt_text": "bambang kurniawan",
+                  "opt_image": "bambang.png",
+                  "opt_count": 8
+                },
+                {
+                  "opt_id": 2,
+                  "opt_text": "solihin",
+                  "opt_image": "solihin.png",
+                  "opt_count": 15
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "201": {
+        "description": "Contoh response sukses menambah survey",
+        "value": {
+          "code": 201,
+          "success": true,
+          "message": "Sukses menambah survey",
+          "data": {
+            "poll_ip_id": 1,
+            "ip_address": "192.168.88.1",
+            "poll_id": 1,
+            "opt_id": 1
+          }
+        }
+      },
+      "192.168.88.1": {
+        "description": "Contoh request body dengan ip address 192.168.88.1",
+        "value": {
+          "ip_address": "192.168.88.1",
+          "poll_id": 1,
+          "opt_id": 1
+        }
+      },
+      "192.168.77.3": {
+        "description": "Contoh request body dengan ip address 192.168.77.3",
+        "value": {
+          "ip_address": "192.168.77.3",
+          "poll_id": 1,
+          "opt_id": 2
+        }
+      },
+      "404": {
+        "description": "Contoh response gagal mendapatkan data",
+        "value": {
+          "code": 404,
+          "success": false,
+          "message": "Data yang anda cari tidak ditemukan",
+          "details": "Pastikan url yang anda gunakan benar dan data yang anda cari ada didalam sistem."
+        }
+      }
+    }
+  }
+}

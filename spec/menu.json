@@ -1,0 +1,225 @@
+{
+  "openapi": "3.0.2",
+  "info": {
+    "title": "Menu Api",
+    "version": "1"
+  },
+  "servers": [
+    {
+      "url": "https://{environtment}.menu",
+      "variables": {
+        "environtment": {
+          "default": "dev",
+          "enum": ["dev", "qa", "prod"]
+        }
+      }
+    }
+  ],
+  "paths": {
+    "/menu": {
+      "get": {
+        "tags": ["menu"],
+        "summary": "Ambil semua data menu",
+        "description": "Dapatkan semua data menu",
+        "responses": {
+          "200": {
+            "description": "Sukses mendapatkan semua data menu",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/200"
+                },
+                "examples": {
+                  "success": {
+                    "$ref": "#/components/examples/200"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/404"
+                },
+                "examples": {
+                  "failed": {
+                    "$ref": "#/components/examples/404"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/menu/{id}": {
+      "get": {
+        "tags": ["menu"],
+        "summary": "Ambil 1 data menu",
+        "description": "Ambil 1 data menu berdasarkan id",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/id-menu"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Sukses ambil 1 data menu",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/200"
+                },
+                "examples": {
+                  "success": {
+                    "description": "Contoh response sukses ambil 1 data menu",
+                    "value": {
+                      "code": 200,
+                      "success": true,
+                      "message": "Sukses mendapatkan 1 data menu",
+                      "data": {
+                        "menu_id": 1,
+                        "menu_name": "beranda",
+                        "parent_id": null,
+                        "menu_link": "https://lancangkuning/beranda",
+                        "menu_active": false,
+                        "menu_sequence": "1"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Gagal ambil 1 data menu",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/404"
+                },
+                "examples": {
+                  "failed": {
+                    "$ref": "#/components/examples/404"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "parameters": {
+      "id-menu": {
+        "name": "id",
+        "in": "path",
+        "required": true,
+        "description": "id menu sebagai parameter",
+        "schema": {
+          "type": "number",
+          "minLength": 1
+        }
+      }
+    },
+    "schemas": {
+      "200": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer"
+          },
+          "success": {
+            "type": "boolean"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "menu_id": {
+                  "type": "number"
+                },
+                "menu_name": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "parent_id": {
+                  "type": "number"
+                },
+                "menu_link": {
+                  "type": "string"
+                },
+                "menu_active": {
+                  "type": "boolean"
+                },
+                "menu_sequence": {
+                  "type": "number"
+                }
+              },
+              "required": ["menu_id"]
+            }
+          }
+        }
+      },
+      "404": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer"
+          },
+          "success": {
+            "type": "boolean"
+          },
+          "errors": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "examples": {
+      "200": {
+        "description": "Contoh response berhasil mendapatkan semua data menu",
+        "value": {
+          "code": 200,
+          "success": true,
+          "message": "Sukses mendapatkan semua data menu",
+          "data": [
+            {
+              "menu_id": 1,
+              "menu_name": "beranda",
+              "parent_id": null,
+              "menu_link": "https://lancangkuning/beranda",
+              "menu_active": false,
+              "menu_sequence": "1"
+            },
+            {
+              "menu_id": 2,
+              "menu_name": "wisata",
+              "parent_id": null,
+              "menu_link": "https://lancangkuning/wisata",
+              "menu_active": false,
+              "menu_sequence": "1"
+            }
+          ]
+        }
+      },
+      "404": {
+        "description": "Contoh response gagal mendapatkan data",
+        "value": {
+          "code": 404,
+          "success": false,
+          "message": "Data yang anda cari tidak ditemukan",
+          "details": "Pastikan url yang anda gunakan benar dan data yang anda cari ada didalam sistem."
+        }
+      }
+    }
+  }
+}

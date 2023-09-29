@@ -1,0 +1,212 @@
+{
+  "openapi": "3.0.2",
+  "info": {
+    "title": "Author Api",
+    "version": "1"
+  },
+  "servers": [
+    {
+      "url": "https://{environtment}.author",
+      "variables": {
+        "environtment": {
+          "default": "dev",
+          "enum": ["dev", "qa", "prod"]
+        }
+      }
+    }
+  ],
+  "paths": {
+    "/author": {
+      "get": {
+        "tags": ["author"],
+        "summary": "Ambil semua data author",
+        "description": "Dapatkan semua data author",
+        "responses": {
+          "200": {
+            "description": "Sukses mendapatkan semua data author",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/200"
+                },
+                "examples": {
+                  "success": {
+                    "$ref": "#/components/examples/200"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/404"
+                },
+                "examples": {
+                  "failed": {
+                    "$ref": "#/components/examples/404"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/author/{id}": {
+      "get": {
+        "tags": ["author"],
+        "summary": "Ambil 1 data author",
+        "description": "Ambil 1 data author berdasarkan id",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/id-author"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Sukses ambil 1 data author",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/200"
+                },
+                "examples": {
+                  "success": {
+                    "description": "Contoh response sukses ambil 1 data author",
+                    "value": {
+                      "code": 200,
+                      "success": true,
+                      "message": "Sukses mendapatkan 1 data author",
+                      "data": {
+                        "author_id": 1,
+                        "author_name": "iwal",
+                        "author_desc": "lorem ipsum dolor sit amet",
+                        "thumbnail": "tes.png"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Gagal ambil 1 data author",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/404"
+                },
+                "examples": {
+                  "failed": {
+                    "$ref": "#/components/examples/404"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "parameters": {
+      "id-author": {
+        "name": "id",
+        "in": "path",
+        "required": true,
+        "description": "id author sebagai parameter",
+        "schema": {
+          "type": "number",
+          "minLength": 1
+        }
+      }
+    },
+    "schemas": {
+      "200": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer"
+          },
+          "success": {
+            "type": "boolean"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "author_id": {
+                  "type": "number"
+                },
+                "author_name": {
+                  "type": "string"
+                },
+                "author_desc": {
+                  "type": "string"
+                },
+                "thumbnail": {
+                  "type": "string"
+                }
+              },
+              "required": ["author_id"]
+            }
+          }
+        }
+      },
+      "404": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer"
+          },
+          "success": {
+            "type": "boolean"
+          },
+          "errors": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "examples": {
+      "200": {
+        "description": "Contoh response berhasil mendapatkan semua data author",
+        "value": {
+          "code": 200,
+          "success": true,
+          "message": "Sukses mendapatkan semua data author",
+          "data": [
+            {
+              "author_id": 1,
+              "author_name": "iwal",
+              "author_desc": "lorem ipsum dolor sit amet",
+              "thumbnail": "tes.png"
+            },
+            {
+              "author_id": 2,
+              "author_name": "sonya",
+              "author_desc": "lorem ipsum dolor sit amet",
+              "thumbnail": "tes.png"
+            }
+          ]
+        }
+      },
+      "404": {
+        "description": "Contoh response gagal mendapatkan data",
+        "value": {
+          "code": 404,
+          "success": false,
+          "message": "Data yang anda cari tidak ditemukan",
+          "details": "Pastikan url yang anda gunakan benar dan data yang anda cari ada didalam sistem."
+        }
+      }
+    }
+  }
+}
