@@ -1,5 +1,5 @@
 <template>
-  <body>
+  <main>
     <div class="body">
       <Header />
       <div role="main" class="main pt-3 mt-3">
@@ -7,5 +7,5 @@
       </div>
       <Footer />
     </div>
-  </body>
+  </main>
 </template>

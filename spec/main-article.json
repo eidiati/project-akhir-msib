@@ -1,12 +1,12 @@
 {
   "openapi": "3.0.2",
   "info": {
-    "title": "Tags Api",
+    "title": "Main Article Api",
     "version": "1"
   },
   "servers": [
     {
-      "url": "https://{environtment}.tags",
+      "url": "https://{environtment}.main-article",
       "variables": {
         "environtment": {
           "default": "dev",
@@ -16,58 +16,19 @@
     }
   ],
   "paths": {
-    "/tags": {
+    "/main-article/{id}": {
       "get": {
-        "tags": ["tags"],
-        "summary": "Ambil semua data tag",
-        "description": "Dapatkan semua data tag",
-        "responses": {
-          "200": {
-            "description": "Sukses mendapatkan semua data tag",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/200"
-                },
-                "examples": {
-                  "success": {
-                    "$ref": "#/components/examples/200"
-                  }
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not Found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/404"
-                },
-                "examples": {
-                  "failed": {
-                    "$ref": "#/components/examples/404"
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/tags/{id}": {
-      "get": {
-        "tags": ["tags"],
-        "summary": "Ambil 1 data tag",
-        "description": "Ambil 1 data tag berdasarkan id",
+        "tags": ["main-article"],
+        "summary": "Ambil 1 data berita",
+        "description": "Ambil 1 data berita berdasarkan id",
         "parameters": [
           {
-            "$ref": "#/components/parameters/id-tags"
+            "$ref": "#/components/parameters/id-main-article"
           }
         ],
         "responses": {
           "200": {
-            "description": "Sukses ambil 1 data tag",
+            "description": "Sukses ambil 1 data berita",
             "content": {
               "application/json": {
                 "schema": {
@@ -75,15 +36,20 @@
                 },
                 "examples": {
                   "success": {
-                    "description": "Contoh response sukses ambil 1 data tag",
+                    "description": "Contoh response sukses ambil 1 data berita",
                     "value": {
                       "code": 200,
                       "success": true,
-                      "message": "Sukses mendapatkan 1 data tag",
+                      "message": "Sukses mendapatkan 1 data berita",
                       "data": {
-                        "tags_id": 1,
-                        "tags_name": "sawit",
-                        "tags_url": "/sawit"
+                        "post_id": 1,
+                        "post_title": "HPN 2023 di Medan, PWI Riau akan Berangkatkan Ratusan WartawanHPN 2023 di Medan, PWI Riau akan Berangkatkan Ratusan Wartawan",
+                        "post_category": "acara",
+                        "post_content": "lorem ipsum sfsdfj dafgjsdif kkjsdjfks iashfoehf enakeun jenglapo laenpenv eooigowej",
+                        "thumbnail": "tes.png",
+                        "medium_thumbnail": "tes.png",
+                        "post_url": "https://lancangkuning/tes",
+                        "post_date": "4 september 2023, senin"
                       }
                     }
                   }
@@ -92,7 +58,7 @@
             }
           },
           "404": {
-            "description": "Gagal ambil 1 data tag",
+            "description": "Gagal ambil 1 data berita",
             "content": {
               "application/json": {
                 "schema": {
@@ -112,11 +78,11 @@
   },
   "components": {
     "parameters": {
-      "id-tags": {
+      "id-main-article": {
         "name": "id",
         "in": "path",
         "required": true,
-        "description": "id tag sebagai parameter",
+        "description": "id main-article sebagai parameter",
         "schema": {
           "type": "number",
           "minLength": 1
@@ -141,18 +107,32 @@
             "items": {
               "type": "object",
               "properties": {
-                "tags_id": {
+                "post_id": {
                   "type": "number"
                 },
-                "tags_name": {
-                  "type": "string",
-                  "minLength": 1
+                "post_title": {
+                  "type": "string"
                 },
-                "tags_url": {
+                "post_category": {
+                  "type": "string"
+                },
+                "post_content": {
+                  "type": "string"
+                },
+                "thumbnail": {
+                  "type": "string"
+                },
+                "medium_thumbnail": {
+                  "type": "string"
+                },
+                "post_url": {
+                  "type": "string"
+                },
+                "post_date": {
                   "type": "string"
                 }
               },
-              "required": ["tags_id"]
+              "required": ["post_id"]
             }
           }
         }
@@ -173,26 +153,6 @@
       }
     },
     "examples": {
-      "200": {
-        "description": "Contoh response berhasil mendapatkan semua data tag",
-        "value": {
-          "code": 200,
-          "success": true,
-          "message": "Sukses mendapatkan semua data tag",
-          "data": [
-            {
-              "tags_id": 1,
-              "tags_name": "sawit",
-              "tags_url": "/sawit"
-            },
-            {
-              "tags_id": 2,
-              "tags_name": "kampus",
-              "tags_url": "/kampus"
-            }
-          ]
-        }
-      },
       "404": {
         "description": "Contoh response gagal mendapatkan data",
         "value": {

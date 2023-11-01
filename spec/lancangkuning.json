@@ -1,0 +1,2083 @@
+{
+  "openapi": "3.0.2",
+  "info": {
+    "title": "Lancang Kuning Api",
+    "version": "1"
+  },
+  "servers": [
+    {
+      "url": "https://{environtment}.lancangkuning",
+      "variables": {
+        "environtment": {
+          "default": "dev",
+          "enum": ["dev", "qa", "prod"]
+        }
+      }
+    }
+  ],
+  "paths": {
+    "/location": {
+      "get": {
+        "tags": ["location"],
+        "summary": "Ambil semua data lokasi",
+        "description": "Dapatkan semua data lokasi",
+        "responses": {
+          "200": {
+            "description": "Sukses mendapatkan semua data lokasi",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/200-location"
+                },
+                "examples": {
+                  "success": {
+                    "$ref": "#/components/examples/200-location"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/404"
+                },
+                "examples": {
+                  "failed": {
+                    "$ref": "#/components/examples/404"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/social-media": {
+      "get": {
+        "tags": ["social-media"],
+        "summary": "Ambil semua data media sosial",
+        "description": "Dapatkan semua data media sosial",
+        "responses": {
+          "200": {
+            "description": "Sukses mendapatkan semua data media sosial",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/200-social-media"
+                },
+                "examples": {
+                  "success": {
+                    "$ref": "#/components/examples/200-social-media"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/404"
+                },
+                "examples": {
+                  "failed": {
+                    "$ref": "#/components/examples/404"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/menu": {
+      "get": {
+        "tags": ["menu"],
+        "summary": "Ambil semua data menu",
+        "description": "Dapatkan semua data menu",
+        "responses": {
+          "200": {
+            "description": "Sukses mendapatkan semua data menu",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/200-menu"
+                },
+                "examples": {
+                  "success": {
+                    "$ref": "#/components/examples/200-menu"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/404"
+                },
+                "examples": {
+                  "failed": {
+                    "$ref": "#/components/examples/404"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/post-category/{id}": {
+      "get": {
+        "tags": ["post-category"],
+        "summary": "Ambil 1 data berita dari kategori",
+        "description": "Ambil 1 data berita dari kategori berdasarkan id",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/id-post"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Sukses ambil 1 data arsip berita",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/200-post-category"
+                },
+                "examples": {
+                  "success": {
+                    "$ref": "#/components/examples/200-post-category"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Gagal ambil 1 data arsip berita",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/404"
+                },
+                "examples": {
+                  "failed": {
+                    "$ref": "#/components/examples/404"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/tags": {
+      "get": {
+        "tags": ["tags"],
+        "summary": "Ambil semua data tag",
+        "description": "Dapatkan semua data tag",
+        "responses": {
+          "200": {
+            "description": "Sukses mendapatkan semua data tag",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/200-tags"
+                },
+                "examples": {
+                  "success": {
+                    "$ref": "#/components/examples/200-tags"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/404"
+                },
+                "examples": {
+                  "failed": {
+                    "$ref": "#/components/examples/404"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/contact": {
+      "get": {
+        "tags": ["contact"],
+        "summary": "Ambil semua data kontak",
+        "description": "Dapatkan semua data kontak",
+        "responses": {
+          "200": {
+            "description": "Sukses mendapatkan semua data kontak",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/200-contact"
+                },
+                "examples": {
+                  "success": {
+                    "$ref": "#/components/examples/200-contact"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/404"
+                },
+                "examples": {
+                  "failed": {
+                    "$ref": "#/components/examples/404"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/subscribe": {
+      "post": {
+        "tags": ["subscribe"],
+        "summary": "Subscribe for newsletter",
+        "description": "Subscribe for newsletter",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/201-subscribe"
+              },
+              "examples": {
+                "iwal": {
+                  "$ref": "#/components/examples/iwal"
+                },
+                "sonya": {
+                  "$ref": "#/components/examples/sonya"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Sukses menambah jawaban quiz",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/201-subscribe"
+                },
+                "examples": {
+                  "success": {
+                    "$ref": "#/components/examples/201-subscribe"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/post-by-category": {
+      "get": {
+        "tags": ["post-by-category"],
+        "summary": "Ambil semua data berita berdasarkan kategori",
+        "description": "Dapatkan semua data berita berdasarkan kategori",
+        "responses": {
+          "200": {
+            "description": "Sukses mendapatkan semua data berita berdasarkan kategori",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/200-post"
+                },
+                "examples": {
+                  "success": {
+                    "$ref": "#/components/examples/200-post-by-category"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/404"
+                },
+                "examples": {
+                  "failed": {
+                    "$ref": "#/components/examples/404"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/malayhomeland": {
+      "get": {
+        "tags": ["malayhomeland"],
+        "summary": "Ambil semua data malayhomeland",
+        "description": "Dapatkan semua data malayhomeland",
+        "responses": {
+          "200": {
+            "description": "Sukses mendapatkan semua data malayhomeland",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/200-post"
+                },
+                "examples": {
+                  "success": {
+                    "$ref": "#/components/examples/200-post-malayhomeland"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/404"
+                },
+                "examples": {
+                  "failed": {
+                    "$ref": "#/components/examples/404"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/advetorial": {
+      "get": {
+        "tags": ["advetorial"],
+        "summary": "Ambil semua data advetorial",
+        "description": "Dapatkan semua data advetorial",
+        "responses": {
+          "200": {
+            "description": "Sukses mendapatkan semua data advetorial",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/200-post"
+                },
+                "examples": {
+                  "success": {
+                    "$ref": "#/components/examples/200-post-advetorial"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/404"
+                },
+                "examples": {
+                  "failed": {
+                    "$ref": "#/components/examples/404"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/latest-news": {
+      "get": {
+        "tags": ["latest-news"],
+        "summary": "Ambil semua data berita terbaru",
+        "description": "Dapatkan semua data berita terbaru",
+        "responses": {
+          "200": {
+            "description": "Sukses mendapatkan semua data berita terbaru",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/200-post"
+                },
+                "examples": {
+                  "success": {
+                    "$ref": "#/components/examples/200-post-latest-news"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/404"
+                },
+                "examples": {
+                  "failed": {
+                    "$ref": "#/components/examples/404"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/advertising": {
+      "get": {
+        "tags": ["advertising"],
+        "summary": "Ambil semua data iklan",
+        "description": "Dapatkan semua data iklan",
+        "responses": {
+          "200": {
+            "description": "Sukses mendapatkan semua data iklan",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/200-advertising"
+                },
+                "examples": {
+                  "success": {
+                    "$ref": "#/components/examples/200-advertising"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/404"
+                },
+                "examples": {
+                  "failed": {
+                    "$ref": "#/components/examples/404"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/popular-posts": {
+      "get": {
+        "tags": ["popular-posts"],
+        "summary": "Ambil semua data post populer",
+        "description": "Dapatkan semua data post populer",
+        "responses": {
+          "200": {
+            "description": "Sukses mendapatkan semua data post populer",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/200-post"
+                },
+                "examples": {
+                  "success": {
+                    "$ref": "#/components/examples/200-post-popular"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/404"
+                },
+                "examples": {
+                  "failed": {
+                    "$ref": "#/components/examples/404"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/recent-posts": {
+      "get": {
+        "tags": ["recent-posts"],
+        "summary": "Ambil semua data berita terkini",
+        "description": "Dapatkan semua data berita terkini",
+        "responses": {
+          "200": {
+            "description": "Sukses mendapatkan semua data berita terkini",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/200-post"
+                },
+                "examples": {
+                  "success": {
+                    "$ref": "#/components/examples/200-post-recent"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/404"
+                },
+                "examples": {
+                  "failed": {
+                    "$ref": "#/components/examples/404"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/main-article/{id}": {
+      "get": {
+        "tags": ["main-article"],
+        "summary": "Ambil 1 data berita",
+        "description": "Ambil 1 data berita berdasarkan id",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/id-post"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Sukses ambil 1 data berita",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/200-main-article"
+                },
+                "examples": {
+                  "success": {
+                    "$ref": "#/components/examples/200-main-article"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Gagal ambil 1 data berita",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/404"
+                },
+                "examples": {
+                  "failed": {
+                    "$ref": "#/components/examples/404"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/related-articles/{id}": {
+      "get": {
+        "tags": ["related-articles"],
+        "summary": "Ambil data artikel terkait",
+        "description": "Ambil banyak data artikel terkait berdasarkan id article yang dibaca",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/id-post"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Sukses ambil 1 data artikel terkait",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/200-post"
+                },
+                "examples": {
+                  "success": {
+                    "$ref": "#/components/examples/200-post-related"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Gagal ambil 1 data artikel terkait",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/404"
+                },
+                "examples": {
+                  "failed": {
+                    "$ref": "#/components/examples/404"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/relevant-search": {
+      "get": {
+        "tags": ["relevant-search"],
+        "summary": "Cari berita",
+        "description": "Dapatkan semua data berita relevant berdasarkan pencarian",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/keyword"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Sukses mendapatkan semua data berita berdasarkan pencarian",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/200-relevant-recent-search"
+                },
+                "examples": {
+                  "success": {
+                    "$ref": "#/components/examples/200-relevant-search"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/404"
+                },
+                "examples": {
+                  "failed": {
+                    "$ref": "#/components/examples/404"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/recent-search": {
+      "get": {
+        "tags": ["recent-search"],
+        "summary": "Cari berita",
+        "description": "Dapatkan semua data berita terkini berdasarkan pencarian",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/keyword"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Sukses mendapatkan semua data berita berdasarkan pencarian",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/200-relevant-recent-search"
+                },
+                "examples": {
+                  "success": {
+                    "$ref": "#/components/examples/200-recent-search"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/404"
+                },
+                "examples": {
+                  "failed": {
+                    "$ref": "#/components/examples/404"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "parameters": {
+      "id-post": {
+        "name": "id",
+        "in": "path",
+        "required": true,
+        "description": "id postingan sebagai parameter",
+        "schema": {
+          "type": "number",
+          "minLength": 1
+        }
+      },
+      "keyword": {
+        "name": "keyword",
+        "in": "query",
+        "required": true,
+        "description": "cari berita berdasarkan keyword",
+        "schema": {
+          "type": "string",
+          "nullable": false
+        }
+      }
+    },
+    "schemas": {
+      "200-location": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer"
+          },
+          "success": {
+            "type": "boolean"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "location_id": {
+                  "type": "number"
+                },
+                "location_city": {
+                  "type": "string"
+                },
+                "location_province": {
+                  "type": "string"
+                },
+                "location_country": {
+                  "type": "string"
+                }
+              },
+              "required": ["location_id"]
+            }
+          }
+        }
+      },
+      "200-social-media": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer"
+          },
+          "success": {
+            "type": "boolean"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "sosmed_id": {
+                  "type": "number"
+                },
+                "sosmed_title": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "sosmed_icon": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "sosmed_link": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "required": ["sosmed_id"]
+            }
+          }
+        }
+      },
+      "200-menu": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer"
+          },
+          "success": {
+            "type": "boolean"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "menu_id": {
+                  "type": "number"
+                },
+                "menu_name": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "parent_id": {
+                  "type": "number"
+                },
+                "menu_link": {
+                  "type": "string"
+                },
+                "menu_active": {
+                  "type": "boolean"
+                },
+                "menu_sequence": {
+                  "type": "number"
+                }
+              },
+              "required": ["menu_id"]
+            }
+          }
+        }
+      },
+      "200-post-category": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer"
+          },
+          "success": {
+            "type": "boolean"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "category_id": {
+                "type": "integer"
+              },
+              "category_name": {
+                "type": "string"
+              },
+              "category_image": {
+                "type": "string"
+              },
+              "category_posts": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "post_id": {
+                      "type": "integer"
+                    },
+                    "post_title": {
+                      "type": "string"
+                    },
+                    "post_content": {
+                      "type": "string"
+                    },
+                    "medium_thumbnail": {
+                      "type": "string"
+                    },
+                    "post_url": {
+                      "type": "string"
+                    },
+                    "author_name": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            },
+            "required": ["category_"]
+          }
+        }
+      },
+      "200-tags": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer"
+          },
+          "success": {
+            "type": "boolean"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "tags_id": {
+                  "type": "number"
+                },
+                "tags_name": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "tags_url": {
+                  "type": "string"
+                }
+              },
+              "required": ["tags_id"]
+            }
+          }
+        }
+      },
+      "200-contact": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer"
+          },
+          "success": {
+            "type": "boolean"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "contact_id": {
+                  "type": "number"
+                },
+                "contact_title": {
+                  "type": "string"
+                },
+                "contact_name": {
+                  "type": "string"
+                },
+                "contact_icon": {
+                  "type": "string"
+                }
+              },
+              "required": ["contact_id"]
+            }
+          }
+        }
+      },
+      "201-subscribe": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer"
+          },
+          "success": {
+            "type": "boolean"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "subscriber_id": {
+                "type": "integer"
+              },
+              "subscriber_email": {
+                "type": "string"
+              }
+            },
+            "required": ["subscriber_id", "subscriber_email"]
+          }
+        }
+      },
+      "200-post": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer"
+          },
+          "success": {
+            "type": "boolean"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "post_id": {
+                  "type": "number"
+                },
+                "post_title": {
+                  "type": "string"
+                },
+                "post_category": {
+                  "type": "string"
+                },
+                "thumbnail": {
+                  "type": "string"
+                },
+                "medium_thumbnail": {
+                  "type": "string"
+                },
+                "post_url": {
+                  "type": "string"
+                },
+                "post_date": {
+                  "type": "string"
+                }
+              },
+              "required": ["post_id"]
+            }
+          }
+        }
+      },
+      "200-advertising": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer"
+          },
+          "success": {
+            "type": "boolean"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "ads_id": {
+                  "type": "number"
+                },
+                "ads_name": {
+                  "type": "string"
+                },
+                "ads_position": {
+                  "type": "string"
+                },
+                "ads_desc": {
+                  "type": "string"
+                },
+                "ads_image": {
+                  "type": "string"
+                },
+                "ads_mobile_image": {
+                  "type": "string"
+                },
+                "ads_link": {
+                  "type": "string"
+                },
+                "ads_start": {
+                  "type": "string"
+                },
+                "ads_end": {
+                  "type": "string"
+                },
+                "ads_sequence": {
+                  "type": "number"
+                }
+              },
+              "required": ["ads_id"]
+            }
+          }
+        }
+      },
+      "200-main-article": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer"
+          },
+          "success": {
+            "type": "boolean"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "post_id": {
+                  "type": "number"
+                },
+                "post_title": {
+                  "type": "string"
+                },
+                "post_category": {
+                  "type": "string"
+                },
+                "thumbnail": {
+                  "type": "string"
+                },
+                "medium_thumbnail": {
+                  "type": "string"
+                },
+                "post_url": {
+                  "type": "string"
+                },
+                "post_date": {
+                  "type": "string"
+                },
+                "post_content": {
+                  "type": "string"
+                },
+                "post_author": {
+                  "type": "object",
+                  "properties": {
+                    "author_id": {
+                      "type": "number"
+                    },
+                    "author_name": {
+                      "type": "string"
+                    },
+                    "author_thumbnail": {
+                      "type": "string"
+                    },
+                    "author_url": {
+                      "type": "string"
+                    }
+                  }
+                }
+              },
+              "required": ["post_id"]
+            }
+          }
+        }
+      },
+      "200-relevant-recent-search": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer"
+          },
+          "success": {
+            "type": "boolean"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "posts": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "post_id": {
+                        "type": "number"
+                      },
+                      "post_title": {
+                        "type": "string"
+                      },
+                      "post_content": {
+                        "type": "string"
+                      },
+                      "post_category": {
+                        "type": "string"
+                      },
+                      "thumbnail": {
+                        "type": "string"
+                      },
+                      "medium_thumbnail": {
+                        "type": "string"
+                      },
+                      "post_url": {
+                        "type": "string"
+                      },
+                      "post_date": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                },
+                "total": {
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        }
+      },
+      "404": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer"
+          },
+          "success": {
+            "type": "boolean"
+          },
+          "errors": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "examples": {
+      "200-location": {
+        "description": "Contoh response berhasil mendapatkan semua data lokasi",
+        "value": {
+          "code": 200,
+          "success": true,
+          "message": "Sukses mendapatkan semua data lokasi",
+          "data": [
+            {
+              "location_id": 1,
+              "location_city": "Pekanbaru",
+              "location_province": "Riau",
+              "location_country": "Indonesia"
+            },
+            {
+              "location_id": 2,
+              "location_city": "Duri",
+              "location_province": "Riau",
+              "location_country": "Indonesia"
+            }
+          ]
+        }
+      },
+      "200-social-media": {
+        "description": "Contoh response berhasil mendapatkan semua data media sosial",
+        "value": {
+          "code": 200,
+          "success": true,
+          "message": "Sukses mendapatkan semua data media sosial",
+          "data": [
+            {
+              "sosmed_id": 1,
+              "sosmed_title": "instagram",
+              "sosmed_icon": "https://api.iconify.design/mdi:instagram.svg?color=%23ffffff",
+              "sosmed_link": "/"
+            },
+            {
+              "sosmed_id": 2,
+              "sosmed_title": "facebook",
+              "sosmed_icon": "https://api.iconify.design/mdi:facebook.svg?color=%23ffffff",
+              "sosmed_link": "/"
+            },
+            {
+              "sosmed_id": 3,
+              "sosmed_title": "twitter",
+              "sosmed_icon": "https://api.iconify.design/mdi:twitter.svg?color=%23ffffff",
+              "sosmed_link": "/"
+            },
+            {
+              "sosmed_id": 4,
+              "sosmed_title": "youtube",
+              "sosmed_icon": "https://api.iconify.design/mdi:youtube.svg?color=%23ffffff",
+              "sosmed_link": "/"
+            }
+          ]
+        }
+      },
+      "200-menu": {
+        "description": "Contoh response berhasil mendapatkan semua data menu",
+        "value": {
+          "code": 200,
+          "success": true,
+          "message": "Sukses mendapatkan semua data menu",
+          "data": [
+            {
+              "menu_id": 1,
+              "menu_name": "Pendidikan",
+              "parent_id": null,
+              "menu_link": "/kategori/pendidikan",
+              "menu_active": false,
+              "menu_sequence": "1"
+            },
+            {
+              "menu_id": 2,
+              "menu_name": "Bisnis",
+              "parent_id": null,
+              "menu_link": "/kategori/bisnis",
+              "menu_active": false,
+              "menu_sequence": "1"
+            },
+            {
+              "menu_id": 3,
+              "menu_name": "Wisata",
+              "parent_id": null,
+              "menu_link": "/kategori/wisata",
+              "menu_active": false,
+              "menu_sequence": "1"
+            },
+            {
+              "menu_id": 4,
+              "menu_name": "Kampus",
+              "parent_id": null,
+              "menu_link": "/kategori/kampus",
+              "menu_active": false,
+              "menu_sequence": "1"
+            },
+            {
+              "menu_id": 5,
+              "menu_name": "Sawit",
+              "parent_id": null,
+              "menu_link": "/kategori/sawit",
+              "menu_active": false,
+              "menu_sequence": "1"
+            },
+            {
+              "menu_id": 6,
+              "menu_name": "Daerah",
+              "parent_id": null,
+              "menu_link": "/kategori/daerah",
+              "menu_active": false,
+              "menu_sequence": "1"
+            },
+            {
+              "menu_id": 7,
+              "menu_name": "Info Riau",
+              "parent_id": 6,
+              "menu_link": "/kategori/asahan-sumut",
+              "menu_active": false,
+              "menu_sequence": "1"
+            },
+            {
+              "menu_id": 8,
+              "menu_name": "Info Inhil",
+              "parent_id": 6,
+              "menu_link": "/kategori/inhil",
+              "menu_active": false,
+              "menu_sequence": "1"
+            },
+            {
+              "menu_id": 9,
+              "menu_name": "Info Pekanbaru",
+              "parent_id": 6,
+              "menu_link": "/kategori/pekanbaru",
+              "menu_active": false,
+              "menu_sequence": "1"
+            },
+            {
+              "menu_id": 10,
+              "menu_name": "Info Siak",
+              "parent_id": 6,
+              "menu_link": "/kategori/siak",
+              "menu_active": false,
+              "menu_sequence": "1"
+            },
+            {
+              "menu_id": 11,
+              "menu_name": "Info Pelalawan",
+              "parent_id": 6,
+              "menu_link": "/kategori/pelalawan",
+              "menu_active": false,
+              "menu_sequence": "1"
+            },
+            {
+              "menu_id": 12,
+              "menu_name": "Info Kampar",
+              "parent_id": 6,
+              "menu_link": "/kategori/kampar",
+              "menu_active": false,
+              "menu_sequence": "1"
+            }
+          ]
+        }
+      },
+      "200-post-category": {
+        "description": "Contoh response berhasil mendapatkan semua data berita berdasarkan kategori",
+        "value": {
+          "code": 200,
+          "success": true,
+          "message": "Sukses mendapatkan semua data berita",
+          "data": {
+            "category_id": "1",
+            "category_name": "Info Pelalawan",
+            "category_image": "pelalawan.png",
+            "category_posts": [
+              {
+                "post_id": 1,
+                "post_title": "article pelalawan 1",
+                "post_content": "lorem ipsum dolor sit amet",
+                "medium_thumbnail": "tes.png",
+                "post_url": "/1",
+                "author_name": "iwal"
+              },
+              {
+                "post_id": 2,
+                "post_title": "article pelalawan 2",
+                "post_content": "lorem ipsum dolor sit amet",
+                "medium_thumbnail": "tes2.png",
+                "post_url": "/2",
+                "author_name": "sonya"
+              }
+            ]
+          }
+        }
+      },
+      "200-tags": {
+        "description": "Contoh response berhasil mendapatkan semua data tag",
+        "value": {
+          "code": 200,
+          "success": true,
+          "message": "Sukses mendapatkan semua data tag",
+          "data": [
+            {
+              "tags_id": 1,
+              "tags_name": "sawit",
+              "tags_url": "/sawit"
+            },
+            {
+              "tags_id": 2,
+              "tags_name": "kampus",
+              "tags_url": "/kampus"
+            }
+          ]
+        }
+      },
+      "200-contact": {
+        "description": "Contoh response berhasil mendapatkan semua data kontak",
+        "value": {
+          "code": 200,
+          "success": true,
+          "message": "Sukses mendapatkan semua data kontak",
+          "data": [
+            {
+              "contact_id": 1,
+              "contact_title": "alamat",
+              "contact_name": "Jl. Subrantas No. 188 Panam. Pekanbaru, Riau.",
+              "contact_icon": "https://api.iconify.design/material-symbols:location-on.svg?color=%23ffffff"
+            },
+            {
+              "contact_id": 2,
+              "contact_title": "no-hp",
+              "contact_name": "0812345678",
+              "contact_icon": "https://api.iconify.design/material-symbols:phone-enabled-sharp.svg?color=%23ffffff"
+            },
+            {
+              "contact_id": 3,
+              "contact_title": "email",
+              "contact_name": "redaksi@lancangkuning.com",
+              "contact_icon": "https://api.iconify.design/material-symbols:mail.svg?color=%23ffffff"
+            },
+            {
+              "contact_id": 4,
+              "contact_title": "support",
+              "contact_name": "LancangKuning Support",
+              "contact_icon": "https://api.iconify.design/material-symbols:contact-support.svg?color=%23ffffff"
+            }
+          ]
+        }
+      },
+      "201-subscribe": {
+        "description": "Contoh response sukses subscribe",
+        "value": {
+          "code": 201,
+          "success": true,
+          "message": "Sukses subscribe",
+          "data": {
+            "subscriber_id": 1,
+            "subscriber_email": "iwal@gmail.com"
+          }
+        }
+      },
+      "200-post-by-category": {
+        "description": "Contoh response berhasil mendapatkan semua data berita berdasarkan kategori",
+        "value": {
+          "code": 200,
+          "success": true,
+          "message": "Sukses mendapatkan semua data berita berdasarkan kategori",
+          "data": [
+            {
+              "post_id": 1,
+              "post_title": "HPN 2023 di Medan, PWI Riau akan Berangkatkan Ratusan WartawanHPN 2023 di Medan, PWI Riau akan Berangkatkan Ratusan Wartawan",
+              "post_category": "acara",
+              "thumbnail": "tes.png",
+              "medium_thumbnail": "tes.png",
+              "post_url": "/1",
+              "post_date": "senin, 4 september 2023"
+            },
+            {
+              "post_id": 2,
+              "post_title": "Sedia Payung Sebelum Hujan, Inilah Prakiraan Cuaca Untuk Wilayah Riau",
+              "post_category": "cuaca",
+              "thumbnail": "tes.png",
+              "medium_thumbnail": "tes.png",
+              "post_url": "/2",
+              "post_date": "selasa, 5 september 2023, "
+            },
+            {
+              "post_id": 3,
+              "post_title": "HPN 2023 di Medan, PWI Riau akan Berangkatkan Ratusan WartawanHPN 2023 di Medan, PWI Riau akan Berangkatkan Ratusan Wartawan",
+              "post_category": "bisnis",
+              "thumbnail": "tes.png",
+              "medium_thumbnail": "tes.png",
+              "post_url": "/3",
+              "post_date": "senin, 4 september 2023"
+            },
+            {
+              "post_id": 4,
+              "post_title": "Sedia Payung Sebelum Hujan, Inilah Prakiraan Cuaca Untuk Wilayah Riau",
+              "post_category": "pendidikan",
+              "thumbnail": "tes.png",
+              "medium_thumbnail": "tes.png",
+              "post_url": "/4",
+              "post_date": "selasa, 5 september 2023, "
+            }
+          ]
+        }
+      },
+      "200-post-malayhomeland": {
+        "description": "Contoh response berhasil mendapatkan semua data malayhomeland",
+        "value": {
+          "code": 200,
+          "success": true,
+          "message": "Sukses mendapatkan semua data malayhomeland",
+          "data": [
+            {
+              "post_id": 1,
+              "post_title": "HPN 2023 di Medan, PWI Riau akan Berangkatkan Ratusan WartawanHPN 2023 di Medan, PWI Riau akan Berangkatkan Ratusan Wartawan",
+              "post_category": "acara",
+              "thumbnail": "tes.png",
+              "medium_thumbnail": "tes.png",
+              "post_url": "/1",
+              "post_date": "senin, 4 september 2023"
+            },
+            {
+              "post_id": 2,
+              "post_title": "Sedia Payung Sebelum Hujan, Inilah Prakiraan Cuaca Untuk Wilayah Riau",
+              "post_category": "cuaca",
+              "thumbnail": "tes.png",
+              "medium_thumbnail": "tes.png",
+              "post_url": "/2",
+              "post_date": "selasa, 5 september 2023, "
+            },
+            {
+              "post_id": 3,
+              "post_title": "HPN 2023 di Medan, PWI Riau akan Berangkatkan Ratusan WartawanHPN 2023 di Medan, PWI Riau akan Berangkatkan Ratusan Wartawan",
+              "post_category": "bisnis",
+              "thumbnail": "tes.png",
+              "medium_thumbnail": "tes.png",
+              "post_url": "/3",
+              "post_date": "senin, 4 september 2023"
+            },
+            {
+              "post_id": 4,
+              "post_title": "Sedia Payung Sebelum Hujan, Inilah Prakiraan Cuaca Untuk Wilayah Riau",
+              "post_category": "pendidikan",
+              "thumbnail": "tes.png",
+              "medium_thumbnail": "tes.png",
+              "post_url": "/4",
+              "post_date": "selasa, 5 september 2023, "
+            }
+          ]
+        }
+      },
+      "200-post-advetorial": {
+        "description": "Contoh response berhasil mendapatkan semua data advetorial",
+        "value": {
+          "code": 200,
+          "success": true,
+          "message": "Sukses mendapatkan semua data advetorial",
+          "data": [
+            {
+              "post_id": 1,
+              "post_title": "HPN 2023 di Medan, PWI Riau akan Berangkatkan Ratusan WartawanHPN 2023 di Medan, PWI Riau akan Berangkatkan Ratusan Wartawan",
+              "post_category": "acara",
+              "thumbnail": "tes.png",
+              "medium_thumbnail": "tes.png",
+              "post_url": "/1",
+              "post_date": "senin, 4 september 2023"
+            },
+            {
+              "post_id": 2,
+              "post_title": "Sedia Payung Sebelum Hujan, Inilah Prakiraan Cuaca Untuk Wilayah Riau",
+              "post_category": "cuaca",
+              "thumbnail": "tes.png",
+              "medium_thumbnail": "tes.png",
+              "post_url": "/2",
+              "post_date": "selasa, 5 september 2023, "
+            },
+            {
+              "post_id": 3,
+              "post_title": "HPN 2023 di Medan, PWI Riau akan Berangkatkan Ratusan WartawanHPN 2023 di Medan, PWI Riau akan Berangkatkan Ratusan Wartawan",
+              "post_category": "bisnis",
+              "thumbnail": "tes.png",
+              "medium_thumbnail": "tes.png",
+              "post_url": "/3",
+              "post_date": "senin, 4 september 2023"
+            },
+            {
+              "post_id": 4,
+              "post_title": "Sedia Payung Sebelum Hujan, Inilah Prakiraan Cuaca Untuk Wilayah Riau",
+              "post_category": "pendidikan",
+              "thumbnail": "tes.png",
+              "medium_thumbnail": "tes.png",
+              "post_url": "/4",
+              "post_date": "selasa, 5 september 2023, "
+            }
+          ]
+        }
+      },
+      "200-post-latest-news": {
+        "description": "Contoh response berhasil mendapatkan semua data berita terbaru",
+        "value": {
+          "code": 200,
+          "success": true,
+          "message": "Sukses mendapatkan semua data berita terbaru",
+          "data": [
+            {
+              "post_id": 1,
+              "post_title": "HPN 2023 di Medan, PWI Riau akan Berangkatkan Ratusan WartawanHPN 2023 di Medan, PWI Riau akan Berangkatkan Ratusan Wartawan",
+              "post_category": "acara",
+              "thumbnail": "tes.png",
+              "medium_thumbnail": "tes.png",
+              "post_url": "/1",
+              "post_date": "senin, 4 september 2023"
+            },
+            {
+              "post_id": 2,
+              "post_title": "Sedia Payung Sebelum Hujan, Inilah Prakiraan Cuaca Untuk Wilayah Riau",
+              "post_category": "cuaca",
+              "thumbnail": "tes.png",
+              "medium_thumbnail": "tes.png",
+              "post_url": "/2",
+              "post_date": "selasa, 5 september 2023, "
+            },
+            {
+              "post_id": 3,
+              "post_title": "HPN 2023 di Medan, PWI Riau akan Berangkatkan Ratusan WartawanHPN 2023 di Medan, PWI Riau akan Berangkatkan Ratusan Wartawan",
+              "post_category": "bisnis",
+              "thumbnail": "tes.png",
+              "medium_thumbnail": "tes.png",
+              "post_url": "/3",
+              "post_date": "senin, 4 september 2023"
+            },
+            {
+              "post_id": 4,
+              "post_title": "Sedia Payung Sebelum Hujan, Inilah Prakiraan Cuaca Untuk Wilayah Riau",
+              "post_category": "pendidikan",
+              "thumbnail": "tes.png",
+              "medium_thumbnail": "tes.png",
+              "post_url": "/4",
+              "post_date": "selasa, 5 september 2023, "
+            }
+          ]
+        }
+      },
+      "200-post-popular": {
+        "description": "Contoh response berhasil mendapatkan semua data post populer",
+        "value": {
+          "code": 200,
+          "success": true,
+          "message": "Sukses mendapatkan semua data post populer",
+          "data": [
+            {
+              "post_id": 1,
+              "post_title": "HPN 2023 di Medan, PWI Riau akan Berangkatkan Ratusan WartawanHPN 2023 di Medan, PWI Riau akan Berangkatkan Ratusan Wartawan",
+              "post_category": "acara",
+              "thumbnail": "tes.png",
+              "medium_thumbnail": "tes.png",
+              "post_url": "/1",
+              "post_date": "senin, 4 september 2023"
+            },
+            {
+              "post_id": 2,
+              "post_title": "Sedia Payung Sebelum Hujan, Inilah Prakiraan Cuaca Untuk Wilayah Riau",
+              "post_category": "cuaca",
+              "thumbnail": "tes.png",
+              "medium_thumbnail": "tes.png",
+              "post_url": "/2",
+              "post_date": "selasa, 5 september 2023, "
+            },
+            {
+              "post_id": 3,
+              "post_title": "HPN 2023 di Medan, PWI Riau akan Berangkatkan Ratusan WartawanHPN 2023 di Medan, PWI Riau akan Berangkatkan Ratusan Wartawan",
+              "post_category": "bisnis",
+              "thumbnail": "tes.png",
+              "medium_thumbnail": "tes.png",
+              "post_url": "/3",
+              "post_date": "senin, 4 september 2023"
+            },
+            {
+              "post_id": 4,
+              "post_title": "Sedia Payung Sebelum Hujan, Inilah Prakiraan Cuaca Untuk Wilayah Riau",
+              "post_category": "pendidikan",
+              "thumbnail": "tes.png",
+              "medium_thumbnail": "tes.png",
+              "post_url": "/4",
+              "post_date": "selasa, 5 september 2023, "
+            }
+          ]
+        }
+      },
+      "200-post-recent": {
+        "description": "Contoh response berhasil mendapatkan semua data post populer",
+        "value": {
+          "code": 200,
+          "success": true,
+          "message": "Sukses mendapatkan semua data post populer",
+          "data": [
+            {
+              "post_id": 1,
+              "post_title": "HPN 2023 di Medan, PWI Riau akan Berangkatkan Ratusan WartawanHPN 2023 di Medan, PWI Riau akan Berangkatkan Ratusan Wartawan",
+              "post_category": "acara",
+              "thumbnail": "tes.png",
+              "medium_thumbnail": "tes.png",
+              "post_url": "/1",
+              "post_date": "senin, 4 september 2023"
+            },
+            {
+              "post_id": 2,
+              "post_title": "Sedia Payung Sebelum Hujan, Inilah Prakiraan Cuaca Untuk Wilayah Riau",
+              "post_category": "cuaca",
+              "thumbnail": "tes.png",
+              "medium_thumbnail": "tes.png",
+              "post_url": "/2",
+              "post_date": "selasa, 5 september 2023, "
+            },
+            {
+              "post_id": 3,
+              "post_title": "HPN 2023 di Medan, PWI Riau akan Berangkatkan Ratusan WartawanHPN 2023 di Medan, PWI Riau akan Berangkatkan Ratusan Wartawan",
+              "post_category": "bisnis",
+              "thumbnail": "tes.png",
+              "medium_thumbnail": "tes.png",
+              "post_url": "/3",
+              "post_date": "senin, 4 september 2023"
+            },
+            {
+              "post_id": 4,
+              "post_title": "Sedia Payung Sebelum Hujan, Inilah Prakiraan Cuaca Untuk Wilayah Riau",
+              "post_category": "pendidikan",
+              "thumbnail": "tes.png",
+              "medium_thumbnail": "tes.png",
+              "post_url": "/4",
+              "post_date": "selasa, 5 september 2023, "
+            }
+          ]
+        }
+      },
+      "200-advertising": {
+        "description": "Contoh response berhasil mendapatkan semua data iklan",
+        "value": {
+          "code": 200,
+          "success": true,
+          "message": "Sukses mendapatkan semua data iklan",
+          "data": [
+            {
+              "ads_id": 1,
+              "ads_name": "Advertising 1",
+              "ads_position": "atas",
+              "ads_desc": "Lorem ipsum dolor sit amet.",
+              "ads_image": "tes.png",
+              "ads_mobile_image": "tes.png",
+              "ads_link": "https://advertising/1",
+              "ads_start": "4 september 2023, senin",
+              "ads_end": "5 september 2023, selasa",
+              "ads_sequence": 1
+            },
+            {
+              "ads_id": 2,
+              "ads_name": "Advertising 2",
+              "ads_position": "bawah",
+              "ads_desc": "Lorem ipsum dolor sit amet.",
+              "ads_image": "tes.png",
+              "ads_mobile_image": "tes.png",
+              "ads_link": "https://advertising/1",
+              "ads_start": "6 september 2023, rabu",
+              "ads_end": "7 september 2023, kamis",
+              "ads_sequence": 1
+            }
+          ]
+        }
+      },
+      "200-main-article": {
+        "description": "Contoh response sukses ambil 1 data berita",
+        "value": {
+          "code": 200,
+          "success": true,
+          "message": "Sukses mendapatkan 1 data berita",
+          "data": {
+            "post_id": 1,
+            "post_title": "HPN 2023 di Medan, PWI Riau akan Berangkatkan Ratusan WartawanHPN 2023 di Medan, PWI Riau akan Berangkatkan Ratusan Wartawan",
+            "post_category": "acara",
+            "post_content": "loremasfsadf sfasfasg dfgdfgad afdfasfafaadf etretergrv sdfnjdjdygjtej dhfhsrhsrht",
+            "thumbnail": "tes.png",
+            "medium_thumbnail": "tes.png",
+            "post_url": "/1",
+            "post_date": "senin, 4 september 2023",
+            "post_author": {
+              "author_id": 1,
+              "author_name": "iwal",
+              "author_description": "lorem ipsum bla bla blam bla sfasf erwefag egrgfg hrthrt aer",
+              "author_thumbnail": "tes.png",
+              "author_url": "/iwal"
+            }
+          }
+        }
+      },
+      "200-post-related": {
+        "description": "Contoh response berhasil mendapatkan semua data artikel terkait",
+        "value": {
+          "code": 200,
+          "success": true,
+          "message": "Sukses mendapatkan semua data artikel terkait",
+          "data": [
+            {
+              "post_id": 1,
+              "post_title": "HPN 2023 di Medan, PWI Riau akan Berangkatkan Ratusan WartawanHPN 2023 di Medan, PWI Riau akan Berangkatkan Ratusan Wartawan",
+              "post_category": "acara",
+              "thumbnail": "tes.png",
+              "medium_thumbnail": "tes.png",
+              "post_url": "/1",
+              "post_date": "senin, 4 september 2023"
+            },
+            {
+              "post_id": 2,
+              "post_title": "Sedia Payung Sebelum Hujan, Inilah Prakiraan Cuaca Untuk Wilayah Riau",
+              "post_category": "cuaca",
+              "thumbnail": "tes.png",
+              "medium_thumbnail": "tes.png",
+              "post_url": "/2",
+              "post_date": "selasa, 5 september 2023, "
+            },
+            {
+              "post_id": 3,
+              "post_title": "HPN 2023 di Medan, PWI Riau akan Berangkatkan Ratusan WartawanHPN 2023 di Medan, PWI Riau akan Berangkatkan Ratusan Wartawan",
+              "post_category": "bisnis",
+              "thumbnail": "tes.png",
+              "medium_thumbnail": "tes.png",
+              "post_url": "/3",
+              "post_date": "senin, 4 september 2023"
+            },
+            {
+              "post_id": 4,
+              "post_title": "Sedia Payung Sebelum Hujan, Inilah Prakiraan Cuaca Untuk Wilayah Riau",
+              "post_category": "pendidikan",
+              "thumbnail": "tes.png",
+              "medium_thumbnail": "tes.png",
+              "post_url": "/4",
+              "post_date": "selasa, 5 september 2023, "
+            }
+          ]
+        }
+      },
+      "200-relevant-search": {
+        "description": "Contoh response berhasil mendapatkan semua data berita relevant berdasarkan pencarian",
+        "value": {
+          "code": 200,
+          "success": true,
+          "message": "Sukses mendapatkan semua data berita berdasarkan pencarian",
+          "data": {
+            "posts": [
+              {
+                "post_id": 1,
+                "post_title": "HPN 2023 di Medan, PWI Riau akan Berangkatkan Ratusan Wartawan",
+                "post_content": "lorem ipsum dolor sit amet consectetur adipisicing elit.",
+                "post_category": "acara",
+                "thumbnail": "tes.png",
+                "medium_thumbnail": "tes.png",
+                "post_url": "/1",
+                "post_date": "senin, 4 september 2023"
+              },
+              {
+                "post_id": 2,
+                "post_title": "Sedia Payung Sebelum Hujan, Inilah Prakiraan Cuaca Untuk Wilayah Riau",
+                "post_content": "lorem ipsum dolor sit amet consectetur adipisicing elit.",
+                "post_category": "cuaca",
+                "thumbnail": "tes.png",
+                "medium_thumbnail": "tes.png",
+                "post_url": "/2",
+                "post_date": "selasa, 5 september 2023, selasa"
+              },
+              {
+                "post_id": 1,
+                "post_title": "HPN 2023 di Medan, PWI Riau akan Berangkatkan Ratusan Wartawan",
+                "post_content": "lorem ipsum dolor sit amet consectetur adipisicing elit.",
+                "post_category": "acara",
+                "thumbnail": "tes.png",
+                "medium_thumbnail": "tes.png",
+                "post_url": "/1",
+                "post_date": "senin, 4 september 2023"
+              },
+              {
+                "post_id": 2,
+                "post_title": "Sedia Payung Sebelum Hujan, Inilah Prakiraan Cuaca Untuk Wilayah Riau",
+                "post_content": "lorem ipsum dolor sit amet consectetur adipisicing elit.",
+                "post_category": "cuaca",
+                "thumbnail": "tes.png",
+                "medium_thumbnail": "tes.png",
+                "post_url": "/2",
+                "post_date": "selasa, 5 september 2023, selasa"
+              },
+              {
+                "post_id": 3,
+                "post_title": "HPN 2023 di Medan, PWI Riau akan Berangkatkan Ratusan Wartawan",
+                "post_content": "lorem ipsum dolor sit amet consectetur adipisicing elit.",
+                "post_category": "acara",
+                "thumbnail": "tes.png",
+                "medium_thumbnail": "tes.png",
+                "post_url": "/3",
+                "post_date": "senin, 4 september 2023"
+              },
+              {
+                "post_id": 4,
+                "post_title": "Sedia Payung Sebelum Hujan, Inilah Prakiraan Cuaca Untuk Wilayah Riau",
+                "post_content": "lorem ipsum dolor sit amet consectetur adipisicing elit.",
+                "post_category": "cuaca",
+                "thumbnail": "tes.png",
+                "medium_thumbnail": "tes.png",
+                "post_url": "/4",
+                "post_date": "selasa, 5 september 2023, selasa"
+              }
+            ],
+            "total": 4
+          }
+        }
+      },
+      "200-recent-search": {
+        "description": "Contoh response berhasil mendapatkan semua data berita terbaru berdasarkan pencarian",
+        "value": {
+          "code": 200,
+          "success": true,
+          "message": "Sukses mendapatkan semua data berita berdasarkan pencarian",
+          "data": {
+            "posts": [
+              {
+                "post_id": 1,
+                "post_title": "HPN 2023 di Medan, PWI Riau akan Berangkatkan Ratusan Wartawan",
+                "post_content": "lorem ipsum dolor sit amet consectetur adipisicing elit.",
+                "post_category": "acara",
+                "thumbnail": "tes.png",
+                "medium_thumbnail": "tes.png",
+                "post_url": "/1",
+                "post_date": "senin, 4 september 2023"
+              },
+              {
+                "post_id": 2,
+                "post_title": "Sedia Payung Sebelum Hujan, Inilah Prakiraan Cuaca Untuk Wilayah Riau",
+                "post_content": "lorem ipsum dolor sit amet consectetur adipisicing elit.",
+                "post_category": "cuaca",
+                "thumbnail": "tes.png",
+                "medium_thumbnail": "tes.png",
+                "post_url": "/2",
+                "post_date": "selasa, 5 september 2023, selasa"
+              },
+              {
+                "post_id": 3,
+                "post_title": "HPN 2023 di Medan, PWI Riau akan Berangkatkan Ratusan Wartawan",
+                "post_content": "lorem ipsum dolor sit amet consectetur adipisicing elit.",
+                "post_category": "acara",
+                "thumbnail": "tes.png",
+                "medium_thumbnail": "tes.png",
+                "post_url": "/3",
+                "post_date": "senin, 4 september 2023"
+              },
+              {
+                "post_id": 4,
+                "post_title": "Sedia Payung Sebelum Hujan, Inilah Prakiraan Cuaca Untuk Wilayah Riau",
+                "post_content": "lorem ipsum dolor sit amet consectetur adipisicing elit.",
+                "post_category": "cuaca",
+                "thumbnail": "tes.png",
+                "medium_thumbnail": "tes.png",
+                "post_url": "/4",
+                "post_date": "selasa, 5 september 2023, selasa"
+              },
+              {
+                "post_id": 5,
+                "post_title": "HPN 2023 di Medan, PWI Riau akan Berangkatkan Ratusan Wartawan",
+                "post_content": "lorem ipsum dolor sit amet consectetur adipisicing elit.",
+                "post_category": "acara",
+                "thumbnail": "tes.png",
+                "medium_thumbnail": "tes.png",
+                "post_url": "/5",
+                "post_date": "senin, 4 september 2023"
+              },
+              {
+                "post_id": 6,
+                "post_title": "Sedia Payung Sebelum Hujan, Inilah Prakiraan Cuaca Untuk Wilayah Riau",
+                "post_content": "lorem ipsum dolor sit amet consectetur adipisicing elit.",
+                "post_category": "cuaca",
+                "thumbnail": "tes.png",
+                "medium_thumbnail": "tes.png",
+                "post_url": "/6",
+                "post_date": "selasa, 5 september 2023, selasa"
+              }
+            ],
+            "total": 6
+          }
+        }
+      },
+      "iwal": {
+        "description": "Contoh request body dengan subscriber_email iwal@gmail.com",
+        "value": {
+          "subscriber_id": 1,
+          "subscriber_email": "iwal@gmail.com"
+        }
+      },
+      "sonya": {
+        "description": "Contoh request body dengan subscriber_email sonya@gmail.com",
+        "value": {
+          "subscriber_id": 2,
+          "subscriber_email": "sonya@gmail.com"
+        }
+      },
+      "404": {
+        "description": "Contoh response gagal mendapatkan data",
+        "value": {
+          "code": 404,
+          "success": false,
+          "message": "Data yang anda cari tidak ditemukan",
+          "details": "Pastikan url yang anda gunakan benar dan data yang anda cari ada didalam sistem."
+        }
+      }
+    }
+  }
+}

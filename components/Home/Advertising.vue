@@ -7,7 +7,7 @@
     >
       <img
         alt="Porto"
-        class="img-fluid ps-3"
+        class="img-fluid"
         src="~/assets/img/blog/blog-ad-3.jpg"
       />
     </NuxtLink>

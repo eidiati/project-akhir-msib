@@ -1,21 +1,17 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   devtools: { enabled: true },
+  runtimeConfig: {
+    public: {
+      url_api: process.env.URL_API,
+    },
+  },
   app: {
     head: {
       title: "Lancang Kuning",
       charset: "utf-8",
       viewport: "width=device-width, initial-scale=1",
       link: [
-        {
-          rel: "shortcut icon",
-          href: "~assets/img/favicon.ico",
-          type: "image/x-icon",
-        },
-        {
-          rel: "apple-touch-icon",
-          href: "~assets/img/apple-touch-icon.png",
-        },
         {
           id: "googleFonts",
           href: "https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800%7CShadows+Into+Light%7CPlayfair+Display:400&display=swap",
@@ -86,4 +82,5 @@ export default defineNuxtConfig({
     "~/assets/css/custom.css",
     "~/assets/css/skins/default.css",
   ],
+  plugins: ["~/plugins/disqus"],
 });

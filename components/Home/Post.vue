@@ -1,5 +1,5 @@
 <template>
-  <template v-for="(post, i) in posts" :key="i">
+  <template v-for="(post, index) in posts" :key="index">
     <div class="heading heading-border heading-middle-border">
       <h3 class="text-4">
         <strong
@@ -12,17 +12,39 @@
 
     <div class="row pb-1">
       <div class="col-lg-6 mb-4 pb-1">
+        <article v-if="post.loading">
+          <div class="row">
+            <div class="col">
+              <div class="position-relative w-100" style="padding-top: 55%">
+                <div class="position-absolute top-0 start-0 end-0 bottom-0">
+                  <AnimationSkleton width_="100%" height_="100%" />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <AnimationSkleton width_="200px" height_="14px" class_="my-2" />
+              <AnimationSkleton width_="100%" height_="14px" />
+            </div>
+          </div>
+        </article>
         <article
+          v-else
           class="thumb-info thumb-info-no-zoom bg-transparent border-radius-0 pb-2 mb-2"
         >
           <div class="row">
             <div class="col">
-              <NuxtLink :to="post.articles[0].link">
-                <img
-                  :src="post.articles[0].image"
-                  class="img-fluid border-radius-0"
-                  alt="Why should I buy a smartwatch?"
-                />
+              <NuxtLink :to="post.articles[0].post_url">
+                <div class="position-relative w-100" style="padding-top: 55%">
+                  <div class="position-absolute top-0 start-0 end-0 bottom-0">
+                    <img
+                      :src="post.articles[0].medium_thumbnail"
+                      style="width: 100%; height: 100%; object-fit: cover"
+                      :alt="post.articles[0].post_title"
+                    />
+                  </div>
+                </div>
               </NuxtLink>
             </div>
           </div>
@@ -31,18 +53,18 @@
               <div class="thumb-info-caption-text">
                 <div class="d-inline-block text-default text-1 mt-2 float-none">
                   <NuxtLink
-                    :to="post.articles[0].link"
+                    :to="post.articles[0].post_url"
                     class="text-decoration-none text-color-default"
-                    >{{ post.articles[0].date }}</NuxtLink
+                    >{{ post.articles[0].post_date }}</NuxtLink
                   >
                 </div>
                 <h4
                   class="d-block line-height-2 text-4 text-dark font-weight-bold mb-0"
                 >
                   <NuxtLink
-                    :to="post.articles[0].link"
+                    :to="post.articles[0].post_url"
                     class="text-decoration-none text-color-dark text-color-hover-primary"
-                    >{{ post.articles[0].title }}</NuxtLink
+                    >{{ post.articles[0].post_title }}</NuxtLink
                   >
                 </h4>
               </div>
@@ -52,37 +74,66 @@
       </div>
 
       <div class="col-lg-6">
-        <template v-for="(article, i) in post.articles" :key="i">
+        <template
+          v-if="post.loading"
+          v-for="number in numberPost"
+          :key="number"
+        >
+          <article class="mb-2">
+            <div class="row align-items-center">
+              <div class="col-sm-4">
+                <div class="position-relative w-100" style="padding-top: 55%">
+                  <div class="position-absolute top-0 start-0 end-0 bottom-0">
+                    <AnimationSkleton width_="100%" height_="100%" />
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-8 ps-sm-0">
+                <AnimationSkleton width_="100px" height_="14px" class_="my-2" />
+                <AnimationSkleton width_="100%" height_="14px" />
+              </div>
+            </div>
+          </article>
+        </template>
+        <template
+          v-else
+          v-for="(article, index) in post.articles"
+          :key="article.post_id"
+        >
           <article
-            v-if="i > 0"
+            v-if="index > 0 && index < 4"
             class="thumb-info thumb-info-no-zoom bg-transparent border-radius-0 pb-4 mb-2"
           >
             <div class="row align-items-center pb-1">
               <div class="col-sm-4">
-                <NuxtLink :to="article.link">
-                  <img
-                    :src="article.image"
-                    class="img-fluid border-radius-0"
-                    alt="Gadgets That Make Your Smartphone Even Smarter"
-                  />
+                <NuxtLink :to="article.post_url">
+                  <div class="position-relative w-100" style="padding-top: 55%">
+                    <div class="position-absolute top-0 start-0 end-0 bottom-0">
+                      <img
+                        :src="article.thumbnail"
+                        style="width: 100%; height: 100%; object-fit: cover"
+                        :alt="article.post_title"
+                      />
+                    </div>
+                  </div>
                 </NuxtLink>
               </div>
               <div class="col-sm-8 ps-sm-0">
                 <div class="thumb-info-caption-text">
                   <div class="d-inline-block text-default text-1 float-none">
                     <NuxtLink
-                      :to="article.link"
+                      :to="article.post_url"
                       class="text-decoration-none text-color-default"
-                      >{{ article.date }}</NuxtLink
+                      >{{ article.post_date }}</NuxtLink
                     >
                   </div>
                   <h4
                     class="d-block pb-2 line-height-2 text-3 text-dark font-weight-bold mb-0"
                   >
                     <NuxtLink
-                      :to="article.link"
+                      :to="article.post_url"
                       class="text-decoration-none text-color-dark text-color-hover-primary"
-                      >{{ article.title }}</NuxtLink
+                      >{{ article.post_title }}</NuxtLink
                     >
                   </h4>
                 </div>
@@ -96,113 +147,129 @@
 </template>
 
 <script setup>
-import blog67 from "~/assets/img/blog/default/blog-67.jpg";
-import blog47 from "~/assets/img/blog/default/blog-47.jpg";
-import blog68 from "~/assets/img/blog/default/blog-68.jpg";
-// import blog67 from "~/assets/img/blog/default/blog-67.jpg"
-import blog49 from "~/assets/img/blog/default/blog-49.jpg";
-import blog50 from "~/assets/img/blog/default/blog-50.jpg";
-import blog51 from "~/assets/img/blog/default/blog-51.jpg";
-import blog52 from "~/assets/img/blog/default/blog-52.jpg";
-import blog53 from "~/assets/img/blog/default/blog-53.jpg";
-import blog54 from "~/assets/img/blog/default/blog-54.jpg";
-import blog55 from "~/assets/img/blog/default/blog-55.jpg";
-import blog56 from "~/assets/img/blog/default/blog-56.jpg";
-import blog57 from "~/assets/img/blog/default/blog-57.jpg";
-import blog58 from "~/assets/img/blog/default/blog-58.jpg";
-import blog59 from "~/assets/img/blog/default/blog-59.jpg";
-import blog60 from "~/assets/img/blog/default/blog-60.jpg";
-
-const posts = [
+import blog46 from "~/assets/img/blog/default/blog-46.jpg";
+const numberPost = 3;
+const posts = ref([
   {
     label: "Berita Advetorial",
     bgColor: "bg-secondary",
+    loading: true,
     articles: [
       {
-        image: blog67,
-        date: "January 12, 2020",
-        title: "Why should I buy a smartwatch?",
-        link: "/",
-      },
-      {
-        image: blog47,
-        date: "January 12, 2020",
-        title: "Gadgets That Make Your Smartphone Even Smarter",
-        link: "/",
-      },
-      {
-        image: blog68,
-        date: "January 12, 2020",
-        title: "The best augmented reality smartglasses",
-        link: "/",
-      },
-      {
-        image: blog67,
-        date: "January 12, 2020",
-        title: "Why should I buy a smartwatch?",
-        link: "/",
+        post_id: 1,
+        post_title: "How To Take Better Concert Pictures in 30 Seconds",
+        post_category: "Pendidikan",
+        thumbnail: blog46,
+        medium_thumbnail: blog46,
+        post_url: `/1`,
+        post_date: "4 september 2023, senin",
+        post_description:
+          "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Eveniet expedita dolore corporis ex, dolorem corrupti atque aut illo ab ut maiores sint doloribus obcaecati qui laborum, necessitatibus cum. Harum, at",
       },
     ],
   },
   {
     label: "Malay Homeland",
     bgColor: "bg-primary",
+    loading: true,
     articles: [
       {
-        image: blog49,
-        date: "January 12, 2020",
-        title: "The Best Way to Ride a Motorcycle",
-        link: "/",
-      },
-      {
-        image: blog50,
-        date: "January 12, 2020",
-        title: "5 Fun Things to Do at the Beach",
-        link: "/",
-      },
-      {
-        image: blog51,
-        date: "January 12, 2020",
-        title: "Amazingly Fresh Fruit And Herb Drinks For Summer",
-        link: "/",
-      },
-      {
-        image: blog52,
-        date: "January 12, 2020",
-        title: "The 20 Best Appetizers with 5 Ingredients",
-        link: "/",
+        post_id: 1,
+        post_title: "How To Take Better Concert Pictures in 30 Seconds",
+        post_category: "Pendidikan",
+        thumbnail: blog46,
+        medium_thumbnail: blog46,
+        post_url: `/1`,
+        post_date: "4 september 2023, senin",
+        post_description:
+          "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Eveniet expedita dolore corporis ex, dolorem corrupti atque aut illo ab ut maiores sint doloribus obcaecati qui laborum, necessitatibus cum. Harum, at",
       },
     ],
   },
   {
     label: "Berita Menarik Lainnya",
     bgColor: "bg-warning",
+    loading: true,
     articles: [
       {
-        image: blog53,
-        date: "January 12, 2020",
-        title: "6 Tips to Memorize Before Your Next Flight",
-        link: "/",
-      },
-      {
-        image: blog54,
-        date: "January 12, 2020",
-        title: "How to Make Friends as a Grown-Up",
-        link: "/",
-      },
-      {
-        image: blog55,
-        date: "January 12, 2020",
-        title: "Simple Ways to Have a Pretty Face",
-        link: "/",
-      },
-      {
-        image: blog56,
-        date: "January 12, 2020",
-        title: "Ranking the greatest players in basketball",
-        link: "/",
+        post_id: 1,
+        post_title: "How To Take Better Concert Pictures in 30 Seconds",
+        post_category: "Pendidikan",
+        thumbnail: blog46,
+        medium_thumbnail: blog46,
+        post_url: `/1`,
+        post_date: "4 september 2023, senin",
+        post_description:
+          "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Eveniet expedita dolore corporis ex, dolorem corrupti atque aut illo ab ut maiores sint doloribus obcaecati qui laborum, necessitatibus cum. Harum, at",
       },
     ],
   },
-];
+]);
+
+const { getData } = useFetchData();
+async function getPostAdvetorial() {
+  try {
+    const datas = await getData("products");
+    const advetorial = posts.value[0];
+    advetorial.loading = false;
+    advetorial.articles = datas.products.map((data) => ({
+      post_id: data.id,
+      post_title: `${data.title} ${data.description}`,
+      post_category: data.category,
+      thumbnail: data.thumbnail,
+      medium_thumbnail: data.images[0],
+      post_url: `/${data.id}`,
+      post_date: "4 september 2023, senin",
+      post_description: data.description,
+    }));
+    posts.value[0] = advetorial;
+  } catch (error) {
+    console.log(error);
+  }
+}
+async function getPostMalayHomeland() {
+  try {
+    const datas = await getData("products");
+    const malayhomeland = posts.value[1];
+    malayhomeland.loading = false;
+    malayhomeland.articles = datas.products.map((data) => ({
+      post_id: data.id,
+      post_title: `${data.title} ${data.description}`,
+      post_category: data.category,
+      thumbnail: data.thumbnail,
+      medium_thumbnail: data.images[0],
+      post_url: `/${data.id}`,
+      post_date: "4 september 2023, senin",
+      post_description: data.description,
+    }));
+    posts.value[1] = malayhomeland;
+  } catch (error) {
+    console.log(error);
+  }
+}
+async function getPostIntresting() {
+  try {
+    const datas = await getData("products");
+    const intresting = posts.value[2];
+    intresting.loading = false;
+    intresting.articles = datas.products.map((data) => ({
+      post_id: data.id,
+      post_title: `${data.title} ${data.description}`,
+      post_category: data.category,
+      thumbnail: data.thumbnail,
+      medium_thumbnail: data.images[0],
+      post_url: `/${data.id}`,
+      post_date: "4 september 2023, senin",
+      post_description: data.description,
+    }));
+    posts.value[2] = intresting;
+  } catch (error) {
+    console.log(error);
+  }
+}
+onMounted(() => {
+  getPostAdvetorial();
+  getPostMalayHomeland();
+  getPostIntresting();
+});
 </script>

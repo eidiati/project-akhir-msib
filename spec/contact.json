@@ -84,7 +84,7 @@
                         "contact_id": 1,
                         "contact_title": "alamat",
                         "contact_name": "Jl. Subrantas No. 188 Panam. Pekanbaru, Riau.",
-                        "contact_logo": "https://free-svg/alamat"
+                        "contact_icon": "https://free-svg/alamat"
                       }
                     }
                   }
@@ -151,7 +151,7 @@
                 "contact_name": {
                   "type": "string"
                 },
-                "contact_logo": {
+                "contact_icon": {
                   "type": "string"
                 }
               },
@@ -187,13 +187,25 @@
               "contact_id": 1,
               "contact_title": "alamat",
               "contact_name": "Jl. Subrantas No. 188 Panam. Pekanbaru, Riau.",
-              "contact_logo": "https://free-svg/alamat"
+              "contact_icon": "https://api.iconify.design/material-symbols:location-on.svg?color=%23ffffff"
             },
             {
               "contact_id": 2,
-              "contact_title": "no hp",
+              "contact_title": "no-hp",
               "contact_name": "0812345678",
-              "contact_logo": "https://free-svg/no-hp"
+              "contact_icon": "https://api.iconify.design/material-symbols:phone-enabled-sharp.svg?color=%23ffffff"
+            },
+            {
+              "contact_id": 3,
+              "contact_title": "email",
+              "contact_name": "redaksi@lancangkuning.com",
+              "contact_icon": "https://api.iconify.design/material-symbols:mail.svg?color=%23ffffff"
+            },
+            {
+              "contact_id": 4,
+              "contact_title": "support",
+              "contact_name": "LancangKuning Support",
+              "contact_icon": "https://api.iconify.design/material-symbols:contact-support.svg?color=%23ffffff"
             }
           ]
         }
