@@ -5,7 +5,7 @@
   >
     <div class="header-body border-color-primary border-top-0 box-shadow-none">
       <!-- header -->
-      <div class="d-lg-block d-none bg-color-dark">
+      <div class="d-lg-block d-none" style="background-color: #2c3033">
         <main class="container py-2">
           <div class="row text-light">
             <div class="col-3">
@@ -16,7 +16,8 @@
                 class_="mt-1 rounded-0"
               />
               <span v-else class="text-capitalize">
-                {{ location.data }}
+                {{ location.data[0].location_city }},
+                {{ location.data[0].location_province }}
               </span>
             </div>
             <div class="col-3 border-start border-light">
@@ -44,7 +45,7 @@
                   class_="mt-1 me-3 rounded-circle d-inline-block"
                 />
                 <NuxtLink v-else :to="d.sosmed_link" class="me-3">
-                  <img :src="d.sosmed_logo" :alt="d.sosmed_title" />
+                  <img :src="d.sosmed_icon" :alt="d.sosmed_title" />
                 </NuxtLink>
               </template>
             </div>
@@ -115,43 +116,23 @@
 </template>
 
 <script setup>
-const sosmed = ref({
-  data: 4,
-  loading: true,
-});
-const iconSosmed = [
-  "https://api.iconify.design/mdi:instagram.svg?color=%23ffffff",
-  "https://api.iconify.design/mdi:facebook.svg?color=%23ffffff",
-  "https://api.iconify.design/mdi:twitter.svg?color=%23ffffff",
-  "https://api.iconify.design/mdi:youtube.svg?color=%23ffffff",
-];
-const location = ref({
-  data: "",
-  loading: true,
-});
 const tanggalWaktu = ref({
   data: "",
   loading: true,
 });
-const advertising = ref({
-  data: [
-    {
-      ads_id: null,
-      ads_name: null,
-      ads_position: null,
-      ads_desc: null,
-      ads_image: null,
-      ads_mobile_image: null,
-      ads_link: null,
-      ads_start: null,
-      ads_end: null,
-      ads_sequence: null,
-    },
-  ],
+const sosmed = ref({
+  data: 4,
   loading: true,
 });
-
-const { getData } = useFetchData();
+const advertising = ref({
+  data: 1,
+  loading: true,
+});
+const location = ref({
+  data: 1,
+  loading: true,
+});
+const { getData } = await useFetchData();
 function updateDateTime() {
   const date = new Date();
   const tahun = date.getFullYear();
@@ -201,63 +182,12 @@ function updateDateTime() {
     loading: false,
   };
 }
-async function getLocation() {
-  try {
-    const datas = await getData("products/categories");
-    location.value = {
-      data: `${datas[0]}, ${datas[1]}`,
-      loading: false,
-    };
-  } catch (error) {
-    console.log(error);
-  }
-}
-async function getAdvertising() {
-  try {
-    const datas = await getData("products");
-    advertising.value = {
-      data: datas.products.map((d) => ({
-        ads_id: d.id,
-        ads_name: "Advertising 1",
-        ads_position: "atas",
-        ads_desc: "Lorem ipsum dolor sit amet.",
-        ads_image: d.images[1],
-        ads_mobile_image: d.thumbnail,
-        ads_link: "/",
-        ads_start: "4 september 2023, senin",
-        ads_end: "5 september 2023, selasa",
-        ads_sequence: 1,
-      })),
-      loading: false,
-    };
-  } catch (error) {
-    console.log(error);
-  }
-}
-async function getSosmed() {
-  try {
-    const datas = await getData("products/categories");
-    sosmed.value = {
-      data: datas
-        .map((d, index) => ({
-          sosmed_id: index,
-          sosmed_title: d,
-          sosmed_logo: iconSosmed[index],
-          sosmed_link: "/",
-        }))
-        .slice(0, 4),
-      loading: false,
-    };
-  } catch (error) {
-    console.log(error);
-  }
-}
-onMounted(() => {
-  getLocation();
-  getAdvertising();
-  getSosmed();
+onMounted(async () => {
   setInterval(() => {
     updateDateTime();
   }, 1000);
+  sosmed.value = await getData("social-media");
+  advertising.value = await getData("advertising");
+  location.value = await getData("location");
 });
 </script>

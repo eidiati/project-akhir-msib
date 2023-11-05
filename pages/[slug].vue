@@ -17,14 +17,17 @@
           </h1>
 
           <div class="post-meta">
-            <MainArticlePostMeta :article="article" />
+            <MainArticlePostMeta
+              :article="article.data"
+              :loading="article.loading"
+            />
           </div>
         </section>
         <div class="col-md-9">
           <div class="blog-posts single-post">
             <article class="post post-large blog-single-post border-0 m-0 p-0">
               <div class="post-image ms-0">
-                <MainArticleImage :article="article" />
+                <LazyMainArticleImage :article="article" />
               </div>
               <div class="post-content ms-0">
                 <template v-if="article.loading">
@@ -78,25 +81,31 @@
                   class="post-block mt-5 d-flex align-items-center post-share"
                 >
                   <h4 class="mb-0 me-3 p-0">Share this Post</h4>
-                  <MainArticleSharePost />
+                  <LazyMainArticleSharePost />
                 </div>
                 <div class="mt-4">
-                  <HomeAdvertising />
+                  <LazyHomeAdvertising />
                 </div>
                 <div class="post-block mt-4 pt-2 post-author">
-                  <MainArticleAuthor :article="article" />
+                  <LazyMainArticleAuthor
+                    :author="article.data.post_author"
+                    :loading="article.loading"
+                  />
                 </div>
                 <div id="comments" class="post-block mt-5 post-comments">
-                  <MainArticleComments />
+                  <LazyMainArticleComments />
                 </div>
               </div>
             </article>
           </div>
         </div>
         <div class="col-md-3">
-          <MainArticleRelatedPosts />
+          <LazyMainArticleRelatedPosts :idArticle="slug" />
           <div class="sidebar pb-4">
-            <HomeTags />
+            <LazyTags
+              :tags="article.data.post_tags"
+              :loading="article.loading"
+            />
             <NuxtLink to="/" class="my-4 pt-3 d-block">
               <img
                 alt="Porto"
@@ -105,7 +114,7 @@
               />
             </NuxtLink>
           </div>
-          <MainArticlePopularRecentPost />
+          <LazyMainArticlePopularRecentPost />
         </div>
       </div>
     </div>
@@ -114,33 +123,17 @@
 
 <script setup>
 const route = useRoute();
+const slug = route.params.slug;
 
 const article = ref({
-  data: null,
+  data: {
+    post_author: null,
+  },
   loading: true,
 });
-const { getOneData } = useFetchData();
-async function getArticle(id) {
-  try {
-    const data = await getOneData("products", id);
-    article.value = {
-      data: {
-        post_id: data.id,
-        post_title: `${data.title} ${data.description}`,
-        post_content: data.description,
-        post_category: data.category,
-        first_image: data.images[0],
-        post_author_name: data.brand,
-        post_slug: "https://lancangkuning/article?title=HPN-2023-di-Medan",
-        post_date: "4 september 2023, senin",
-      },
-      loading: false,
-    };
-  } catch (error) {
-    console.log(error);
-  }
-}
-onMounted(() => {
-  getArticle(route.params.id);
+const { getData } = await useFetchData();
+
+onMounted(async () => {
+  article.value = await getData(`main-article/${slug}`);
 });
 </script>

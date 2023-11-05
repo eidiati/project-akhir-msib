@@ -35,13 +35,13 @@
         >
           <div class="row">
             <div class="col">
-              <NuxtLink :to="post.articles[0].post_url">
+              <NuxtLink :to="post.data[0].post_url">
                 <div class="position-relative w-100" style="padding-top: 55%">
                   <div class="position-absolute top-0 start-0 end-0 bottom-0">
                     <img
-                      :src="post.articles[0].medium_thumbnail"
+                      :src="post.data[0].medium_thumbnail"
                       style="width: 100%; height: 100%; object-fit: cover"
-                      :alt="post.articles[0].post_title"
+                      :alt="post.data[0].post_title"
                     />
                   </div>
                 </div>
@@ -53,18 +53,18 @@
               <div class="thumb-info-caption-text">
                 <div class="d-inline-block text-default text-1 mt-2 float-none">
                   <NuxtLink
-                    :to="post.articles[0].post_url"
+                    :to="post.data[0].post_url"
                     class="text-decoration-none text-color-default"
-                    >{{ post.articles[0].post_date }}</NuxtLink
+                    >{{ post.data[0].post_date }}</NuxtLink
                   >
                 </div>
                 <h4
                   class="d-block line-height-2 text-4 text-dark font-weight-bold mb-0"
                 >
                   <NuxtLink
-                    :to="post.articles[0].post_url"
+                    :to="post.data[0].post_url"
                     class="text-decoration-none text-color-dark text-color-hover-primary"
-                    >{{ post.articles[0].post_title }}</NuxtLink
+                    >{{ post.data[0].post_title }}</NuxtLink
                   >
                 </h4>
               </div>
@@ -76,7 +76,7 @@
       <div class="col-lg-6">
         <template
           v-if="post.loading"
-          v-for="number in numberPost"
+          v-for="number in posts.length"
           :key="number"
         >
           <article class="mb-2">
@@ -97,7 +97,7 @@
         </template>
         <template
           v-else
-          v-for="(article, index) in post.articles"
+          v-for="(article, index) in post.data"
           :key="article.post_id"
         >
           <article
@@ -147,129 +147,47 @@
 </template>
 
 <script setup>
-import blog46 from "~/assets/img/blog/default/blog-46.jpg";
-const numberPost = 3;
 const posts = ref([
   {
     label: "Berita Advetorial",
     bgColor: "bg-secondary",
     loading: true,
-    articles: [
-      {
-        post_id: 1,
-        post_title: "How To Take Better Concert Pictures in 30 Seconds",
-        post_category: "Pendidikan",
-        thumbnail: blog46,
-        medium_thumbnail: blog46,
-        post_url: `/1`,
-        post_date: "4 september 2023, senin",
-        post_description:
-          "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Eveniet expedita dolore corporis ex, dolorem corrupti atque aut illo ab ut maiores sint doloribus obcaecati qui laborum, necessitatibus cum. Harum, at",
-      },
-    ],
+    data: null,
   },
   {
     label: "Malay Homeland",
     bgColor: "bg-primary",
     loading: true,
-    articles: [
-      {
-        post_id: 1,
-        post_title: "How To Take Better Concert Pictures in 30 Seconds",
-        post_category: "Pendidikan",
-        thumbnail: blog46,
-        medium_thumbnail: blog46,
-        post_url: `/1`,
-        post_date: "4 september 2023, senin",
-        post_description:
-          "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Eveniet expedita dolore corporis ex, dolorem corrupti atque aut illo ab ut maiores sint doloribus obcaecati qui laborum, necessitatibus cum. Harum, at",
-      },
-    ],
+    data: null,
   },
   {
     label: "Berita Menarik Lainnya",
     bgColor: "bg-warning",
     loading: true,
-    articles: [
-      {
-        post_id: 1,
-        post_title: "How To Take Better Concert Pictures in 30 Seconds",
-        post_category: "Pendidikan",
-        thumbnail: blog46,
-        medium_thumbnail: blog46,
-        post_url: `/1`,
-        post_date: "4 september 2023, senin",
-        post_description:
-          "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Eveniet expedita dolore corporis ex, dolorem corrupti atque aut illo ab ut maiores sint doloribus obcaecati qui laborum, necessitatibus cum. Harum, at",
-      },
-    ],
+    data: null,
   },
 ]);
+const { getData } = await useFetchData();
 
-const { getData } = useFetchData();
-async function getPostAdvetorial() {
-  try {
-    const datas = await getData("products");
-    const advetorial = posts.value[0];
-    advetorial.loading = false;
-    advetorial.articles = datas.products.map((data) => ({
-      post_id: data.id,
-      post_title: `${data.title} ${data.description}`,
-      post_category: data.category,
-      thumbnail: data.thumbnail,
-      medium_thumbnail: data.images[0],
-      post_url: `/${data.id}`,
-      post_date: "4 september 2023, senin",
-      post_description: data.description,
-    }));
-    posts.value[0] = advetorial;
-  } catch (error) {
-    console.log(error);
-  }
-}
-async function getPostMalayHomeland() {
-  try {
-    const datas = await getData("products");
-    const malayhomeland = posts.value[1];
-    malayhomeland.loading = false;
-    malayhomeland.articles = datas.products.map((data) => ({
-      post_id: data.id,
-      post_title: `${data.title} ${data.description}`,
-      post_category: data.category,
-      thumbnail: data.thumbnail,
-      medium_thumbnail: data.images[0],
-      post_url: `/${data.id}`,
-      post_date: "4 september 2023, senin",
-      post_description: data.description,
-    }));
-    posts.value[1] = malayhomeland;
-  } catch (error) {
-    console.log(error);
-  }
-}
-async function getPostIntresting() {
-  try {
-    const datas = await getData("products");
-    const intresting = posts.value[2];
-    intresting.loading = false;
-    intresting.articles = datas.products.map((data) => ({
-      post_id: data.id,
-      post_title: `${data.title} ${data.description}`,
-      post_category: data.category,
-      thumbnail: data.thumbnail,
-      medium_thumbnail: data.images[0],
-      post_url: `/${data.id}`,
-      post_date: "4 september 2023, senin",
-      post_description: data.description,
-    }));
-    posts.value[2] = intresting;
-  } catch (error) {
-    console.log(error);
-  }
-}
-onMounted(() => {
-  getPostAdvetorial();
-  getPostMalayHomeland();
-  getPostIntresting();
+onMounted(async () => {
+  const advetorial = await getData("advetorial");
+  const malayhomeland = await getData("malayhomeland");
+  const intresting = await getData("intresting");
+
+  posts.value[0] = {
+    ...posts.value[0],
+    data: advetorial.data,
+    loading: advetorial.loading,
+  };
+  posts.value[1] = {
+    ...posts.value[1],
+    data: malayhomeland.data,
+    loading: malayhomeland.loading,
+  };
+  posts.value[2] = {
+    ...posts.value[2],
+    data: intresting.data,
+    loading: intresting.loading,
+  };
 });
 </script>

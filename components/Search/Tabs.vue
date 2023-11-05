@@ -41,7 +41,7 @@
         role="tabpanel"
         aria-labelledby="home-tab"
       >
-        <SearchListPosts label="Postingan Populer" />
+        <SearchListPosts :route_api="'relevant-search?keyword=' + keyword" />
       </div>
       <div
         class="tab-pane fade"
@@ -49,10 +49,14 @@
         role="tabpanel"
         aria-labelledby="profile-tab"
       >
-        <SearchListPosts label="Postingan Terkini" />
+        <SearchListPosts :route_api="'recent-search?keyword=' + keyword" />
       </div>
     </div>
   </div>
 </template>
 
-<script setup></script>
+<script setup>
+defineProps({
+  keyword: String,
+});
+</script>

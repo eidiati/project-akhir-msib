@@ -4,8 +4,8 @@ import { NuxtLink } from '#build/components';
 
   <div class="pb-2">
     <div
-      v-if="loading"
-      v-for="number in numberPost"
+      v-if="posts.loading"
+      v-for="number in posts.data"
       :key="number"
       class="mb-4 pb-2"
     >
@@ -28,7 +28,7 @@ import { NuxtLink } from '#build/components';
       </article>
     </div>
 
-    <template v-else v-for="(post, index) in posts" :key="post.post_id">
+    <template v-else v-for="(post, index) in posts.data" :key="post.post_id">
       <div v-if="index < 2" class="mb-4 pb-2">
         <article
           class="thumb-info thumb-info-no-zoom bg-transparent border-radius-0 pb-2 mb-2"
@@ -73,42 +73,14 @@ import { NuxtLink } from '#build/components';
 </template>
 
 <script setup>
-const numberPost = 2;
-const posts = ref([
-  {
-    post_id: "data.id",
-    post_title: "",
-    post_category: "",
-    thumbnail: "",
-    medium_thumbnail: "",
-    post_url: "/",
-    post_date: "",
-    post_description: "",
-  },
-]);
+const posts = ref({
+  data: 2,
+  loading: true,
+});
 
-const loading = ref(true);
+const { getData } = await useFetchData();
 
-const { getData } = useFetchData();
-async function getNewPost() {
-  try {
-    const datas = await getData("products");
-    posts.value = datas.products.map((data) => ({
-      post_id: data.id,
-      post_title: `${data.title} ${data.description}`,
-      post_category: data.category,
-      thumbnail: data.thumbnail,
-      medium_thumbnail: data.images[0],
-      post_url: `/${data.id}`,
-      post_date: "4 september 2023, senin",
-      post_description: data.description,
-    }));
-    loading.value = false;
-  } catch (error) {
-    console.log(error);
-  }
-}
-onMounted(() => {
-  getNewPost();
+onMounted(async () => {
+  posts.value = await getData("latest-news");
 });
 </script>

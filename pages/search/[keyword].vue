@@ -7,13 +7,13 @@
             Berita tentang {{ route.params.keyword }}
           </h1>
           <span
-            >Hasil pencarian "{{ route.params.keyword }}", 1000 hasil
+            >Hasil pencarian "{{ route.params.keyword }}", {{ total }} hasil
             ditemukan</span
           >
         </section>
         <div class="row mx-auto">
-          <div class="col-12 col-lg-7 col-md-7 com-sm-10 mx-auto">
-            <SearchTabs />
+          <div class="col-12 col-lg-10 mx-auto">
+            <SearchTabs :keyword="route.params.keyword" />
           </div>
         </div>
         <div
@@ -25,5 +25,20 @@
 </template>
 
 <script setup>
+import axios from "axios";
+
 const route = useRoute();
+const total = ref(0);
+
+onMounted(async () => {
+  const url = useRuntimeConfig().public.url_api;
+  try {
+    const res = await axios.get(
+      `${url}/recent-search?keyword=${route.params.keyword}`
+    );
+    total.value = res.data.data.total;
+  } catch (error) {
+    console.log(error);
+  }
+});
 </script>

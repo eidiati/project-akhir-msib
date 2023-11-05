@@ -15,7 +15,7 @@
         aria-controls="home"
         aria-selected="true"
       >
-        Berita Terbaru
+        Berita Populer
       </button>
     </li>
     <li class="nav-item" role="presentation">
@@ -41,7 +41,7 @@
       role="tabpanel"
       aria-labelledby="home-tab"
     >
-      <MainArticleListPopulerRecentPost label="Postingan Populer" />
+      <ListPosts route_api="popular-posts" />
     </div>
     <div
       class="tab-pane fade"
@@ -49,7 +49,7 @@
       role="tabpanel"
       aria-labelledby="profile-tab"
     >
-      <MainArticleListPopulerRecentPost label="Postingan Terkini" />
+      <ListPosts route_api="recent-posts" />
     </div>
   </div>
 </template>

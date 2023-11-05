@@ -3,7 +3,7 @@
   <main
     v-if="relatedPost.loading"
     class="position-relative w-100 mb-3"
-    style="padding-top: 85%"
+    style="padding-top: 100%"
   >
     <div class="position-absolute top-0 start-0 end-0 bottom-0">
       <AnimationSkleton width_="100%" height_="100%" />
@@ -12,7 +12,7 @@
   <template v-else>
     <div
       id="carouselExampleAutoplaying"
-      class="carousel slide mb-3"
+      class="carousel slide mb-3 hoverCard"
       data-bs-ride="carousel"
     >
       <div class="carousel-inner rounded-2 shadow-sm">
@@ -31,7 +31,18 @@
               ></div>
               <div class="bg-primary py-3 px-4">
                 <div
-                  class="font-weight-semi-bold text-light"
+                  class="font-weight-semi-bold text-light text-lg-start mb-3"
+                  style="font-size: 12px"
+                >
+                  <img
+                    src="https://api.iconify.design/material-symbols:calendar-month.svg?color=%23ffffff"
+                    alt="publishedAt"
+                    style="width: 17px; height: 17px; margin: -5px 1px 0 -2px"
+                  />
+                  {{ post.post_date }}
+                </div>
+                <div
+                  class="font-weight-semi-bold text-light text-lg-start"
                   style="
                     font-size: 12px;
                     text-align: justify;
@@ -72,33 +83,24 @@
 </template>
 
 <script setup>
+const props = defineProps(["idArticle"]);
+const idArticle = props.idArticle;
+
 const relatedPost = ref({
   data: null,
   loading: true,
 });
-const { getData } = useFetchData();
-const getRelatedPost = async () => {
-  try {
-    const datas = await getData("products");
-    relatedPost.value = {
-      data: datas.products
-        .map((data) => ({
-          post_id: data.id,
-          post_title: `${data.title} ${data.description}`,
-          post_category: data.category,
-          thumbnail: data.thumbnail,
-          medium_thumbnail: data.images[0],
-          post_url: `/${data.id}`,
-          post_date: "4 september 2023, senin",
-        }))
-        .slice(0, 5),
-      loading: false,
-    };
-  } catch (error) {
-    console.log(error);
-  }
-};
-onMounted(() => {
-  getRelatedPost();
+const { getData } = await useFetchData();
+
+onMounted(async () => {
+  relatedPost.value = await getData(`related-articles/${idArticle}`);
 });
 </script>
+<style>
+.hoverCard {
+  transition: all 0.3s ease-in-out;
+}
+.hoverCard:hover {
+  filter: brightness(0.7);
+}
+</style>

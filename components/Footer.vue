@@ -20,7 +20,7 @@
               />
               <NuxtLink v-else :to="d.sosmed_link" class="me-3">
                 <img
-                  :src="d.sosmed_logo"
+                  :src="d.sosmed_icon"
                   :alt="d.sosmed_title"
                   style="width: 25px; height: 25px"
                 />
@@ -57,7 +57,10 @@
         <div class="col-md-6 col-lg-3 mb-5 mb-md-0">
           <h5 class="text-3 mb-3">CONTACT</h5>
           <ul class="list-unstyled mb-0">
-            <template v-for="(contact, i) in contacts.data" :key="i">
+            <template
+              v-for="(contact, i) in contacts.data"
+              :key="contact.contact_id"
+            >
               <li class="d-flex mb-3 pb-1">
                 <article class="d-flex">
                   <AnimationSkleton
@@ -69,7 +72,7 @@
                   <img
                     v-else
                     class="me-3"
-                    :src="contact.icon"
+                    :src="contact.contact_icon"
                     alt=""
                     style="width: 25px; height: 25px"
                   />
@@ -84,7 +87,7 @@
                       v-else
                       class="text-3 text-color-light opacity-8 line-height-7 ls-0 mb-1"
                     >
-                      {{ contact.title }}
+                      {{ contact.contact_name }}
                     </h6>
                   </div>
                 </article>
@@ -93,9 +96,9 @@
           </ul>
         </div>
         <div class="col-md-6 col-lg-2">
-          <h5 class="text-3 mb-3">TAGS</h5>
-          <div v-if="tags.loading" class="d-flex flex-wrap">
-            <template v-for="(tag, i) in tags.data" :key="i">
+          <h5 class="text-3 mb-3">News</h5>
+          <div v-if="category.loading" class="d-flex flex-wrap">
+            <template v-for="(cat, i) in category.data" :key="i">
               <AnimationSkleton
                 width_="60px"
                 height_="16px"
@@ -104,11 +107,11 @@
             </template>
           </div>
           <p v-else>
-            <template v-for="(tag, i) in tags.data" :key="i">
-              <NuxtLink to="/"
+            <template v-for="(cat, i) in category.data" :key="cat.category_id">
+              <NuxtLink :to="'/kategori' + cat.category_url"
                 ><span
                   class="badge badge-dark bg-color-black badge-sm py-2 me-1 mb-2 text-uppercase"
-                  >{{ tag }}</span
+                  >{{ cat.category_name }}</span
                 ></NuxtLink
               >
             </template>
@@ -140,9 +143,9 @@
             class="col-lg-4 d-flex align-items-center justify-content-center justify-content-lg-end"
           >
             <main id="sub-menu" class="text-lg-start text-center">
-              <template v-if="copyright.loading">
+              <template v-if="redaksi.loading">
                 <div class="d-flex flex-wrap">
-                  <template v-for="(data, i) in copyright.data" :key="i">
+                  <template v-for="(data, i) in redaksi.data.length" :key="i">
                     <AnimationSkleton
                       width_="60px"
                       height_="16px"
@@ -151,9 +154,9 @@
                   </template>
                 </div>
               </template>
-              <template v-else v-for="(data, i) in copyright.data" :key="i">
+              <template v-else v-for="(data, i) in redaksi.data" :key="i">
                 <span v-if="i > 0" class="mx-2">|</span>
-                <NuxtLink to="/"> {{ data }}</NuxtLink>
+                <NuxtLink to="/"> {{ data.label }}</NuxtLink>
               </template>
             </main>
           </div>
@@ -164,21 +167,19 @@
 </template>
 
 <script setup>
-const tags = ref({
-  data: ["Kriminal", "Bisnis", "Kampus", "Prestasi", "Politik"],
+const category = ref({
+  data: 5,
   loading: true,
 });
 const contacts = ref({
   data: 4,
   loading: true,
 });
-const iconContact = [
-  "https://api.iconify.design/material-symbols:location-on.svg?color=%23ffffff",
-  "https://api.iconify.design/material-symbols:phone-enabled-sharp.svg?color=%23ffffff",
-  "https://api.iconify.design/material-symbols:mail.svg?color=%23ffffff",
-  "https://api.iconify.design/material-symbols:contact-support.svg?color=%23ffffff",
-];
-const copyright = ref({
+const sosmed = ref({
+  data: 4,
+  loading: true,
+});
+const redaksi = ref({
   data: [
     {
       label: "Redaksi",
@@ -201,87 +202,20 @@ const copyright = ref({
       link: "/",
     },
   ],
-  loading: true,
+  loading: false,
 });
-const sosmed = ref({
-  data: 4,
-  loading: true,
-});
-const iconSosmed = [
-  "https://api.iconify.design/mdi:instagram.svg?color=%23ffffff",
-  "https://api.iconify.design/mdi:facebook.svg?color=%23ffffff",
-  "https://api.iconify.design/mdi:twitter.svg?color=%23ffffff",
-  "https://api.iconify.design/mdi:youtube.svg?color=%23ffffff",
-];
 const email = ref("");
 
-const { getData } = useFetchData();
-
+const { getData } = await useFetchData();
 function subscribe(e) {
   e.preventDefault();
   alert(email.value);
   email.value = "";
 }
-async function getSosmed() {
-  try {
-    const datas = await getData("products/categories");
-    sosmed.value = {
-      data: datas
-        .map((d, index) => ({
-          sosmed_id: index,
-          sosmed_title: d,
-          sosmed_logo: iconSosmed[index],
-          sosmed_link: "/",
-        }))
-        .slice(0, 4),
-      loading: false,
-    };
-  } catch (error) {
-    console.log(error);
-  }
-}
-async function getTags() {
-  try {
-    const datas = await getData("products/categories");
-    tags.value = {
-      data: datas.slice(0, 5),
-      loading: false,
-    };
-  } catch (error) {
-    console.log(error);
-  }
-}
-async function getContact() {
-  try {
-    const datas = await getData("products/categories");
-    contacts.value = {
-      data: datas
-        .map((d, index) => ({
-          icon: iconContact[index],
-          title: d,
-        }))
-        .slice(0, 4),
-      loading: false,
-    };
-  } catch (error) {
-    console.log(error);
-  }
-}
-async function getCopyRight() {
-  try {
-    const datas = await getData("products/categories");
-    copyright.value = {
-      data: datas.slice(6, 14),
-      loading: false,
-    };
-  } catch (error) {
-    console.log(error);
-  }
-}
-onMounted(() => {
-  getSosmed();
-  getTags();
-  getContact();
-  getCopyRight();
+
+onMounted(async () => {
+  category.value = await getData("category");
+  contacts.value = await getData("contact");
+  sosmed.value = await getData("social-media");
 });
 </script>

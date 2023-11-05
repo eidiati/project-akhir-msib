@@ -14,6 +14,14 @@
                   >
                     <nav class="collapse">
                       <ul class="nav nav-pills align-items-center" id="mainNav">
+                        <li class="dropdown dropdown-full-color dropdown-light">
+                          <NuxtLink
+                            class="dropdown-item dropdown-toggle"
+                            to="/"
+                          >
+                            beranda
+                          </NuxtLink>
+                        </li>
                         <template v-for="(menu, i) in menus.data" :key="i">
                           <AnimationSkleton
                             v-if="menus.loading"
@@ -23,17 +31,30 @@
                           />
                           <li
                             v-else
+                            v-if="menu.parent_id < 1"
                             class="dropdown dropdown-full-color dropdown-light"
                           >
                             <NuxtLink
                               class="dropdown-item dropdown-toggle"
-                              :to="menu.menu_link"
+                              :to="'/kategori' + menu.menu_url"
                             >
                               {{ menu.menu_name }}
                             </NuxtLink>
-                            <DropdownMenu :submenu="menu.submenu" />
+                            <DropdownMenu
+                              v-if="menu.menu_sequence > 1"
+                              :menuData="menus.data"
+                              :menuId="menu.menu_id"
+                            />
                           </li>
                         </template>
+                        <li class="dropdown dropdown-full-color dropdown-light">
+                          <NuxtLink
+                            class="dropdown-item dropdown-toggle"
+                            to="/"
+                          >
+                            index berita
+                          </NuxtLink>
+                        </li>
                       </ul>
                     </nav>
                   </div>
@@ -84,319 +105,15 @@ async function handleSearch() {
     keyword.value = "";
   }
 }
+
+const keyword = ref("");
 const menus = ref({
-  data: 7,
+  data: 6,
   loading: true,
 });
-const keyword = ref("");
-// const dataMenu=[
-//   {
-//     menu_name: "Beranda",
-//     menu_link: "/",
-//   },
-//   {
-//     menu_name: "Pendidikan",
-//     menu_link: "/",
-//     submenu: [
-//       {
-//         menu_name: "Level 1 dropdown",
-//         submenu: [
-//           {
-//             menu_name: "Level 2",
-//             menu_link: "/",
-//           },
-//           {
-//             menu_name: "Level 2",
-//             menu_link: "/",
-//           },
-//           {
-//             menu_name: "Level 2 dropdown",
-//             submenu: [
-//               {
-//                 menu_name: "Level 3",
-//                 menu_link: "/",
-//               },
-//             ],
-//           },
-//         ],
-//       },
-//       { menu_name: "Level 1", menu_link: "/" },
-//     ],
-//   },
-//   {
-//     menu_name: "Bisnis",
-//     menu_link: "/",
-//     submenu: [
-//       {
-//         menu_name: "Level 1 dropdown",
-//         submenu: [
-//           {
-//             menu_name: "Level 2",
-//             menu_link: "/",
-//           },
-//           {
-//             menu_name: "Level 2",
-//             menu_link: "/",
-//           },
-//           {
-//             menu_name: "Level 2 dropdown",
-//             submenu: [
-//               {
-//                 menu_name: "Level 3",
-//                 menu_link: "/",
-//               },
-//             ],
-//           },
-//         ],
-//       },
-//       { menu_name: "Level 1", menu_link: "/" },
-//     ],
-//   },
-//   {
-//     menu_name: "Wisata",
-//     menu_link: "/",
-//     submenu: [
-//       {
-//         menu_name: "Level 1 dropdown",
-//         submenu: [
-//           {
-//             menu_name: "Level 2",
-//             menu_link: "/",
-//           },
-//           {
-//             menu_name: "Level 2",
-//             menu_link: "/",
-//           },
-//           {
-//             menu_name: "Level 2 dropdown",
-//             submenu: [
-//               {
-//                 menu_name: "Level 3",
-//                 menu_link: "/",
-//               },
-//             ],
-//           },
-//         ],
-//       },
-//       { menu_name: "Level 1", menu_link: "/" },
-//     ],
-//   },
-//   {
-//     menu_name: "Kampus",
-//     menu_link: "/",
-//     submenu: [
-//       {
-//         menu_name: "Level 1 dropdown",
-//         submenu: [
-//           {
-//             menu_name: "Level 2",
-//             menu_link: "/",
-//           },
-//           {
-//             menu_name: "Level 2",
-//             menu_link: "/",
-//           },
-//           {
-//             menu_name: "Level 2 dropdown",
-//             submenu: [
-//               {
-//                 menu_name: "Level 3",
-//                 menu_link: "/",
-//               },
-//             ],
-//           },
-//         ],
-//       },
-//       { menu_name: "Level 1", menu_link: "/" },
-//     ],
-//   },
-//   {
-//     menu_name: "Sawit",
-//     menu_link: "/",
-//     submenu: [
-//       {
-//         menu_name: "Level 1 dropdown",
-//         submenu: [
-//           {
-//             menu_name: "Level 2",
-//             menu_link: "/",
-//           },
-//           {
-//             menu_name: "Level 2",
-//             menu_link: "/",
-//           },
-//           {
-//             menu_name: "Level 2 dropdown",
-//             submenu: [
-//               {
-//                 menu_name: "Level 3",
-//                 menu_link: "/",
-//               },
-//             ],
-//           },
-//         ],
-//       },
-//       { menu_name: "Level 1", menu_link: "/" },
-//     ],
-//   },
-//   {
-//     menu_name: "Daerah",
-//     menu_link: "/",
-//     submenu: [
-//       {
-//         menu_name: "Level 1 dropdown",
-//         submenu: [
-//           {
-//             menu_name: "Level 2",
-//             menu_link: "/",
-//           },
-//           {
-//             menu_name: "Level 2",
-//             menu_link: "/",
-//           },
-//           {
-//             menu_name: "Level 2 dropdown",
-//             submenu: [
-//               {
-//                 menu_name: "Level 3",
-//                 menu_link: "/",
-//               },
-//             ],
-//           },
-//         ],
-//       },
-//       { menu_name: "Level 1", menu_link: "/" },
-//     ],
-//   },
-//   {
-//     menu_name: "Index Berita",
-//     menu_link: "/",
-//     submenu: [
-//       {
-//         menu_name: "Level 1 dropdown",
-//         submenu: [
-//           {
-//             menu_name: "Level 2",
-//             menu_link: "/",
-//           },
-//           {
-//             menu_name: "Level 2",
-//             menu_link: "/",
-//           },
-//           {
-//             menu_name: "Level 2 dropdown",
-//             submenu: [
-//               {
-//                 menu_name: "Level 3",
-//                 menu_link: "/",
-//               },
-//             ],
-//           },
-//         ],
-//       },
-//       { menu_name: "Level 1", menu_link: "/" },
-//     ],
-//   },
-// ]
-const { getData } = useFetchData();
-async function getMenus() {
-  try {
-    const datas = await getData("products/categories");
-    menus.value = {
-      data: [
-        {
-          menu_id: 1,
-          menu_name: "Beranda",
-          menu_link: "/",
-        },
-        {
-          menu_id: 1,
-          menu_name: "Pendidikan",
-          menu_link: "/",
-          submenu: datas.map((d, index) => ({
-            menu_id: index,
-            menu_name: d,
-            menu_link: `/archive/${d}-page-1`,
-          })),
-        },
-        {
-          menu_id: 1,
-          menu_name: "Bisnis",
-          menu_link: "/",
-          submenu: datas.map((d, index) => ({
-            menu_id: index,
-            menu_name: d,
-            menu_link: `/archive/${d}-page-1`,
-          })),
-        },
-        {
-          menu_id: 1,
-          menu_name: "Beranda",
-          menu_link: "/",
-          submenu: datas.map((d, index) => ({
-            menu_id: index,
-            menu_name: d,
-            menu_link: `/archive/${d}-page-1`,
-          })),
-        },
-        {
-          menu_id: 1,
-          menu_name: "Wisata",
-          menu_link: "/",
-          submenu: datas.map((d, index) => ({
-            menu_id: index,
-            menu_name: d,
-            menu_link: `/archive/${d}-page-1`,
-          })),
-        },
-        {
-          menu_id: 1,
-          menu_name: "Kampus",
-          menu_link: "/",
-          submenu: datas.map((d, index) => ({
-            menu_id: index,
-            menu_name: d,
-            menu_link: `/archive/${d}-page-1`,
-          })),
-        },
-        {
-          menu_id: 1,
-          menu_name: "Sawit",
-          menu_link: "/",
-          submenu: datas.map((d, index) => ({
-            menu_id: index,
-            menu_name: d,
-            menu_link: `/archive/${d}-page-1`,
-          })),
-        },
-        {
-          menu_id: 1,
-          menu_name: "Daerah",
-          menu_link: "/",
-          submenu: datas.map((d, index) => ({
-            menu_id: index,
-            menu_name: d,
-            menu_link: `/archive/${d}-page-1`,
-          })),
-        },
-        {
-          menu_id: 1,
-          menu_name: "Index Berita",
-          menu_link: "/",
-          submenu: datas.map((d, index) => ({
-            menu_id: index,
-            menu_name: d,
-            menu_link: `/archive/${d}-page-1`,
-          })),
-        },
-      ],
-      loading: false,
-    };
-  } catch (error) {
-    console.log(error);
-  }
-}
-onMounted(() => {
-  getMenus();
+const { getData } = await useFetchData();
+
+onMounted(async () => {
+  menus.value = await getData("menu");
 });
 </script>

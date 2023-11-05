@@ -5,24 +5,27 @@
     </div>
     <div class="row pb-1 pt-2">
       <div class="col-md-9">
-        <HomePost />
+        <LazyHomePost />
         <!-- advertising -->
-        <HomeAdvertising />
+        <LazyHomeAdvertising />
         <div class="row pb-1 pt-3">
           <!-- popular post -->
           <div class="col-md-6">
-            <HomePopularRecentPost label="Postingan Populer" />
+            <h3 class="font-weight-bold text-3 mb-0">Postingan Populer</h3>
+            <LazyListPosts route_api="popular-posts" />
           </div>
           <!-- recent post -->
           <div class="col-md-6">
-            <HomePopularRecentPost label="Postingan Terkini" />
+            <h3 class="font-weight-bold text-3 mb-0 mt-4 mt-md-0">
+              Postingan Terkini
+            </h3>
+            <LazyListPosts route_api="recent-posts" />
           </div>
         </div>
       </div>
       <div class="col-md-3">
-        <HomeNewPost />
+        <LazyHomeNewPost />
         <aside class="sidebar pb-4">
-          <HomeTags />
           <NuxtLink to="/" class="my-4 pt-3 d-block">
             <img
               alt="Porto"
