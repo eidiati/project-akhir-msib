@@ -33,7 +33,7 @@
             </div>
             <div class="col-3 border-start border-light">
               <NuxtLink to="/contact-us" class="text-decoration-none text-light"
-                >Contact</NuxtLink
+                >Kontak</NuxtLink
               >
             </div>
             <div class="col-3 text-end">
@@ -44,7 +44,7 @@
                   height_="16px"
                   class_="mt-1 me-3 rounded-circle d-inline-block"
                 />
-                <NuxtLink v-else :to="d.sosmed_link" class="me-3">
+                <NuxtLink v-else :to="d.sosmed_url" class="me-3">
                   <img :src="d.sosmed_icon" :alt="d.sosmed_title" />
                 </NuxtLink>
               </template>

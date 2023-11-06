@@ -34,7 +34,7 @@
             </div>
           </div>
           <div class="post-info">
-            <div class="post-meta">{{ post.post_date }}</div>
+            <div class="post-meta text-capitalize">{{ post.post_date }}</div>
             <h4 class="font-weight-normal text-3 mb-0">
               <NuxtLink
                 :to="post.post_url"

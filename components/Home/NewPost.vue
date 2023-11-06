@@ -50,7 +50,7 @@ import { NuxtLink } from '#build/components';
                 <div class="d-inline-block text-default text-1 mt-2 float-none">
                   <NuxtLink
                     :to="post.post_url"
-                    class="text-decoration-none text-color-default"
+                    class="text-decoration-none text-color-default text-capitalize"
                     >{{ post.post_date }}</NuxtLink
                   >
                 </div>
@@ -58,7 +58,7 @@ import { NuxtLink } from '#build/components';
                   class="d-block line-height-2 text-4 text-dark font-weight-bold mb-0"
                 >
                   <NuxtLink
-                    to="/"
+                    :to="post.post_url"
                     class="text-decoration-none text-color-dark text-color-hover-primary"
                     >{{ post.post_title }}</NuxtLink
                   >
@@ -74,7 +74,7 @@ import { NuxtLink } from '#build/components';
 
 <script setup>
 const posts = ref({
-  data: 2,
+  data: 1,
   loading: true,
 });
 

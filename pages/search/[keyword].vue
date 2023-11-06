@@ -3,6 +3,10 @@
     <div class="container py-4">
       <div class="row pb-1 pt-2">
         <section class="mb-4">
+          <ul class="breadcrumb d-block">
+            <li><NuxtLink to="/">Beranda</NuxtLink></li>
+            <li class="active">Pencarian</li>
+          </ul>
           <h1 class="text-dark text-capitalize font-weight-bold text-8 m-0">
             Berita tentang {{ route.params.keyword }}
           </h1>

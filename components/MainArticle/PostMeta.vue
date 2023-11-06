@@ -1,7 +1,7 @@
 <template>
   <!-- author -->
   <span class="me-2 text-capitalize"
-    ><i class="far fa-user me-1"></i> By
+    ><i class="far fa-user me-1"></i>
     <AnimationSkleton
       v-if="loading"
       width_="70px"
@@ -38,7 +38,7 @@
       height_="12px"
       class_="d-inline-block"
     />
-    <NuxtLink v-else to="#">{{ article.post_date }}</NuxtLink>
+    <span v-else class="text-primary">{{ article.post_date }}</span>
   </span>
 </template>
 <script setup>

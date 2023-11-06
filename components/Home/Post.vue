@@ -54,7 +54,7 @@
                 <div class="d-inline-block text-default text-1 mt-2 float-none">
                   <NuxtLink
                     :to="post.data[0].post_url"
-                    class="text-decoration-none text-color-default"
+                    class="text-decoration-none text-color-default text-capitalize"
                     >{{ post.data[0].post_date }}</NuxtLink
                   >
                 </div>
@@ -123,7 +123,7 @@
                   <div class="d-inline-block text-default text-1 float-none">
                     <NuxtLink
                       :to="article.post_url"
-                      class="text-decoration-none text-color-default"
+                      class="text-decoration-none text-color-default text-capitalize"
                       >{{ article.post_date }}</NuxtLink
                     >
                   </div>

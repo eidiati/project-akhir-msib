@@ -4,8 +4,8 @@
       <div class="row pb-1 pt-2">
         <section class="mb-4">
           <ul class="breadcrumb d-block">
-            <li><NuxtLink to="/">Home</NuxtLink></li>
-            <li class="active">Blog</li>
+            <li><NuxtLink to="/">Beranda</NuxtLink></li>
+            <li class="active">Post</li>
           </ul>
           <AnimationSkleton
             v-if="article.loading"

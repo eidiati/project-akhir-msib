@@ -828,6 +828,45 @@
           }
         }
       }
+    },
+    "/card-polling": {
+      "get": {
+        "tags": ["card-polling"],
+        "summary": "Ambil data polling ",
+        "description": "Ambil banyak data polling",
+        "responses": {
+          "200": {
+            "description": "Sukses mendapatkan semua data polling",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/200-card-polling"
+                },
+                "examples": {
+                  "success": {
+                    "$ref": "#/components/examples/200-card-polling"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/404"
+                },
+                "examples": {
+                  "failed": {
+                    "$ref": "#/components/examples/404"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -1070,6 +1109,50 @@
               }
             },
             "required": ["category_"]
+          }
+        }
+      },
+      "200-card-polling": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer"
+          },
+          "success": {
+            "type": "boolean"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "poll_id": {
+                  "type": "number"
+                },
+                "poll_title": {
+                  "type": "string"
+                },
+                "poll_url": {
+                  "type": "string"
+                },
+                "poll_start": {
+                  "type": "string"
+                },
+                "poll_end": {
+                  "type": "string"
+                },
+                "poll_active": {
+                  "type": "boolean"
+                },
+                "thumbnail": {
+                  "type": "string"
+                }
+              },
+              "required": ["post_id"]
+            }
           }
         }
       },
@@ -2354,6 +2437,34 @@
             ],
             "total": 6
           }
+        }
+      },
+      "200-card-polling": {
+        "description": "Contoh response berhasil mendapatkan semua data polling",
+        "value": {
+          "code": 200,
+          "success": true,
+          "message": "Sukses mendapatkan semua data polling",
+          "data": [
+            {
+              "poll_id": 1,
+              "poll_title": "polling & survey calon bupati dan wakin bupati indragiri hulu 2023",
+              "poll_url": "/1",
+              "poll_start": "2 januari 2023",
+              "poll_end": "3 januari 2023",
+              "poll_active": true,
+              "thumbnail": "https://i.dummyjson.com/data/products/1/thumbnail.jpg"
+            },
+            {
+              "poll_id": 2,
+              "poll_title": "polling & survey calon bupati dan wakin bupati bengkalis 2023",
+              "poll_url": "/2",
+              "poll_start": "5 februari 2023",
+              "poll_end": "5 februari 2023",
+              "poll_active": false,
+              "thumbnail": "https://i.dummyjson.com/data/products/1/thumbnail.jpg"
+            }
+          ]
         }
       },
       "iwal": {

@@ -1,7 +1,3 @@
-<template>
-  <div>
-    <h1>ini halaman kontak</h1>
-  </div>
-</template>
+<template></template>
 
 <script setup></script>

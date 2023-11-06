@@ -16,10 +16,10 @@
     </NuxtLink>
     <div class="card-body">
       <div class="d-flex justify-content-between text-default text-1 mb-2">
-        <span class=""
-          ><i class="far fa-user me-1"></i>By {{ data.author_name }}</span
+        <span class="text-capitalize"
+          ><i class="far fa-user me-1"></i>{{ data.author_name }}</span
         >
-        <span class=""
+        <span class="text-capitalize"
           ><img
             src="https://api.iconify.design/material-symbols:calendar-month.svg?color=%23777777"
             alt="publishedAt"

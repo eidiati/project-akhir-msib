@@ -26,6 +26,7 @@
       <div class="col-md-3">
         <LazyHomeNewPost />
         <aside class="sidebar pb-4">
+          <LazyHomePollingCard />
           <NuxtLink to="/" class="my-4 pt-3 d-block">
             <img
               alt="Porto"

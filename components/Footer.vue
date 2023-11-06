@@ -6,10 +6,10 @@
       </div>
       <div class="row py-5 my-4">
         <div class="col-md-6 col-lg-4 mb-5 mb-lg-0">
-          <h5 class="text-3 mb-3">ABOUT THE BLOG</h5>
+          <h5 class="text-3 mb-3">TENTANG LANCANGKUNING.COM</h5>
           <p>Portal Berita yang menyajikan berita teraktual</p>
 
-          <h5 class="text-3 mb-3">STAY CONNECTED</h5>
+          <h5 class="text-3 mb-3">TETAP TERHUBUNG</h5>
           <main>
             <template v-for="(d, i) in sosmed.data" :key="d.sosmed_id">
               <AnimationSkleton
@@ -29,7 +29,7 @@
           </main>
         </div>
         <div class="col-md-6 col-lg-3 mb-5 mb-lg-0">
-          <h5 class="text-3 mb-3">SUBSCRIBE FOR NEWSLETTER</h5>
+          <h5 class="text-3 mb-3">BERLANGGANAN NEWSLETTER</h5>
           <form v-on:submit="(e) => subscribe(e)">
             <ul class="list-unstyled mb-0">
               <li class="d-flex mb-3 pb-1">
@@ -55,7 +55,7 @@
           </form>
         </div>
         <div class="col-md-6 col-lg-3 mb-5 mb-md-0">
-          <h5 class="text-3 mb-3">CONTACT</h5>
+          <h5 class="text-3 mb-3">KONTAK</h5>
           <ul class="list-unstyled mb-0">
             <template
               v-for="(contact, i) in contacts.data"
@@ -96,7 +96,7 @@
           </ul>
         </div>
         <div class="col-md-6 col-lg-2">
-          <h5 class="text-3 mb-3">News</h5>
+          <h5 class="text-3 mb-3">KATEGORI</h5>
           <div v-if="category.loading" class="d-flex flex-wrap">
             <template v-for="(cat, i) in category.data" :key="i">
               <AnimationSkleton
