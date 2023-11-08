@@ -82,5 +82,5 @@ export default defineNuxtConfig({
     "~/assets/css/custom.css",
     "~/assets/css/skins/default.css",
   ],
-  plugins: ["~/plugins/disqus"],
+  plugins: ["~/plugins/disqus", "~/plugins/chartjs"],
 });

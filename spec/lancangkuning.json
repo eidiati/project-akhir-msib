@@ -299,6 +299,48 @@
         }
       }
     },
+    "/contact-us": {
+      "post": {
+        "tags": ["contact-us"],
+        "summary": "Menambah data yang menghubungi lancangkuning",
+        "description": "Menambah data contact us lancangkuning",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/201-contact-us-req-body"
+              },
+              "examples": {
+                "iwal28": {
+                  "$ref": "#/components/examples/iwal28"
+                },
+                "sonya33": {
+                  "$ref": "#/components/examples/sonya33"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Sukses menambah data yang menghubungi lancangkuning",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/201-contact-us"
+                },
+                "examples": {
+                  "success": {
+                    "$ref": "#/components/examples/201-contact-us"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/subscribe": {
       "post": {
         "tags": ["subscribe"],
@@ -309,7 +351,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/201-subscribe"
+                "$ref": "#/components/schemas/201-subscribe-req-body"
               },
               "examples": {
                 "iwal": {
@@ -867,6 +909,124 @@
           }
         }
       }
+    },
+    "/visi-misi": {
+      "get": {
+        "tags": ["visi-misi"],
+        "summary": "Ambil semua data visi & misi",
+        "description": "Dapatkan semua data visi & misi",
+        "responses": {
+          "200": {
+            "description": "Sukses mendapatkan semua data visi & misi",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/200-visi-misi"
+                },
+                "examples": {
+                  "success": {
+                    "$ref": "#/components/examples/200-visi-misi"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/404"
+                },
+                "examples": {
+                  "failed": {
+                    "$ref": "#/components/examples/404"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/polling": {
+      "get": {
+        "tags": ["polling"],
+        "summary": "Ambil semua data survey",
+        "description": "Dapatkan semua data survey",
+        "responses": {
+          "200": {
+            "description": "Sukses mendapatkan semua data survey",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/200-polling"
+                },
+                "examples": {
+                  "success": {
+                    "$ref": "#/components/examples/200-polling"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/404"
+                },
+                "examples": {
+                  "failed": {
+                    "$ref": "#/components/examples/404"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["polling"],
+        "summary": "Menambah survey",
+        "description": "Menambah survey dengan ip address",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/201-polling"
+              },
+              "examples": {
+                "192.168.88.1": {
+                  "$ref": "#/components/examples/192.168.88.1"
+                },
+                "192.168.77.3": {
+                  "$ref": "#/components/examples/192.168.77.3"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Sukses menambah survey",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/201-polling"
+                },
+                "examples": {
+                  "success": {
+                    "$ref": "#/components/examples/201-polling"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -1256,6 +1416,62 @@
           }
         }
       },
+      "201-contact-us": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer"
+          },
+          "success": {
+            "type": "boolean"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "username": {
+                "type": "string"
+              },
+              "email": {
+                "type": "string"
+              },
+              "subject": {
+                "type": "string"
+              },
+              "message": {
+                "type": "string"
+              },
+              "post_id": {
+                "type": "number"
+              }
+            },
+            "required": ["username", "email", "message"]
+          }
+        }
+      },
+      "201-contact-us-req-body": {
+        "type": "object",
+        "properties": {
+          "username": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "subject": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "post_id": {
+            "type": "number"
+          }
+        },
+        "required": ["username", "email", "message"]
+      },
       "201-subscribe": {
         "type": "object",
         "properties": {
@@ -1279,6 +1495,14 @@
               }
             },
             "required": ["subscriber_id", "subscriber_email"]
+          }
+        }
+      },
+      "201-subscribe-req-body": {
+        "type": "object",
+        "properties": {
+          "subscriber_email": {
+            "type": "string"
           }
         }
       },
@@ -1513,6 +1737,129 @@
             }
           }
         }
+      },
+      "200-visi-misi": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer"
+          },
+          "success": {
+            "type": "boolean"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "visi-misi_id": {
+                "type": "number"
+              },
+              "visi": {
+                "type": "string"
+              },
+              "misi": {
+                "type": "string"
+              }
+            },
+            "required": ["visi-misi_id"]
+          }
+        }
+      },
+      "200-polling": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer"
+          },
+          "success": {
+            "type": "boolean"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/polling-data"
+            }
+          }
+        }
+      },
+      "201-polling": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer"
+          },
+          "success": {
+            "type": "boolean"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "poll_ip_id": {
+                "type": "integer"
+              },
+              "ip_address": {
+                "type": "string"
+              },
+              "poll_id": {
+                "type": "integer"
+              },
+              "opt_id": {
+                "type": "integer"
+              }
+            },
+            "required": ["rating_ip_id"]
+          }
+        }
+      },
+      "polling-data": {
+        "type": "object",
+        "properties": {
+          "poll_id": {
+            "type": "integer"
+          },
+          "poll_title": {
+            "type": "string"
+          },
+          "poll_start": {
+            "type": "string"
+          },
+          "poll_end": {
+            "type": "string"
+          },
+          "poll_active": {
+            "type": "boolean"
+          },
+          "poll_opt": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "opt_id": {
+                  "type": "integer"
+                },
+                "opt_text": {
+                  "type": "string"
+                },
+                "opt_image": {
+                  "type": "string"
+                },
+                "opt_count": {
+                  "type": "integer"
+                }
+              },
+              "required": ["opt_id"]
+            }
+          }
+        },
+        "required": ["poll_id"]
       },
       "404": {
         "type": "object",
@@ -1817,29 +2164,45 @@
           "data": [
             {
               "contact_id": 1,
-              "contact_title": "alamat",
+              "contact_title": "Alamat",
               "contact_name": "Jl. Subrantas No. 188 Panam. Pekanbaru, Riau.",
               "contact_icon": "https://api.iconify.design/material-symbols:location-on.svg?color=%23ffffff"
             },
             {
               "contact_id": 2,
-              "contact_title": "no-hp",
+              "contact_title": "Telepon",
               "contact_name": "0812345678",
               "contact_icon": "https://api.iconify.design/material-symbols:phone-enabled-sharp.svg?color=%23ffffff"
             },
             {
               "contact_id": 3,
-              "contact_title": "email",
+              "contact_title": "Email",
               "contact_name": "redaksi@lancangkuning.com",
               "contact_icon": "https://api.iconify.design/material-symbols:mail.svg?color=%23ffffff"
             },
             {
               "contact_id": 4,
-              "contact_title": "support",
+              "contact_title": "Support",
               "contact_name": "LancangKuning Support",
               "contact_icon": "https://api.iconify.design/material-symbols:contact-support.svg?color=%23ffffff"
             }
           ]
+        }
+      },
+      "201-contact-us": {
+        "description": "Contoh response berhasil menghubungi lancangkuning",
+        "value": {
+          "code": 201,
+          "success": true,
+          "message": "Sukses menambahkan data contact us",
+          "data": {
+            "contact-us_id": 1,
+            "username": "iwal28",
+            "email": "iwal@gmail.com",
+            "subject": "lorem",
+            "message": "lorem ipsum dolor sit amet",
+            "post_id": 1
+          }
         }
       },
       "201-subscribe": {
@@ -2467,18 +2830,191 @@
           ]
         }
       },
+      "200-visi-misi": {
+        "description": "Contoh response berhasil mendapatkan semua data visi & misi",
+        "value": {
+          "code": 200,
+          "success": true,
+          "message": "Sukses mendapatkan semua data visi & misi",
+          "data": {
+            "visi-misi_id": 1,
+            "visi": "Menjadi perusahaan media massa yang profesional dan terpercaya untuk membangun masyarakat yang lebih cerdas dan bijaksana dalam memahanmi dan menyikapi segala bentuk informasi dan perkembangan teknologi.",
+            "misi": "Mengembangkan pendidikan informasi yang mencerdaskan tanpa menyesatkan masyarakat sehingga terbentuk kepribadian bangsa yang lebih baik dengan tetap mengedepankan kaidah-kaidah jurnalisme positif sesuai dengan tata aturan perundang-undangan yang berlaku di Republik Indonesia."
+          }
+        }
+      },
+      "200-polling": {
+        "description": "Contoh response berhasil mendapatkan semua data survey",
+        "value": {
+          "code": 200,
+          "success": true,
+          "message": "Sukses mendapatkan semua data survey",
+          "data": [
+            {
+              "poll_id": 1,
+              "poll_title": "polling & survey calon bupati dan wakin bupati indragiri hulu 2023",
+              "poll_start": "2 januari 2023",
+              "poll_end": "3 januari 2023",
+              "poll_active": true,
+              "poll_opt": [
+                {
+                  "opt_id": 1,
+                  "opt_text": "Agung",
+                  "opt_image": "agung",
+                  "opt_count": 46
+                },
+                {
+                  "opt_id": 2,
+                  "opt_text": "Maul",
+                  "opt_image": "maul",
+                  "opt_count": 32
+                },
+                {
+                  "opt_id": 3,
+                  "opt_text": "Ferdi",
+                  "opt_image": "ferdie",
+                  "opt_count": 57
+                },
+                {
+                  "opt_id": 4,
+                  "opt_text": "Kevin",
+                  "opt_image": "kevin",
+                  "opt_count": 150
+                },
+                {
+                  "opt_id": 5,
+                  "opt_text": "Rizky",
+                  "opt_image": "eky",
+                  "opt_count": 28
+                },
+                {
+                  "opt_id": 6,
+                  "opt_text": "Arip",
+                  "opt_image": "arip",
+                  "opt_count": 77
+                },
+                {
+                  "opt_id": 7,
+                  "opt_text": "Ibal",
+                  "opt_image": "agung",
+                  "opt_count": 89
+                },
+                {
+                  "opt_id": 8,
+                  "opt_text": "Toyib",
+                  "opt_image": "ridho",
+                  "opt_count": 10
+                },
+                {
+                  "opt_id": 9,
+                  "opt_text": "Wal",
+                  "opt_image": "wal",
+                  "opt_count": 23
+                },
+                {
+                  "opt_id": 10,
+                  "opt_text": "Adit",
+                  "opt_image": "adit",
+                  "opt_count": 62
+                },
+                {
+                  "opt_id": 11,
+                  "opt_text": "Rozi",
+                  "opt_image": "rozi",
+                  "opt_count": 167
+                },
+                {
+                  "opt_id": 12,
+                  "opt_text": "Idris",
+                  "opt_image": "idris",
+                  "opt_count": 120
+                }
+              ]
+            },
+            {
+              "poll_id": 2,
+              "poll_title": "polling & survey calon bupati dan wakin bupati bengkalis 2023",
+              "poll_start": "5 februari 2023",
+              "poll_end": "6 februari 2023",
+              "poll_active": false,
+              "poll_opt": [
+                {
+                  "opt_id": 1,
+                  "opt_text": "bambang kurniawan",
+                  "opt_image": "bambang.png",
+                  "opt_count": 8
+                },
+                {
+                  "opt_id": 2,
+                  "opt_text": "solihin",
+                  "opt_image": "solihin.png",
+                  "opt_count": 15
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "201-polling": {
+        "description": "Contoh response sukses memvoting survey",
+        "value": {
+          "code": 201,
+          "success": true,
+          "message": "Sukses memvoting survey",
+          "data": {
+            "poll_ip_id": 1,
+            "ip_address": "192.168.88.1",
+            "poll_id": 1,
+            "opt_id": 1
+          }
+        }
+      },
       "iwal": {
         "description": "Contoh request body dengan subscriber_email iwal@gmail.com",
         "value": {
-          "subscriber_id": 1,
           "subscriber_email": "iwal@gmail.com"
         }
       },
       "sonya": {
         "description": "Contoh request body dengan subscriber_email sonya@gmail.com",
         "value": {
-          "subscriber_id": 2,
           "subscriber_email": "sonya@gmail.com"
+        }
+      },
+      "iwal28": {
+        "description": "Contoh request body dengan username iwal28",
+        "value": {
+          "username": "iwal28",
+          "email": "iwal@gmail.com",
+          "subject": "lorem",
+          "message": "lorem ipsum dolor sit amet",
+          "post_id": 1
+        }
+      },
+      "sonya33": {
+        "description": "Contoh request body dengan username sonya33",
+        "value": {
+          "username": "sonya33",
+          "email": "sonya@gmail.com",
+          "subject": "lorem",
+          "message": "lorem ipsum dolor sit amet",
+          "post_id": 2
+        }
+      },
+      "192.168.88.1": {
+        "description": "Contoh request body dengan ip address 192.168.88.1",
+        "value": {
+          "ip_address": "192.168.88.1",
+          "poll_id": 1,
+          "opt_id": 1
+        }
+      },
+      "192.168.77.3": {
+        "description": "Contoh request body dengan ip address 192.168.77.3",
+        "value": {
+          "ip_address": "192.168.77.3",
+          "poll_id": 1,
+          "opt_id": 2
         }
       },
       "404": {

@@ -55,6 +55,14 @@
                             index berita
                           </NuxtLink>
                         </li>
+                        <li class="dropdown dropdown-full-color dropdown-light">
+                          <NuxtLink
+                            class="dropdown-item dropdown-toggle"
+                            to="/quiz"
+                          >
+                            Kuiz
+                          </NuxtLink>
+                        </li>
                       </ul>
                     </nav>
                   </div>

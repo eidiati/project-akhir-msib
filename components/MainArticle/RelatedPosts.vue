@@ -21,7 +21,7 @@
             :class="index === 0 ? 'carousel-item active' : 'carousel-item'"
             data-bs-interval="3000"
           >
-            <NuxtLink :to="post.post_url">
+            <NuxtLink :to="'/post' + post.post_url">
               <div
                 class="position-relative w-100"
                 style="padding-top: 60%; background-size: cover"
@@ -31,7 +31,7 @@
               ></div>
               <div class="bg-primary py-3 px-4">
                 <div
-                  class="font-weight-semi-bold text-light text-lg-start mb-3"
+                  class="font-weight-semi-bold text-light text-capitalize text-lg-start mb-3"
                   style="font-size: 12px"
                 >
                   <img

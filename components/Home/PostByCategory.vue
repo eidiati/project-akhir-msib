@@ -10,7 +10,7 @@
       />
     </div>
 
-    <NuxtLink v-else :to="posts.data[0].post_url">
+    <NuxtLink v-else :to="'/post' + posts.data[0].post_url">
       <article
         class="thumb-info thumb-info-no-borders thumb-info-bottom-info thumb-info-bottom-info-dark thumb-info-bottom-info-show-more thumb-info-no-zoom border-radius-0"
       >
@@ -114,7 +114,7 @@
                 class="d-block line-height-2 text-4 text-dark font-weight-bold mt-1 mb-0"
               >
                 <NuxtLink
-                  to="/1"
+                  :to="'/post' + post.post_url"
                   class="text-decoration-none text-color-dark text-color-hover-primary"
                   >{{ post.post_title }}</NuxtLink
                 >

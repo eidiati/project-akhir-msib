@@ -63,7 +63,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/201"
+                "$ref": "#/components/schemas/201-req-body-contact-us"
               },
               "examples": {
                 "iwal28": {
@@ -279,6 +279,27 @@
           }
         }
       },
+      "201-req-body-contact-us": {
+        "type": "object",
+        "properties": {
+          "username": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "subject": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "post_id": {
+            "type": "number"
+          }
+        },
+        "required": ["username", "email", "message"]
+      },
       "404": {
         "type": "object",
         "properties": {
@@ -330,7 +351,8 @@
             "username": "iwal28",
             "email": "iwal@gmail.com",
             "subject": "lorem",
-            "message": "lorem ipsum dolor sit amet"
+            "message": "lorem ipsum dolor sit amet",
+            "post_id": 1
           }
         }
       },
@@ -340,7 +362,8 @@
           "username": "iwal28",
           "email": "iwal@gmail.com",
           "subject": "lorem",
-          "message": "lorem ipsum dolor sit amet"
+          "message": "lorem ipsum dolor sit amet",
+          "post_id": 1
         }
       },
       "sonya33": {
@@ -349,7 +372,8 @@
           "username": "sonya33",
           "email": "sonya@gmail.com",
           "subject": "lorem",
-          "message": "lorem ipsum dolor sit amet"
+          "message": "lorem ipsum dolor sit amet",
+          "post_id": 2
         }
       },
       "404": {

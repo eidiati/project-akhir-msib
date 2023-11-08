@@ -18,7 +18,7 @@
                 height_="25px"
                 class_="me-3 rounded-circle d-inline-block"
               />
-              <NuxtLink v-else :to="d.sosmed_link" class="me-3">
+              <NuxtLink v-else :to="d.sosmed_url" class="me-3">
                 <img
                   :src="d.sosmed_icon"
                   :alt="d.sosmed_title"
@@ -47,7 +47,15 @@
               <li class="d-flex">
                 <article class="d-flex">
                   <button type="submit" class="btn btn-light btn-sm">
-                    Subscribe
+                    <template v-if="!loading">Subscribe</template>
+                    <div
+                      v-else
+                      class="spinner-border spinner-border-sm text-dark"
+                      style="margin: -2px 20px -2px 20px"
+                      role="status"
+                    >
+                      <span class="visually-hidden">Loading...</span>
+                    </div>
                   </button>
                 </article>
               </li>
@@ -205,11 +213,18 @@ const redaksi = ref({
   loading: false,
 });
 const email = ref("");
-
-const { getData } = await useFetchData();
-function subscribe(e) {
+const loading = ref(false);
+const { getData, postData } = await useFetchData();
+async function subscribe(e) {
   e.preventDefault();
-  alert(email.value);
+  loading.value = true;
+  try {
+    const res = await postData("subscribe", { subscriber_email: email.value });
+    alert(res.message);
+    loading.value = false;
+  } catch (error) {
+    console.log(error);
+  }
   email.value = "";
 }
 

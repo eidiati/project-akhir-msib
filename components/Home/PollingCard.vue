@@ -23,7 +23,7 @@
       <h3 class="font-weight-bold text-3 pt-1">Polling & Survey</h3>
 
       <div class="card shadow-sm">
-        <NuxtLink :to="poll.poll_url">
+        <NuxtLink :to="'/polling' + poll.poll_url">
           <div class="card-image">
             <img :src="poll.thumbnail" :alt="poll.poll_title" />
           </div>
@@ -33,14 +33,16 @@
           class="d-block line-height-2 text-4 text-dark font-weight-bold my-3"
         >
           <NuxtLink
-            :to="poll.poll_url"
+            :to="'/polling' + poll.poll_url"
             class="text-decoration-none text-color-dark text-color-hover-primary"
           >
             {{ poll.poll_title }}</NuxtLink
           >
         </h4>
 
-        <NuxtLink :to="poll.poll_url" class="card-button">Voting</NuxtLink>
+        <NuxtLink :to="'/polling' + poll.poll_url" class="card-button"
+          >Voting</NuxtLink
+        >
       </div>
     </main>
   </template>

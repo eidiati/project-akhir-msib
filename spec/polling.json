@@ -323,15 +323,63 @@
               "poll_opt": [
                 {
                   "opt_id": 1,
-                  "opt_text": "yori agung",
-                  "opt_image": "yoriagung.png",
-                  "opt_count": 0
+                  "opt_text": "agung",
+                  "opt_image": "agung.jpg",
+                  "opt_count": 46
                 },
                 {
                   "opt_id": 2,
-                  "opt_text": "bayu setiawan",
-                  "opt_image": "bayu.png",
+                  "opt_text": "maul",
+                  "opt_image": "maul.jpg",
+                  "opt_count": 32
+                },
+                {
+                  "opt_id": 3,
+                  "opt_text": "ferdi",
+                  "opt_image": "ferdi.jpg",
+                  "opt_count": 57
+                },
+                {
+                  "opt_id": 4,
+                  "opt_text": "kevin",
+                  "opt_image": "kevin.jpg",
+                  "opt_count": 150
+                },
+                {
+                  "opt_id": 5,
+                  "opt_text": "rizky",
+                  "opt_image": "eky.jpg",
+                  "opt_count": 28
+                },
+                {
+                  "opt_id": 6,
+                  "opt_text": "arip",
+                  "opt_image": "arip.jpg",
+                  "opt_count": 77
+                },
+                {
+                  "opt_id": 7,
+                  "opt_text": "ibal",
+                  "opt_image": "agung.jpg",
+                  "opt_count": 89
+                },
+                {
+                  "opt_id": 8,
+                  "opt_text": "toyib",
+                  "opt_image": "ridho.jpg",
                   "opt_count": 10
+                },
+                {
+                  "opt_id": 9,
+                  "opt_text": "wal",
+                  "opt_image": "wal.jpg",
+                  "opt_count": 20
+                },
+                {
+                  "opt_id": 10,
+                  "opt_text": "adit",
+                  "opt_image": "adit.jpg",
+                  "opt_count": 62
                 }
               ]
             },
