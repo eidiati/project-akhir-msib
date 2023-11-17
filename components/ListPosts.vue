@@ -57,8 +57,8 @@
 </template>
 
 <script setup>
-const props = defineProps(["route_api"]);
-const route_api = ref(props.route_api);
+const props = defineProps(["directori"]);
+const directori = ref(props.directori);
 
 const posts = ref({
   data: 6,
@@ -66,6 +66,6 @@ const posts = ref({
 });
 const { getData } = await useFetchData();
 onMounted(async () => {
-  posts.value = await getData(route_api.value);
+  posts.value = await getData(directori.value);
 });
 </script>

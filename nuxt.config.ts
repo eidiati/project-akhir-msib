@@ -38,33 +38,28 @@ export default defineNuxtConfig({
             "sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF",
           crossorigin: "anonymous",
         },
+        {
+          src: "/_nuxt/assets/vendor/modernizr/modernizr.min.js",
+        },
+        {
+          src: "/_nuxt/assets/vendor/plugins/js/plugins.min.js",
+        },
+        {
+          src: "/_nuxt/assets/vendor/instafeed/instafeed.min.js",
+        },
+        {
+          src: "/_nuxt/assets/js/theme.js",
+        },
+        {
+          src: "/_nuxt/assets/js/custom.js",
+        },
+        {
+          src: "/_nuxt/assets/js/theme.init.js",
+        },
+        {
+          src: "/_nuxt/assets/js/examples/examples.instagramFeed.js",
+        },
       ],
-      // script: [
-      //   {
-      //     src: "tes.js",
-      //   },
-      //   {
-      //     src: "/assets/vendor/modernizr/modernizr.min.js",
-      //   },
-      //   {
-      //     src: "/assets/vendor/plugins/js/plugins.min.js",
-      //   },
-      //   {
-      //     src: "/assets/vendor/instafeed/instafeed.min.js",
-      //   },
-      //   {
-      //     src: "/assets/js/theme.js",
-      //   },
-      //   {
-      //     src: "/assets/js/custom.js",
-      //   },
-      //   {
-      //     src: "/assets/js/theme.init.js",
-      //   },
-      //   {
-      //     src: "/assets/js/examples/examples.instagramFeed.js",
-      //   },
-      // ],
     },
   },
   css: [

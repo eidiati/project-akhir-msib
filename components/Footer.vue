@@ -22,7 +22,7 @@
                 <img
                   :src="d.sosmed_icon"
                   :alt="d.sosmed_title"
-                  style="width: 25px; height: 25px"
+                  class="iconSosmed"
                 />
               </NuxtLink>
             </template>
@@ -234,3 +234,13 @@ onMounted(async () => {
   sosmed.value = await getData("social-media");
 });
 </script>
+<style>
+.iconSosmed {
+  width: 25px;
+  height: 25px;
+  transition: all 0.3s;
+}
+.iconSosmed:hover {
+  transform: scale(1.2);
+}
+</style>

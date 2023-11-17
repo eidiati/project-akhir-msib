@@ -24,6 +24,7 @@
           </div>
         </section>
         <div class="col-md-9">
+          <LazyMainArticleMap :article="article" />
           <div class="blog-posts single-post">
             <article class="post post-large blog-single-post border-0 m-0 p-0">
               <div class="post-image ms-0">
@@ -134,6 +135,9 @@ const article = ref({
 const { getData } = await useFetchData();
 
 onMounted(async () => {
-  article.value = await getData(`main-article/${slug}`);
+  // article.value = await getData(`main-article/${slug}`);
+  const res = await getData(`main-article/${slug}`);
+  const content = res.data.post_content;
+  const tes = content.includes("[polling=");
 });
 </script>

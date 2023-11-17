@@ -216,14 +216,14 @@
         }
       }
     },
-    "/tags/{id}": {
+    "/tags/{name}": {
       "get": {
         "tags": ["tags"],
         "summary": "Ambil 1 data tag",
         "description": "Dapatkan 1 data tag",
         "parameters": [
           {
-            "$ref": "#/components/parameters/id"
+            "$ref": "#/components/parameters/name-tag"
           }
         ],
         "responses": {
@@ -871,45 +871,6 @@
         }
       }
     },
-    "/card-polling": {
-      "get": {
-        "tags": ["card-polling"],
-        "summary": "Ambil data polling ",
-        "description": "Ambil banyak data polling",
-        "responses": {
-          "200": {
-            "description": "Sukses mendapatkan semua data polling",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/200-card-polling"
-                },
-                "examples": {
-                  "success": {
-                    "$ref": "#/components/examples/200-card-polling"
-                  }
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not Found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/404"
-                },
-                "examples": {
-                  "failed": {
-                    "$ref": "#/components/examples/404"
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
     "/visi-misi": {
       "get": {
         "tags": ["visi-misi"],
@@ -1027,6 +988,45 @@
           }
         }
       }
+    },
+    "/polling/{id}": {
+      "get": {
+        "tags": ["polling"],
+        "summary": "Ambil semua data survey",
+        "description": "Dapatkan semua data survey",
+        "responses": {
+          "200": {
+            "description": "Sukses mendapatkan semua data survey",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/200-polling-get-one"
+                },
+                "examples": {
+                  "success": {
+                    "$ref": "#/components/examples/200-polling-get-one"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/404"
+                },
+                "examples": {
+                  "failed": {
+                    "$ref": "#/components/examples/404"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -1037,7 +1037,7 @@
         "required": true,
         "description": "id sebagai parameter",
         "schema": {
-          "type": "number",
+          "type": "string",
           "minLength": 1
         }
       },
@@ -1046,6 +1046,16 @@
         "in": "path",
         "required": true,
         "description": "nama kategori sebagai parameter",
+        "schema": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "name-tag": {
+        "name": "name",
+        "in": "path",
+        "required": true,
+        "description": "nama tag sebagai parameter",
         "schema": {
           "type": "string",
           "minLength": 1
@@ -1269,50 +1279,6 @@
               }
             },
             "required": ["category_"]
-          }
-        }
-      },
-      "200-card-polling": {
-        "type": "object",
-        "properties": {
-          "code": {
-            "type": "integer"
-          },
-          "success": {
-            "type": "boolean"
-          },
-          "message": {
-            "type": "string"
-          },
-          "data": {
-            "type": "array",
-            "items": {
-              "type": "object",
-              "properties": {
-                "poll_id": {
-                  "type": "number"
-                },
-                "poll_title": {
-                  "type": "string"
-                },
-                "poll_url": {
-                  "type": "string"
-                },
-                "poll_start": {
-                  "type": "string"
-                },
-                "poll_end": {
-                  "type": "string"
-                },
-                "poll_active": {
-                  "type": "boolean"
-                },
-                "thumbnail": {
-                  "type": "string"
-                }
-              },
-              "required": ["post_id"]
-            }
           }
         }
       },
@@ -1644,6 +1610,17 @@
                 "post_content": {
                   "type": "string"
                 },
+                "post_location": {
+                  "type": "object",
+                  "properties": {
+                    "location_name": {
+                      "type": "string"
+                    },
+                    "location_embed": {
+                      "type": "string"
+                    }
+                  }
+                },
                 "post_author": {
                   "type": "object",
                   "properties": {
@@ -1787,6 +1764,23 @@
           }
         }
       },
+      "200-polling-get-one": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer"
+          },
+          "success": {
+            "type": "boolean"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "$ref": "#/components/schemas/polling-data"
+          }
+        }
+      },
       "201-polling": {
         "type": "object",
         "properties": {
@@ -1815,7 +1809,7 @@
                 "type": "integer"
               }
             },
-            "required": ["rating_ip_id"]
+            "required": ["poll_ip_id"]
           }
         }
       },
@@ -1826,6 +1820,9 @@
             "type": "integer"
           },
           "poll_title": {
+            "type": "string"
+          },
+          "poll_url": {
             "type": "string"
           },
           "poll_start": {
@@ -1852,6 +1849,9 @@
                   "type": "string"
                 },
                 "opt_count": {
+                  "type": "integer"
+                },
+                "opt_percent": {
                   "type": "integer"
                 }
               },
@@ -2588,6 +2588,10 @@
             "medium_thumbnail": "https://i.dummyjson.com/data/products/1/1.jpg",
             "post_url": "/1",
             "post_date": "senin, 4 september 2023",
+            "post_location": {
+              "location_name": "Garuda Cyber Indonesia",
+              "location_embed": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3989.687637847705!2d101.396144474208!3d0.46373616378476096!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31d5a9bc86b4b417%3A0x94e290673138bc58!2sGaruda%20Cyber%20Institute!5e0!3m2!1sid!2sid!4v1699255736125!5m2!1sid!2sid"
+            },
             "post_author": {
               "author_id": 1,
               "author_name": "iwal",
@@ -2802,34 +2806,6 @@
           }
         }
       },
-      "200-card-polling": {
-        "description": "Contoh response berhasil mendapatkan semua data polling",
-        "value": {
-          "code": 200,
-          "success": true,
-          "message": "Sukses mendapatkan semua data polling",
-          "data": [
-            {
-              "poll_id": 1,
-              "poll_title": "polling & survey calon bupati dan wakin bupati indragiri hulu 2023",
-              "poll_url": "/1",
-              "poll_start": "2 januari 2023",
-              "poll_end": "3 januari 2023",
-              "poll_active": true,
-              "thumbnail": "https://i.dummyjson.com/data/products/1/thumbnail.jpg"
-            },
-            {
-              "poll_id": 2,
-              "poll_title": "polling & survey calon bupati dan wakin bupati bengkalis 2023",
-              "poll_url": "/2",
-              "poll_start": "5 februari 2023",
-              "poll_end": "5 februari 2023",
-              "poll_active": false,
-              "thumbnail": "https://i.dummyjson.com/data/products/1/thumbnail.jpg"
-            }
-          ]
-        }
-      },
       "200-visi-misi": {
         "description": "Contoh response berhasil mendapatkan semua data visi & misi",
         "value": {
@@ -2852,7 +2828,8 @@
           "data": [
             {
               "poll_id": 1,
-              "poll_title": "polling & survey calon bupati dan wakin bupati indragiri hulu 2023",
+              "poll_title": "polling & survey calon bupati dan wakil bupati indragiri hulu 2023",
+              "poll_url": "/1",
               "poll_start": "2 januari 2023",
               "poll_end": "3 januari 2023",
               "poll_active": true,
@@ -2860,99 +2837,286 @@
                 {
                   "opt_id": 1,
                   "opt_text": "Agung",
-                  "opt_image": "agung",
-                  "opt_count": 46
+                  "opt_image": "https://images.unsplash.com/photo-1514501259756-f4b6fbeffa67?q=80&w=1480&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                  "opt_count": 46,
+                  "opt_percent": 25
                 },
                 {
                   "opt_id": 2,
                   "opt_text": "Maul",
-                  "opt_image": "maul",
-                  "opt_count": 32
+                  "opt_image": "https://images.unsplash.com/photo-1514501259756-f4b6fbeffa67?q=80&w=1480&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                  "opt_count": 32,
+                  "opt_percent": 17
                 },
                 {
                   "opt_id": 3,
                   "opt_text": "Ferdi",
-                  "opt_image": "ferdie",
-                  "opt_count": 57
+                  "opt_image": "https://images.unsplash.com/photo-1514501259756-f4b6fbeffa67?q=80&w=1480&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                  "opt_count": 57,
+                  "opt_percent": 31
                 },
                 {
                   "opt_id": 4,
                   "opt_text": "Kevin",
-                  "opt_image": "kevin",
-                  "opt_count": 150
+                  "opt_image": "https://images.unsplash.com/photo-1514501259756-f4b6fbeffa67?q=80&w=1480&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                  "opt_count": 150,
+                  "opt_percent": 83
                 },
                 {
                   "opt_id": 5,
                   "opt_text": "Rizky",
-                  "opt_image": "eky",
-                  "opt_count": 28
+                  "opt_image": "https://images.unsplash.com/photo-1514501259756-f4b6fbeffa67?q=80&w=1480&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                  "opt_count": 28,
+                  "opt_percent": 15
                 },
                 {
                   "opt_id": 6,
                   "opt_text": "Arip",
-                  "opt_image": "arip",
-                  "opt_count": 77
+                  "opt_image": "https://images.unsplash.com/photo-1514501259756-f4b6fbeffa67?q=80&w=1480&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                  "opt_count": 77,
+                  "opt_percent": 42
                 },
                 {
                   "opt_id": 7,
                   "opt_text": "Ibal",
-                  "opt_image": "agung",
-                  "opt_count": 89
+                  "opt_image": "https://images.unsplash.com/photo-1514501259756-f4b6fbeffa67?q=80&w=1480&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                  "opt_count": 89,
+                  "opt_percent": 49
                 },
                 {
                   "opt_id": 8,
                   "opt_text": "Toyib",
-                  "opt_image": "ridho",
-                  "opt_count": 10
+                  "opt_image": "https://images.unsplash.com/photo-1514501259756-f4b6fbeffa67?q=80&w=1480&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                  "opt_count": 10,
+                  "opt_percent": 5
                 },
                 {
                   "opt_id": 9,
                   "opt_text": "Wal",
-                  "opt_image": "wal",
-                  "opt_count": 23
+                  "opt_image": "https://images.unsplash.com/photo-1514501259756-f4b6fbeffa67?q=80&w=1480&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                  "opt_count": 23,
+                  "opt_percent": 12
                 },
                 {
                   "opt_id": 10,
                   "opt_text": "Adit",
-                  "opt_image": "adit",
-                  "opt_count": 62
+                  "opt_image": "https://images.unsplash.com/photo-1514501259756-f4b6fbeffa67?q=80&w=1480&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                  "opt_count": 62,
+                  "opt_percent": 34
                 },
                 {
                   "opt_id": 11,
                   "opt_text": "Rozi",
-                  "opt_image": "rozi",
-                  "opt_count": 167
+                  "opt_image": "https://images.unsplash.com/photo-1514501259756-f4b6fbeffa67?q=80&w=1480&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                  "opt_count": 167,
+                  "opt_percent": 92
                 },
                 {
                   "opt_id": 12,
                   "opt_text": "Idris",
-                  "opt_image": "idris",
-                  "opt_count": 120
+                  "opt_image": "https://images.unsplash.com/photo-1514501259756-f4b6fbeffa67?q=80&w=1480&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                  "opt_count": 120,
+                  "opt_percent": 66
                 }
               ]
             },
             {
               "poll_id": 2,
-              "poll_title": "polling & survey calon bupati dan wakin bupati bengkalis 2023",
+              "poll_title": "polling & survey calon bupati dan wakil bupati bengkalis 2024",
+              "poll_url": "/2",
               "poll_start": "5 februari 2023",
               "poll_end": "6 februari 2023",
-              "poll_active": false,
+              "poll_active": true,
               "poll_opt": [
                 {
                   "opt_id": 1,
-                  "opt_text": "bambang kurniawan",
-                  "opt_image": "bambang.png",
-                  "opt_count": 8
+                  "opt_text": "Agung",
+                  "opt_image": "https://images.unsplash.com/photo-1514501259756-f4b6fbeffa67?q=80&w=1480&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                  "opt_count": 46,
+                  "opt_percent": 25
                 },
                 {
                   "opt_id": 2,
-                  "opt_text": "solihin",
-                  "opt_image": "solihin.png",
-                  "opt_count": 15
+                  "opt_text": "Maul",
+                  "opt_image": "https://images.unsplash.com/photo-1514501259756-f4b6fbeffa67?q=80&w=1480&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                  "opt_count": 32,
+                  "opt_percent": 17
+                },
+                {
+                  "opt_id": 3,
+                  "opt_text": "Ferdi",
+                  "opt_image": "https://images.unsplash.com/photo-1514501259756-f4b6fbeffa67?q=80&w=1480&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                  "opt_count": 57,
+                  "opt_percent": 31
+                },
+                {
+                  "opt_id": 4,
+                  "opt_text": "Kevin",
+                  "opt_image": "https://images.unsplash.com/photo-1514501259756-f4b6fbeffa67?q=80&w=1480&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                  "opt_count": 150,
+                  "opt_percent": 83
+                },
+                {
+                  "opt_id": 5,
+                  "opt_text": "Rizky",
+                  "opt_image": "https://images.unsplash.com/photo-1514501259756-f4b6fbeffa67?q=80&w=1480&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                  "opt_count": 28,
+                  "opt_percent": 15
+                },
+                {
+                  "opt_id": 6,
+                  "opt_text": "Arip",
+                  "opt_image": "https://images.unsplash.com/photo-1514501259756-f4b6fbeffa67?q=80&w=1480&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                  "opt_count": 77,
+                  "opt_percent": 42
+                },
+                {
+                  "opt_id": 7,
+                  "opt_text": "Ibal",
+                  "opt_image": "https://images.unsplash.com/photo-1514501259756-f4b6fbeffa67?q=80&w=1480&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                  "opt_count": 89,
+                  "opt_percent": 49
+                },
+                {
+                  "opt_id": 8,
+                  "opt_text": "Toyib",
+                  "opt_image": "https://images.unsplash.com/photo-1514501259756-f4b6fbeffa67?q=80&w=1480&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                  "opt_count": 10,
+                  "opt_percent": 5
+                },
+                {
+                  "opt_id": 9,
+                  "opt_text": "Wal",
+                  "opt_image": "https://images.unsplash.com/photo-1514501259756-f4b6fbeffa67?q=80&w=1480&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                  "opt_count": 23,
+                  "opt_percent": 12
+                },
+                {
+                  "opt_id": 10,
+                  "opt_text": "Adit",
+                  "opt_image": "https://images.unsplash.com/photo-1514501259756-f4b6fbeffa67?q=80&w=1480&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                  "opt_count": 62,
+                  "opt_percent": 34
+                },
+                {
+                  "opt_id": 11,
+                  "opt_text": "Rozi",
+                  "opt_image": "https://images.unsplash.com/photo-1514501259756-f4b6fbeffa67?q=80&w=1480&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                  "opt_count": 167,
+                  "opt_percent": 92
+                },
+                {
+                  "opt_id": 12,
+                  "opt_text": "Idris",
+                  "opt_image": "https://images.unsplash.com/photo-1514501259756-f4b6fbeffa67?q=80&w=1480&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                  "opt_count": 120,
+                  "opt_percent": 66
                 }
               ]
             }
           ]
+        }
+      },
+      "200-polling-get-one": {
+        "description": "Contoh response berhasil mendapatkan semua data survey",
+        "value": {
+          "code": 200,
+          "success": true,
+          "message": "Sukses mendapatkan semua data survey",
+          "data": {
+            "poll_id": 1,
+            "poll_title": "polling & survey calon bupati dan wakin bupati indragiri hulu 2023",
+            "poll_url": "/1",
+            "poll_start": "2 januari 2023",
+            "poll_end": "3 januari 2023",
+            "poll_active": true,
+            "poll_opt": [
+              {
+                "opt_id": 1,
+                "opt_text": "Agung",
+                "opt_image": "https://images.unsplash.com/photo-1514501259756-f4b6fbeffa67?q=80&w=1480&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                "opt_count": 46,
+                "opt_percent": 25
+              },
+              {
+                "opt_id": 2,
+                "opt_text": "Maul",
+                "opt_image": "https://images.unsplash.com/photo-1514501259756-f4b6fbeffa67?q=80&w=1480&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                "opt_count": 32,
+                "opt_percent": 17
+              },
+              {
+                "opt_id": 3,
+                "opt_text": "Ferdi",
+                "opt_image": "https://images.unsplash.com/photo-1514501259756-f4b6fbeffa67?q=80&w=1480&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                "opt_count": 57,
+                "opt_percent": 31
+              },
+              {
+                "opt_id": 4,
+                "opt_text": "Kevin",
+                "opt_image": "https://images.unsplash.com/photo-1514501259756-f4b6fbeffa67?q=80&w=1480&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                "opt_count": 150,
+                "opt_percent": 83
+              },
+              {
+                "opt_id": 5,
+                "opt_text": "Rizky",
+                "opt_image": "https://images.unsplash.com/photo-1514501259756-f4b6fbeffa67?q=80&w=1480&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                "opt_count": 28,
+                "opt_percent": 15
+              },
+              {
+                "opt_id": 6,
+                "opt_text": "Arip",
+                "opt_image": "https://images.unsplash.com/photo-1514501259756-f4b6fbeffa67?q=80&w=1480&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                "opt_count": 77,
+                "opt_percent": 42
+              },
+              {
+                "opt_id": 7,
+                "opt_text": "Ibal",
+                "opt_image": "https://images.unsplash.com/photo-1514501259756-f4b6fbeffa67?q=80&w=1480&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                "opt_count": 89,
+                "opt_percent": 49
+              },
+              {
+                "opt_id": 8,
+                "opt_text": "Toyib",
+                "opt_image": "https://images.unsplash.com/photo-1514501259756-f4b6fbeffa67?q=80&w=1480&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                "opt_count": 10,
+                "opt_percent": 5
+              },
+              {
+                "opt_id": 9,
+                "opt_text": "Wal",
+                "opt_image": "https://images.unsplash.com/photo-1514501259756-f4b6fbeffa67?q=80&w=1480&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                "opt_count": 23,
+                "opt_percent": 12
+              },
+              {
+                "opt_id": 10,
+                "opt_text": "Adit",
+                "opt_image": "https://images.unsplash.com/photo-1514501259756-f4b6fbeffa67?q=80&w=1480&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                "opt_count": 62,
+                "opt_percent": 34
+              },
+              {
+                "opt_id": 11,
+                "opt_text": "Rozi",
+                "opt_image": "https://images.unsplash.com/photo-1514501259756-f4b6fbeffa67?q=80&w=1480&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                "opt_count": 167,
+                "opt_percent": 92
+              },
+              {
+                "opt_id": 12,
+                "opt_text": "Idris",
+                "opt_image": "https://images.unsplash.com/photo-1514501259756-f4b6fbeffa67?q=80&w=1480&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                "opt_count": 120,
+                "opt_percent": 66
+              }
+            ]
+          }
         }
       },
       "201-polling": {

@@ -44,7 +44,11 @@
                   height_="16px"
                   class_="mt-1 me-3 rounded-circle d-inline-block"
                 />
-                <NuxtLink v-else :to="d.sosmed_url" class="me-3">
+                <NuxtLink
+                  v-else
+                  :to="d.sosmed_url"
+                  class="d-inline-block iconSosmed me-2"
+                >
                   <img :src="d.sosmed_icon" :alt="d.sosmed_title" />
                 </NuxtLink>
               </template>
@@ -129,7 +133,7 @@ const advertising = ref({
   loading: true,
 });
 const location = ref({
-  data: 1,
+  data: [],
   loading: true,
 });
 const { getData } = await useFetchData();
@@ -191,3 +195,11 @@ onMounted(async () => {
   location.value = await getData("location");
 });
 </script>
+<style>
+.iconSosmed {
+  transition: all 0.3s;
+}
+.iconSosmed:hover {
+  transform: scale(1.3);
+}
+</style>
