@@ -36,7 +36,7 @@
               class="d-block line-height-2 text-4 text-dark font-weight-bold my-3 px-2"
             >
               <NuxtLink
-                :to="'/polling' + poll.poll_url"
+                :to="'/polling/' + poll.poll_slug"
                 class="text-decoration-none text-color-dark text-color-hover-primary"
               >
                 {{ poll.poll_title }}</NuxtLink
@@ -48,27 +48,10 @@
                 v-for="opt in poll.poll_opt"
                 :key="opt.opt_id"
               >
-                <div class="col-3 d-flex align-items-center rounded-circle">
-                  <img
-                    :src="opt.opt_image"
-                    :alt="opt.opt_text"
-                    class="img-fluid rounded-circle"
-                  />
-                </div>
-                <div
-                  class="col-9 d-flex align-items-center justify-content-between"
-                >
-                  <span style="font-size: 12px">{{ opt.opt_text }}</span>
-                  <span
-                    class="badge text-bg-warning"
-                    style="cursor: pointer"
-                    @click="() => handleVote(poll.poll_id, opt.opt_id)"
-                    >Vote</span
-                  >
-                </div>
+                <HomeListCandidate :opt="opt" :poll_id="poll.poll_id" />
               </div>
             </section>
-            <NuxtLink :to="'/polling' + poll.poll_url" class="card-button"
+            <NuxtLink :to="'/polling/' + poll.poll_slug" class="card-button"
               >Selengkapnya</NuxtLink
             >
           </div>
@@ -106,13 +89,12 @@
 
 <script setup>
 const { getData } = await useFetchData();
+
 const polling = ref({
   data: 1,
   loading: true,
 });
-function handleVote(poll_id, opt_id) {
-  alert("poll id: " + poll_id + " opt id: " + opt_id);
-}
+
 onMounted(async () => {
   polling.value = await getData("polling");
 });

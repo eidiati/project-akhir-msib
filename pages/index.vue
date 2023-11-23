@@ -12,14 +12,14 @@
           <!-- popular post -->
           <div class="col-md-6">
             <h3 class="font-weight-bold text-3 mb-0">Postingan Populer</h3>
-            <LazyListPosts route_api="popular-posts" />
+            <LazyListPosts directori="popular-posts" />
           </div>
           <!-- recent post -->
           <div class="col-md-6">
             <h3 class="font-weight-bold text-3 mb-0 mt-4 mt-md-0">
               Postingan Terkini
             </h3>
-            <LazyListPosts route_api="recent-posts" />
+            <LazyListPosts directori="recent-posts" />
           </div>
         </div>
       </div>

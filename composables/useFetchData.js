@@ -1,4 +1,6 @@
 import axios from "axios";
+import { toast } from "vue3-toastify";
+import CryptoJS from "crypto-js";
 
 export const useFetchData = async () => {
   const getData = async (route) => {
@@ -17,12 +19,56 @@ export const useFetchData = async () => {
   };
   const postData = async (route, reqBody) => {
     const url = useRuntimeConfig().public.url_api;
-    const res = await axios.post(`${url}/${route}`, reqBody);
-    return res.data;
-  };
+    let loading = true;
+    const id = toast.loading("Loading...", {
+      position: toast.POSITION.TOP_CENTER,
+    });
+    try {
+      const res = await axios.post(`${url}/${route}`, reqBody);
+      toast.update(id, {
+        render: res.data.message,
+        autoClose: true,
+        closeOnClick: true,
+        closeButton: true,
+        type: "success",
+        isLoading: false,
+      });
 
+      loading = false;
+      return {
+        data: res.data,
+        loading: loading,
+      };
+    } catch (error) {
+      toast.update(id, {
+        render: error.data.message,
+        autoClose: true,
+        closeOnClick: true,
+        closeButton: true,
+        type: "error",
+        isLoading: false,
+      });
+      loading = false;
+      return {
+        data: error.data,
+        loading: loading,
+      };
+    }
+  };
+  const getPoll_or_Quiz = async (regex, postContent) => {
+    const matches = postContent.match(regex);
+    const extractedString = matches ? matches[1] : null;
+
+    const decrypt = CryptoJS.AES.decrypt(
+      extractedString.toString(),
+      "lancangkuning2"
+    ).toString(CryptoJS.enc.Utf8);
+
+    return decrypt;
+  };
   return {
     getData,
     postData,
+    getPoll_or_Quiz,
   };
 };

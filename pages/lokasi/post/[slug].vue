@@ -5,6 +5,7 @@
         <section class="mb-4">
           <ul class="breadcrumb d-block">
             <li><NuxtLink to="/">Beranda</NuxtLink></li>
+            <li><NuxtLink to="/">Lokasi</NuxtLink></li>
             <li class="active">Post</li>
           </ul>
           <AnimationSkleton
@@ -24,7 +25,7 @@
           </div>
         </section>
         <div class="col-md-9">
-          <!-- <LazyMainArticleMap :article="article" /> -->
+          <LazyMainArticleMap :article="article" />
           <div class="blog-posts single-post">
             <article class="post post-large blog-single-post border-0 m-0 p-0">
               <div class="post-image ms-0">
@@ -98,19 +99,15 @@
                     :loading="article.loading"
                   />
                 </div>
-                <div
-                  v-if="!article.loading"
-                  id="comments"
-                  class="post-block mt-5 post-comments"
-                >
-                  <LazyMainArticleComments />
+                <div id="comments" class="post-block mt-5 post-comments">
+                  <LazyMainArticleComments v-if="!article.loading" />
                 </div>
               </div>
             </article>
           </div>
         </div>
         <div class="col-md-3">
-          <LazyMainArticlePopularPost :post_id="article.data.post_id" />
+          <LazyMainArticlePopularPost />
           <div class="sidebar pb-4">
             <LazyTags
               :tags="article.data.post_tags"
@@ -143,13 +140,13 @@ const article = ref({
 });
 const content = ref("");
 const isPolling = ref(false);
-const poll_id = ref(null);
 const isQuiz = ref(false);
+const poll_id = ref(null);
 const { getData, getPoll_or_Quiz } = await useFetchData();
 
 onMounted(async () => {
-  const res = await getData(`main-article/${slug}`);
-  let postContent = res.data.post_content;
+  const res = await getData(`location-main-article/${slug}`);
+  const postContent = res.data.post_content;
   useHead({
     title: res.data.meta_title,
     meta: [{ name: res.data.meta_description, content: res.data.meta_keyword }],
@@ -160,10 +157,12 @@ onMounted(async () => {
   isQuiz.value = postContent.includes("[quiz=");
   if (isPolling) {
     const decrypt = await getPoll_or_Quiz(/\[polling=(.*?)=\]/, postContent);
+    console.log(isPolling);
     content.value = postContent.replace(/\[polling=[^\]]*\]/, "");
     poll_id.value = decrypt;
   } else if (isQuiz) {
     const decrypt = await getPoll_or_Quiz(/\[quiz=(.*?)=\]/, postContent);
+    console.log(isQuiz);
     content.value = postContent.replace(/\[quiz=[^\]]*\]/, "");
     console.log(decrypt);
   } else {

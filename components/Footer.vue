@@ -29,7 +29,7 @@
           </main>
         </div>
         <div class="col-md-6 col-lg-3 mb-5 mb-lg-0">
-          <h5 class="text-3 mb-3">BERLANGGANAN NEWSLETTER</h5>
+          <h5 class="text-3 mb-3">DAPATKAN NOTIFIKASI BERITA</h5>
           <form v-on:submit="(e) => subscribe(e)">
             <ul class="list-unstyled mb-0">
               <li class="d-flex mb-3 pb-1">
@@ -40,7 +40,7 @@
                     v-on:input="(e) => (email = e.target.value)"
                     required
                     class="form-control form-control-md"
-                    placeholder="Your Email"
+                    placeholder="Masukkan Email"
                   />
                 </article>
               </li>
@@ -175,6 +175,8 @@
 </template>
 
 <script setup>
+const { getData, postData } = await useFetchData();
+
 const category = ref({
   data: 5,
   loading: true,
@@ -214,17 +216,13 @@ const redaksi = ref({
 });
 const email = ref("");
 const loading = ref(false);
-const { getData, postData } = await useFetchData();
+
 async function subscribe(e) {
   e.preventDefault();
   loading.value = true;
-  try {
-    const res = await postData("subscribe", { subscriber_email: email.value });
-    alert(res.message);
-    loading.value = false;
-  } catch (error) {
-    console.log(error);
-  }
+  const reqBody = { subscriber_email: email.value };
+  const res = await postData("subscribe", reqBody);
+  loading.value = res.loading;
   email.value = "";
 }
 

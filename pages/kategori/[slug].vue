@@ -5,11 +5,11 @@
         <section class="mb-4">
           <ul class="breadcrumb d-block">
             <li><NuxtLink to="/">Beranda</NuxtLink></li>
-            <li class="active">{{ route.params.name }}</li>
+            <li class="active">{{ slug }}</li>
           </ul>
 
           <h1 class="text-dark text-capitalize font-weight-bold text-8 m-0">
-            Info {{ route.params.name }}
+            Info {{ slug }}
           </h1>
         </section>
 
@@ -28,7 +28,7 @@
             :key="index"
             class="col"
           >
-            <LazyCategoryCardPost :data="data" />
+            <LazyCategoryCardPost :data="data" directori="kategori" />
           </div>
         </div>
       </div>
@@ -38,7 +38,7 @@
 
 <script setup>
 const route = useRoute();
-const slug = route.params.name;
+const slug = ref(route.params.slug);
 
 const category = ref({
   data: {

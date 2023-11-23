@@ -23,7 +23,7 @@
         <section class="mt-5 mb-4">
           <div class="row row-cols-2 row-cols-lg-4 g-2 g-lg-3">
             <div
-              v-for="(poll, index) in polling.data.poll_opt"
+              v-for="(opt, index) in polling.data.poll_opt"
               :key="index"
               class="col"
             >
@@ -34,8 +34,8 @@
               />
               <LazyPollingCard
                 v-else
-                :poll="poll"
-                :images="poll.opt_image"
+                :poll_id="polling.data.poll_id"
+                :opt="opt"
                 :bgColor="bgColor[index]"
               />
             </div>
@@ -93,17 +93,11 @@ const polling = ref({
 const bgColor = ref([""]);
 
 onMounted(async () => {
-  const res = await getData("polling");
-  polling.value = {
-    data: res.data.find((data) => data.poll_active === true),
-    loading: res.loading,
-  };
-  const candidates = res.data
-    .find((data) => data.poll_active === true)
-    .poll_opt.map((data) => data.opt_text);
-  const count = res.data
-    .find((data) => data.poll_active === true)
-    .poll_opt.map((data) => data.opt_count);
+  const res = await getData(`polling/1`);
+  polling.value = res;
+
+  const candidates = res.data.poll_opt.map((data) => data.opt_text);
+  const count = res.data.poll_opt.map((data) => data.opt_count);
   const color = count.map(
     () => `#${Math.floor(Math.random() * 16777215).toString(16)}`
   );

@@ -216,14 +216,14 @@
         }
       }
     },
-    "/tags/{name}": {
+    "/tags/{slug}": {
       "get": {
         "tags": ["tags"],
         "summary": "Ambil 1 data tag",
         "description": "Dapatkan 1 data tag",
         "parameters": [
           {
-            "$ref": "#/components/parameters/name-tag"
+            "$ref": "#/components/parameters/slug"
           }
         ],
         "responses": {
@@ -695,14 +695,14 @@
         }
       }
     },
-    "/main-article/{id}": {
+    "/main-article/{slug}": {
       "get": {
         "tags": ["main-article"],
         "summary": "Ambil 1 data berita",
         "description": "Ambil 1 data berita berdasarkan id",
         "parameters": [
           {
-            "$ref": "#/components/parameters/id"
+            "$ref": "#/components/parameters/slug"
           }
         ],
         "responses": {
@@ -716,6 +716,89 @@
                 "examples": {
                   "success": {
                     "$ref": "#/components/examples/200-main-article"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Gagal ambil 1 data berita",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/404"
+                },
+                "examples": {
+                  "failed": {
+                    "$ref": "#/components/examples/404"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/post-location": {
+      "get": {
+        "tags": ["post-by-category"],
+        "summary": "Ambil semua data berita berdasarkan kategori",
+        "description": "Dapatkan semua data berita berdasarkan kategori",
+        "responses": {
+          "200": {
+            "description": "Sukses mendapatkan semua data berita berdasarkan kategori",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/200-post-location"
+                },
+                "examples": {
+                  "success": {
+                    "$ref": "#/components/examples/200-post-location"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/404"
+                },
+                "examples": {
+                  "failed": {
+                    "$ref": "#/components/examples/404"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/location-main-article/{slug}": {
+      "get": {
+        "tags": ["main-article"],
+        "summary": "Ambil 1 data berita",
+        "description": "Ambil 1 data berita berdasarkan slug",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/slug"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Sukses ambil 1 data berita dari lokasi",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/200-post-location-main-article"
+                },
+                "examples": {
+                  "success": {
+                    "$ref": "#/components/examples/200-post-location-main-article"
                   }
                 }
               }
@@ -992,11 +1075,16 @@
     "/polling/{id}": {
       "get": {
         "tags": ["polling"],
-        "summary": "Ambil semua data survey",
-        "description": "Dapatkan semua data survey",
+        "summary": "Ambil 1 data survey",
+        "description": "Dapatkan 1 data survey",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/id"
+          }
+        ],
         "responses": {
           "200": {
-            "description": "Sukses mendapatkan semua data survey",
+            "description": "Sukses mendapatkan 1 data survey",
             "content": {
               "application/json": {
                 "schema": {
@@ -1036,6 +1124,16 @@
         "in": "path",
         "required": true,
         "description": "id sebagai parameter",
+        "schema": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "slug": {
+        "name": "slug",
+        "in": "path",
+        "required": true,
+        "description": "slug sebagai parameter",
         "schema": {
           "type": "string",
           "minLength": 1
@@ -1268,7 +1366,7 @@
                     "post_date": {
                       "type": "string"
                     },
-                    "post_url": {
+                    "post_slug": {
                       "type": "string"
                     },
                     "author_name": {
@@ -1295,55 +1393,52 @@
             "type": "string"
           },
           "data": {
-            "type": "array",
-            "items": {
-              "type": "object",
-              "properties": {
-                "tag_id": {
-                  "type": "number"
-                },
-                "tag_name": {
-                  "type": "string",
-                  "minLength": 1
-                },
-                "tag_url": {
-                  "type": "string"
-                },
-                "tag_posts": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "post_id": {
-                        "type": "integer"
-                      },
-                      "post_title": {
-                        "type": "string"
-                      },
-                      "post_content": {
-                        "type": "string"
-                      },
-                      "medium_thumbnail": {
-                        "type": "string"
-                      },
-                      "thumbnail": {
-                        "type": "string"
-                      },
-                      "post_date": {
-                        "type": "string"
-                      },
-                      "post_url": {
-                        "type": "string"
-                      },
-                      "author_name": {
-                        "type": "string"
-                      }
+            "type": "object",
+            "properties": {
+              "tag_id": {
+                "type": "number"
+              },
+              "tag_name": {
+                "type": "string",
+                "minLength": 1
+              },
+              "tag_url": {
+                "type": "string"
+              },
+              "tag_posts": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "post_id": {
+                      "type": "integer"
+                    },
+                    "post_title": {
+                      "type": "string"
+                    },
+                    "post_content": {
+                      "type": "string"
+                    },
+                    "medium_thumbnail": {
+                      "type": "string"
+                    },
+                    "thumbnail": {
+                      "type": "string"
+                    },
+                    "post_date": {
+                      "type": "string"
+                    },
+                    "post_slug": {
+                      "type": "string"
+                    },
+                    "author_name": {
+                      "type": "string"
                     }
                   }
                 }
-              },
-              "required": ["tag_id"]
-            }
+              }
+            },
+            "required": ["tag_id"]
           }
         }
       },
@@ -1504,7 +1599,7 @@
                 "medium_thumbnail": {
                   "type": "string"
                 },
-                "post_url": {
+                "post_slug": {
                   "type": "string"
                 },
                 "post_date": {
@@ -1601,13 +1696,159 @@
                 "medium_thumbnail": {
                   "type": "string"
                 },
-                "post_url": {
+                "post_slug": {
                   "type": "string"
                 },
                 "post_date": {
                   "type": "string"
                 },
                 "post_content": {
+                  "type": "string"
+                },
+                "meta_title": {
+                  "type": "string"
+                },
+                "meta_description": {
+                  "type": "string"
+                },
+                "meta_keyword": {
+                  "type": "string"
+                },
+                "post_author": {
+                  "type": "object",
+                  "properties": {
+                    "author_id": {
+                      "type": "number"
+                    },
+                    "author_name": {
+                      "type": "string"
+                    },
+                    "author_thumbnail": {
+                      "type": "string"
+                    },
+                    "author_url": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "post_tags": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "tag_id": {
+                        "type": "number"
+                      },
+                      "tag_name": {
+                        "type": "string"
+                      },
+                      "tag_url": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              },
+              "required": ["post_id"]
+            }
+          }
+        }
+      },
+      "200-post-location": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer"
+          },
+          "success": {
+            "type": "boolean"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "post_id": {
+                  "type": "integer"
+                },
+                "post_title": {
+                  "type": "string"
+                },
+                "post_content": {
+                  "type": "string"
+                },
+                "medium_thumbnail": {
+                  "type": "string"
+                },
+                "thumbnail": {
+                  "type": "string"
+                },
+                "post_date": {
+                  "type": "string"
+                },
+                "post_slug": {
+                  "type": "string"
+                },
+                "author_name": {
+                  "type": "string"
+                }
+              },
+              "required": ["category_"]
+            }
+          }
+        }
+      },
+      "200-post-location-main-article": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer"
+          },
+          "success": {
+            "type": "boolean"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "post_id": {
+                  "type": "number"
+                },
+                "post_title": {
+                  "type": "string"
+                },
+                "post_category": {
+                  "type": "string"
+                },
+                "thumbnail": {
+                  "type": "string"
+                },
+                "medium_thumbnail": {
+                  "type": "string"
+                },
+                "post_slug": {
+                  "type": "string"
+                },
+                "post_date": {
+                  "type": "string"
+                },
+                "post_content": {
+                  "type": "string"
+                },
+                "meta_title": {
+                  "type": "string"
+                },
+                "meta_description": {
+                  "type": "string"
+                },
+                "meta_keyword": {
                   "type": "string"
                 },
                 "post_location": {
@@ -1699,7 +1940,7 @@
                     "medium_thumbnail": {
                       "type": "string"
                     },
-                    "post_url": {
+                    "post_slug": {
                       "type": "string"
                     },
                     "post_date": {
@@ -1822,7 +2063,7 @@
           "poll_title": {
             "type": "string"
           },
-          "poll_url": {
+          "poll_slug": {
             "type": "string"
           },
           "poll_start": {
@@ -1944,7 +2185,7 @@
               "menu_id": 1,
               "menu_name": "Pendidikan",
               "parent_id": 0,
-              "menu_url": "/pendidikan",
+              "menu_url": "/kategori/pendidikan",
               "menu_active": false,
               "menu_sequence": 1
             },
@@ -1952,15 +2193,15 @@
               "menu_id": 2,
               "menu_name": "Bisnis",
               "parent_id": 0,
-              "menu_url": "/bisnis",
-              "menu_active": false,
+              "menu_url": "/kategori/bisnis",
+              "menu_active": true,
               "menu_sequence": 1
             },
             {
               "menu_id": 3,
               "menu_name": "Wisata",
               "parent_id": 0,
-              "menu_url": "/wisata",
+              "menu_url": "/kategori/wisata",
               "menu_active": false,
               "menu_sequence": 1
             },
@@ -1968,7 +2209,7 @@
               "menu_id": 4,
               "menu_name": "Kampus",
               "parent_id": 0,
-              "menu_url": "/kampus",
+              "menu_url": "/kategori/kampus",
               "menu_active": false,
               "menu_sequence": 1
             },
@@ -1976,70 +2217,64 @@
               "menu_id": 5,
               "menu_name": "Sawit",
               "parent_id": 0,
-              "menu_url": "/sawit",
-              "menu_active": false,
+              "menu_url": "/kategori/sawit",
+              "menu_active": true,
               "menu_sequence": 1
             },
             {
               "menu_id": 6,
               "menu_name": "Daerah",
               "parent_id": 0,
-              "menu_url": "/daerah",
-              "menu_active": false,
+              "menu_url": "/kategori/daerah",
+              "menu_active": true,
               "menu_sequence": 6
             },
             {
               "menu_id": 7,
               "menu_name": "Info Riau",
               "parent_id": 6,
-              "menu_url": "/asahan-sumut",
-
-              "menu_active": false,
+              "menu_url": "/kategori/riau",
+              "menu_active": true,
               "menu_sequence": 1
             },
             {
               "menu_id": 8,
               "menu_name": "Info Inhil",
               "parent_id": 6,
-              "menu_url": "/inhil",
-
-              "menu_active": false,
+              "menu_url": "/kategori/inhil",
+              "menu_active": true,
               "menu_sequence": 1
             },
             {
               "menu_id": 9,
               "menu_name": "Info Pekanbaru",
               "parent_id": 6,
-              "menu_url": "/pekanbaru",
-
-              "menu_active": false,
+              "menu_url": "/kategori/pekanbaru",
+              "menu_active": true,
               "menu_sequence": 1
             },
             {
               "menu_id": 10,
               "menu_name": "Info Siak",
               "parent_id": 6,
-              "menu_url": "/siak",
-
-              "menu_active": false,
+              "menu_url": "/kategori/siak",
+              "menu_active": true,
               "menu_sequence": 1
             },
             {
               "menu_id": 11,
               "menu_name": "Info Pelalawan",
               "parent_id": 6,
-              "menu_url": "/pelalawan",
-
-              "menu_active": false,
+              "menu_url": "/kategori/pelalawan",
+              "menu_active": true,
               "menu_sequence": 1
             },
             {
               "menu_id": 12,
               "menu_name": "Info Kampar",
               "parent_id": 6,
-              "menu_url": "/kampar",
-
-              "menu_active": false,
+              "menu_url": "/kategori/kampar",
+              "menu_active": true,
               "menu_sequence": 1
             }
           ]
@@ -2103,7 +2338,7 @@
                 "medium_thumbnail": "https://i.dummyjson.com/data/products/1/1.jpg",
                 "thumbnail": "https://i.dummyjson.com/data/products/1/thumbnail.jpg",
                 "post_date": "senin, 4 september 2023",
-                "post_url": "/1",
+                "post_slug": "HPN+2023+di+Medan+PWI+Riau+akan+Berangkatkan+Ratusan+Wartawan",
                 "author_name": "iwal"
               },
               {
@@ -2113,7 +2348,7 @@
                 "medium_thumbnail": "https://i.dummyjson.com/data/products/1/1.jpg",
                 "thumbnail": "https://i.dummyjson.com/data/products/1/thumbnail.jpg",
                 "post_date": "selasa, 5 september 2023",
-                "post_url": "/2",
+                "post_slug": "Sedia+Payung+Sebelum+Hujan+Inilah+Prakiraan+Cuaca+Untuk+Wilayah+Riau",
                 "author_name": "sonya"
               }
             ]
@@ -2138,7 +2373,7 @@
                 "medium_thumbnail": "https://i.dummyjson.com/data/products/1/1.jpg",
                 "thumbnail": "https://i.dummyjson.com/data/products/1/thumbnail.jpg",
                 "post_date": "senin, 4 september 2023",
-                "post_url": "/1",
+                "post_slug": "HPN+2023+di+Medan+PWI+Riau+akan+Berangkatkan+Ratusan+Wartawan",
                 "author_name": "iwal"
               },
               {
@@ -2148,7 +2383,7 @@
                 "medium_thumbnail": "https://i.dummyjson.com/data/products/1/1.jpg",
                 "thumbnail": "https://i.dummyjson.com/data/products/1/thumbnail.jpg",
                 "post_date": "selasa, 5 september 2023",
-                "post_url": "/2",
+                "post_slug": "Sedia+Payung+Sebelum+Hujan+Inilah+Prakiraan+Cuaca+Untuk+Wilayah+Riau",
                 "author_name": "sonya"
               }
             ]
@@ -2194,7 +2429,7 @@
         "value": {
           "code": 201,
           "success": true,
-          "message": "Sukses menambahkan data contact us",
+          "message": "Terima kasih! Tim kami akan segera merespons pesan Anda.",
           "data": {
             "contact-us_id": 1,
             "username": "iwal28",
@@ -2230,7 +2465,7 @@
               "post_category": "acara",
               "thumbnail": "https://i.dummyjson.com/data/products/1/thumbnail.jpg",
               "medium_thumbnail": "https://i.dummyjson.com/data/products/1/1.jpg",
-              "post_url": "/1",
+              "post_slug": "HPN+2023+di+Medan+PWI+Riau+akan+Berangkatkan+Ratusan+Wartawan",
               "post_date": "senin, 4 september 2023"
             },
             {
@@ -2239,7 +2474,7 @@
               "post_category": "cuaca",
               "thumbnail": "https://i.dummyjson.com/data/products/1/thumbnail.jpg",
               "medium_thumbnail": "https://i.dummyjson.com/data/products/1/1.jpg",
-              "post_url": "/2",
+              "post_slug": "Sedia+Payung+Sebelum+Hujan+Inilah+Prakiraan+Cuaca+Untuk+Wilayah+Riau",
               "post_date": "selasa, 5 september 2023, "
             },
             {
@@ -2248,7 +2483,7 @@
               "post_category": "bisnis",
               "thumbnail": "https://i.dummyjson.com/data/products/1/thumbnail.jpg",
               "medium_thumbnail": "https://i.dummyjson.com/data/products/1/1.jpg",
-              "post_url": "/3",
+              "post_slug": "HPN+2023+di+Medan+PWI+Riau+akan+Berangkatkan+Ratusan+Wartawan",
               "post_date": "senin, 4 september 2023"
             },
             {
@@ -2257,7 +2492,7 @@
               "post_category": "pendidikan",
               "thumbnail": "https://i.dummyjson.com/data/products/1/thumbnail.jpg",
               "medium_thumbnail": "https://i.dummyjson.com/data/products/1/1.jpg",
-              "post_url": "/4",
+              "post_slug": "Sedia+Payung+Sebelum+Hujan+Inilah+Prakiraan+Cuaca+Untuk+Wilayah+Riau",
               "post_date": "selasa, 5 september 2023, "
             }
           ]
@@ -2276,7 +2511,7 @@
               "post_category": "acara",
               "thumbnail": "https://i.dummyjson.com/data/products/1/thumbnail.jpg",
               "medium_thumbnail": "https://i.dummyjson.com/data/products/1/1.jpg",
-              "post_url": "/1",
+              "post_slug": "HPN+2023+di+Medan+PWI+Riau+akan+Berangkatkan+Ratusan+Wartawan",
               "post_date": "senin, 4 september 2023"
             },
             {
@@ -2285,7 +2520,7 @@
               "post_category": "cuaca",
               "thumbnail": "https://i.dummyjson.com/data/products/1/thumbnail.jpg",
               "medium_thumbnail": "https://i.dummyjson.com/data/products/1/1.jpg",
-              "post_url": "/2",
+              "post_slug": "Sedia+Payung+Sebelum+Hujan+Inilah+Prakiraan+Cuaca+Untuk+Wilayah+Riau",
               "post_date": "selasa, 5 september 2023, "
             },
             {
@@ -2294,7 +2529,7 @@
               "post_category": "bisnis",
               "thumbnail": "https://i.dummyjson.com/data/products/1/thumbnail.jpg",
               "medium_thumbnail": "https://i.dummyjson.com/data/products/1/1.jpg",
-              "post_url": "/3",
+              "post_slug": "HPN+2023+di+Medan+PWI+Riau+akan+Berangkatkan+Ratusan+Wartawan",
               "post_date": "senin, 4 september 2023"
             },
             {
@@ -2303,7 +2538,7 @@
               "post_category": "pendidikan",
               "thumbnail": "https://i.dummyjson.com/data/products/1/thumbnail.jpg",
               "medium_thumbnail": "https://i.dummyjson.com/data/products/1/1.jpg",
-              "post_url": "/4",
+              "post_slug": "Sedia+Payung+Sebelum+Hujan+Inilah+Prakiraan+Cuaca+Untuk+Wilayah+Riau",
               "post_date": "selasa, 5 september 2023, "
             }
           ]
@@ -2322,7 +2557,7 @@
               "post_category": "acara",
               "thumbnail": "https://i.dummyjson.com/data/products/1/thumbnail.jpg",
               "medium_thumbnail": "https://i.dummyjson.com/data/products/1/1.jpg",
-              "post_url": "/1",
+              "post_slug": "HPN+2023+di+Medan+PWI+Riau+akan+Berangkatkan+Ratusan+Wartawan",
               "post_date": "senin, 4 september 2023"
             },
             {
@@ -2331,7 +2566,7 @@
               "post_category": "cuaca",
               "thumbnail": "https://i.dummyjson.com/data/products/1/thumbnail.jpg",
               "medium_thumbnail": "https://i.dummyjson.com/data/products/1/1.jpg",
-              "post_url": "/2",
+              "post_slug": "Sedia+Payung+Sebelum+Hujan+Inilah+Prakiraan+Cuaca+Untuk+Wilayah+Riau",
               "post_date": "selasa, 5 september 2023, "
             },
             {
@@ -2340,7 +2575,7 @@
               "post_category": "bisnis",
               "thumbnail": "https://i.dummyjson.com/data/products/1/thumbnail.jpg",
               "medium_thumbnail": "https://i.dummyjson.com/data/products/1/1.jpg",
-              "post_url": "/3",
+              "post_slug": "HPN+2023+di+Medan+PWI+Riau+akan+Berangkatkan+Ratusan+Wartawan",
               "post_date": "senin, 4 september 2023"
             },
             {
@@ -2349,7 +2584,7 @@
               "post_category": "pendidikan",
               "thumbnail": "https://i.dummyjson.com/data/products/1/thumbnail.jpg",
               "medium_thumbnail": "https://i.dummyjson.com/data/products/1/1.jpg",
-              "post_url": "/4",
+              "post_slug": "Sedia+Payung+Sebelum+Hujan+Inilah+Prakiraan+Cuaca+Untuk+Wilayah+Riau",
               "post_date": "selasa, 5 september 2023, "
             }
           ]
@@ -2368,7 +2603,7 @@
               "post_category": "acara",
               "thumbnail": "https://i.dummyjson.com/data/products/1/thumbnail.jpg",
               "medium_thumbnail": "https://i.dummyjson.com/data/products/1/1.jpg",
-              "post_url": "/1",
+              "post_slug": "HPN+2023+di+Medan+PWI+Riau+akan+Berangkatkan+Ratusan+Wartawan",
               "post_date": "senin, 4 september 2023"
             },
             {
@@ -2377,7 +2612,7 @@
               "post_category": "cuaca",
               "thumbnail": "https://i.dummyjson.com/data/products/1/thumbnail.jpg",
               "medium_thumbnail": "https://i.dummyjson.com/data/products/1/1.jpg",
-              "post_url": "/2",
+              "post_slug": "Sedia+Payung+Sebelum+Hujan+Inilah+Prakiraan+Cuaca+Untuk+Wilayah+Riau",
               "post_date": "selasa, 5 september 2023, "
             },
             {
@@ -2386,7 +2621,7 @@
               "post_category": "bisnis",
               "thumbnail": "https://i.dummyjson.com/data/products/1/thumbnail.jpg",
               "medium_thumbnail": "https://i.dummyjson.com/data/products/1/1.jpg",
-              "post_url": "/3",
+              "post_slug": "HPN+2023+di+Medan+PWI+Riau+akan+Berangkatkan+Ratusan+Wartawan",
               "post_date": "senin, 4 september 2023"
             },
             {
@@ -2395,7 +2630,7 @@
               "post_category": "pendidikan",
               "thumbnail": "https://i.dummyjson.com/data/products/1/thumbnail.jpg",
               "medium_thumbnail": "https://i.dummyjson.com/data/products/1/1.jpg",
-              "post_url": "/4",
+              "post_slug": "Sedia+Payung+Sebelum+Hujan+Inilah+Prakiraan+Cuaca+Untuk+Wilayah+Riau",
               "post_date": "selasa, 5 september 2023, "
             }
           ]
@@ -2414,7 +2649,7 @@
               "post_category": "acara",
               "thumbnail": "https://i.dummyjson.com/data/products/1/thumbnail.jpg",
               "medium_thumbnail": "https://i.dummyjson.com/data/products/1/1.jpg",
-              "post_url": "/1",
+              "post_slug": "HPN+2023+di+Medan+PWI+Riau+akan+Berangkatkan+Ratusan+Wartawan",
               "post_date": "senin, 4 september 2023"
             },
             {
@@ -2423,7 +2658,7 @@
               "post_category": "cuaca",
               "thumbnail": "https://i.dummyjson.com/data/products/1/thumbnail.jpg",
               "medium_thumbnail": "https://i.dummyjson.com/data/products/1/1.jpg",
-              "post_url": "/2",
+              "post_slug": "Sedia+Payung+Sebelum+Hujan+Inilah+Prakiraan+Cuaca+Untuk+Wilayah+Riau",
               "post_date": "selasa, 5 september 2023, "
             },
             {
@@ -2432,7 +2667,7 @@
               "post_category": "bisnis",
               "thumbnail": "https://i.dummyjson.com/data/products/1/thumbnail.jpg",
               "medium_thumbnail": "https://i.dummyjson.com/data/products/1/1.jpg",
-              "post_url": "/3",
+              "post_slug": "HPN+2023+di+Medan+PWI+Riau+akan+Berangkatkan+Ratusan+Wartawan",
               "post_date": "senin, 4 september 2023"
             },
             {
@@ -2441,7 +2676,7 @@
               "post_category": "pendidikan",
               "thumbnail": "https://i.dummyjson.com/data/products/1/thumbnail.jpg",
               "medium_thumbnail": "https://i.dummyjson.com/data/products/1/1.jpg",
-              "post_url": "/4",
+              "post_slug": "Sedia+Payung+Sebelum+Hujan+Inilah+Prakiraan+Cuaca+Untuk+Wilayah+Riau",
               "post_date": "selasa, 5 september 2023, "
             }
           ]
@@ -2460,7 +2695,7 @@
               "post_category": "acara",
               "thumbnail": "https://i.dummyjson.com/data/products/1/thumbnail.jpg",
               "medium_thumbnail": "https://i.dummyjson.com/data/products/1/1.jpg",
-              "post_url": "/1",
+              "post_slug": "HPN+2023+di+Medan+PWI+Riau+akan+Berangkatkan+Ratusan+Wartawan",
               "post_date": "senin, 4 september 2023"
             },
             {
@@ -2469,7 +2704,7 @@
               "post_category": "cuaca",
               "thumbnail": "https://i.dummyjson.com/data/products/1/thumbnail.jpg",
               "medium_thumbnail": "https://i.dummyjson.com/data/products/1/1.jpg",
-              "post_url": "/2",
+              "post_slug": "Sedia+Payung+Sebelum+Hujan+Inilah+Prakiraan+Cuaca+Untuk+Wilayah+Riau",
               "post_date": "selasa, 5 september 2023, "
             },
             {
@@ -2478,7 +2713,7 @@
               "post_category": "bisnis",
               "thumbnail": "https://i.dummyjson.com/data/products/1/thumbnail.jpg",
               "medium_thumbnail": "https://i.dummyjson.com/data/products/1/1.jpg",
-              "post_url": "/3",
+              "post_slug": "HPN+2023+di+Medan+PWI+Riau+akan+Berangkatkan+Ratusan+Wartawan",
               "post_date": "senin, 4 september 2023"
             },
             {
@@ -2487,7 +2722,7 @@
               "post_category": "pendidikan",
               "thumbnail": "https://i.dummyjson.com/data/products/1/thumbnail.jpg",
               "medium_thumbnail": "https://i.dummyjson.com/data/products/1/1.jpg",
-              "post_url": "/4",
+              "post_slug": "Sedia+Payung+Sebelum+Hujan+Inilah+Prakiraan+Cuaca+Untuk+Wilayah+Riau",
               "post_date": "selasa, 5 september 2023, "
             }
           ]
@@ -2506,7 +2741,7 @@
               "post_category": "acara",
               "thumbnail": "https://i.dummyjson.com/data/products/1/thumbnail.jpg",
               "medium_thumbnail": "https://i.dummyjson.com/data/products/1/1.jpg",
-              "post_url": "/1",
+              "post_slug": "HPN+2023+di+Medan+PWI+Riau+akan+Berangkatkan+Ratusan+Wartawan",
               "post_date": "senin, 4 september 2023"
             },
             {
@@ -2515,7 +2750,7 @@
               "post_category": "cuaca",
               "thumbnail": "https://i.dummyjson.com/data/products/1/thumbnail.jpg",
               "medium_thumbnail": "https://i.dummyjson.com/data/products/1/1.jpg",
-              "post_url": "/2",
+              "post_slug": "Sedia+Payung+Sebelum+Hujan+Inilah+Prakiraan+Cuaca+Untuk+Wilayah+Riau",
               "post_date": "selasa, 5 september 2023, "
             },
             {
@@ -2524,7 +2759,7 @@
               "post_category": "bisnis",
               "thumbnail": "https://i.dummyjson.com/data/products/1/thumbnail.jpg",
               "medium_thumbnail": "https://i.dummyjson.com/data/products/1/1.jpg",
-              "post_url": "/3",
+              "post_slug": "HPN+2023+di+Medan+PWI+Riau+akan+Berangkatkan+Ratusan+Wartawan",
               "post_date": "senin, 4 september 2023"
             },
             {
@@ -2533,7 +2768,7 @@
               "post_category": "pendidikan",
               "thumbnail": "https://i.dummyjson.com/data/products/1/thumbnail.jpg",
               "medium_thumbnail": "https://i.dummyjson.com/data/products/1/1.jpg",
-              "post_url": "/4",
+              "post_slug": "Sedia+Payung+Sebelum+Hujan+Inilah+Prakiraan+Cuaca+Untuk+Wilayah+Riau",
               "post_date": "selasa, 5 september 2023, "
             }
           ]
@@ -2583,10 +2818,80 @@
             "post_id": 1,
             "post_title": "HPN 2023 di Medan, PWI Riau akan Berangkatkan Ratusan Wartawan HPN 2023 di Medan, PWI Riau akan Berangkatkan Ratusan Wartawan",
             "post_category": "acara",
-            "post_content": "loremasfsadf sfasfasg dfgdfgad afdfasfafaadf etretergrv sdfnjdjdygjtej dhfhsrhsrht",
+            "post_content": "loremasfsadf sfasfasg dfgdfgad afdfasfafaadf etretergrv sdfnjdjdygjtej dhfhsrhsrht [polling=U2FsdGVkX1+tZwUa2bnb29O+e167KuIpezWzxjR4Jao=]",
+            "meta_title": "HPN 2023 di Medan, PWI Riau akan Berangkatkan Ratusan Wartawan HPN 2023 di Medan, PWI Riau akan Berangkatkan Ratusan Wartawan",
+            "meta_description": "lorem ipsum sit amet dolor",
+            "meta_keyword": "HPN 2023 di Medan",
             "thumbnail": "https://i.dummyjson.com/data/products/1/thumbnail.jpg",
             "medium_thumbnail": "https://i.dummyjson.com/data/products/1/1.jpg",
-            "post_url": "/1",
+            "post_slug": "HPN+2023+di+Medan+PWI+Riau+akan+Berangkatkan+Ratusan+Wartawan",
+            "post_date": "senin, 4 september 2023",
+            "post_author": {
+              "author_id": 1,
+              "author_name": "iwal",
+              "author_description": "lorem ipsum bla bla blam bla sfasf erwefag egrgfg hrthrt aer",
+              "author_thumbnail": "https://i.dummyjson.com/data/products/1/thumbnail.jpg",
+              "author_url": "/iwal"
+            },
+            "post_tags": [
+              {
+                "tag_id": 1,
+                "tag_name": "Lorem Ipsum",
+                "tag_url": "/lorem-ipsum"
+              },
+              {
+                "tag_id": 1,
+                "tag_name": "HPN 2023 Medan,",
+                "tag_url": "/hpn-2023-Medan"
+              }
+            ]
+          }
+        }
+      },
+      "200-post-location": {
+        "description": "Contoh response sukses ambil data berita dari lokasi",
+        "value": {
+          "code": 200,
+          "success": true,
+          "message": "Sukses mendapatkan data berita dari lokasi",
+          "data": [
+            {
+              "post_id": 1,
+              "post_title": "article pelalawan 1",
+              "post_content": "lorem ipsum dolor sit amet",
+              "medium_thumbnail": "https://i.dummyjson.com/data/products/1/1.jpg",
+              "thumbnail": "https://i.dummyjson.com/data/products/1/thumbnail.jpg",
+              "post_date": "senin, 4 september 2023",
+              "post_slug": "HPN+2023+di+Medan+PWI+Riau+akan+Berangkatkan+Ratusan+Wartawan",
+              "author_name": "iwal"
+            },
+            {
+              "post_id": 2,
+              "post_title": "article pelalawan 2",
+              "post_content": "lorem ipsum dolor sit amet",
+              "medium_thumbnail": "https://i.dummyjson.com/data/products/1/1.jpg",
+              "thumbnail": "https://i.dummyjson.com/data/products/1/thumbnail.jpg",
+              "post_date": "selasa, 5 september 2023",
+              "post_slug": "Sedia+Payung+Sebelum+Hujan+Inilah+Prakiraan+Cuaca+Untuk+Wilayah+Riau",
+              "author_name": "sonya"
+            }
+          ]
+        }
+      },
+      "200-post-location-main-article": {
+        "description": "Contoh response sukses ambil 1 data berita dari lokasi",
+        "value": {
+          "code": 200,
+          "success": true,
+          "message": "Sukses mendapatkan 1 data berita",
+          "data": {
+            "post_id": 1,
+            "post_title": "HPN 2023 di Medan, PWI Riau akan Berangkatkan Ratusan Wartawan HPN 2023 di Medan, PWI Riau akan Berangkatkan Ratusan Wartawan",
+            "post_category": "acara",
+            "post_content": "loremasfsadf sfasfasg dfgdfgad afdfasfafaadf etretergrv sdfnjdjdygjtej dhfhsrhsrht [polling=234d23r3f34t345a234345]",
+            "thumbnail": "https://i.dummyjson.com/data/products/1/thumbnail.jpg",
+            "medium_thumbnail": "https://i.dummyjson.com/data/products/1/1.jpg",
+            "post_slug": "HPN+2023+di+Medan+PWI+Riau+akan+Berangkatkan+Ratusan+Wartawan",
             "post_date": "senin, 4 september 2023",
             "post_location": {
               "location_name": "Garuda Cyber Indonesia",
@@ -2627,7 +2932,7 @@
               "post_category": "acara",
               "thumbnail": "https://i.dummyjson.com/data/products/1/thumbnail.jpg",
               "medium_thumbnail": "https://i.dummyjson.com/data/products/1/1.jpg",
-              "post_url": "/1",
+              "post_slug": "HPN+2023+di+Medan+PWI+Riau+akan+Berangkatkan+Ratusan+Wartawan",
               "post_date": "senin, 4 september 2023"
             },
             {
@@ -2636,7 +2941,7 @@
               "post_category": "cuaca",
               "thumbnail": "https://i.dummyjson.com/data/products/1/thumbnail.jpg",
               "medium_thumbnail": "https://i.dummyjson.com/data/products/1/1.jpg",
-              "post_url": "/2",
+              "post_slug": "Sedia+Payung+Sebelum+Hujan+Inilah+Prakiraan+Cuaca+Untuk+Wilayah+Riau",
               "post_date": "selasa, 5 september 2023, "
             },
             {
@@ -2645,7 +2950,7 @@
               "post_category": "bisnis",
               "thumbnail": "https://i.dummyjson.com/data/products/1/thumbnail.jpg",
               "medium_thumbnail": "https://i.dummyjson.com/data/products/1/1.jpg",
-              "post_url": "/3",
+              "post_slug": "HPN+2023+di+Medan+PWI+Riau+akan+Berangkatkan+Ratusan+Wartawan",
               "post_date": "senin, 4 september 2023"
             },
             {
@@ -2654,7 +2959,7 @@
               "post_category": "pendidikan",
               "thumbnail": "https://i.dummyjson.com/data/products/1/thumbnail.jpg",
               "medium_thumbnail": "https://i.dummyjson.com/data/products/1/1.jpg",
-              "post_url": "/4",
+              "post_slug": "Sedia+Payung+Sebelum+Hujan+Inilah+Prakiraan+Cuaca+Untuk+Wilayah+Riau",
               "post_date": "selasa, 5 september 2023, "
             }
           ]
@@ -2675,7 +2980,7 @@
                 "post_category": "acara",
                 "thumbnail": "https://i.dummyjson.com/data/products/1/thumbnail.jpg",
                 "medium_thumbnail": "https://i.dummyjson.com/data/products/1/1.jpg",
-                "post_url": "/1",
+                "post_slug": "HPN+2023+di+Medan+PWI+Riau+akan+Berangkatkan+Ratusan+Wartawan",
                 "post_date": "senin, 4 september 2023"
               },
               {
@@ -2685,7 +2990,7 @@
                 "post_category": "cuaca",
                 "thumbnail": "https://i.dummyjson.com/data/products/1/thumbnail.jpg",
                 "medium_thumbnail": "https://i.dummyjson.com/data/products/1/1.jpg",
-                "post_url": "/2",
+                "post_slug": "Sedia+Payung+Sebelum+Hujan+Inilah+Prakiraan+Cuaca+Untuk+Wilayah+Riau",
                 "post_date": "selasa, 5 september 2023"
               },
               {
@@ -2695,7 +3000,7 @@
                 "post_category": "acara",
                 "thumbnail": "https://i.dummyjson.com/data/products/1/thumbnail.jpg",
                 "medium_thumbnail": "https://i.dummyjson.com/data/products/1/1.jpg",
-                "post_url": "/1",
+                "post_slug": "HPN+2023+di+Medan+PWI+Riau+akan+Berangkatkan+Ratusan+Wartawan",
                 "post_date": "senin, 4 september 2023"
               },
               {
@@ -2705,7 +3010,7 @@
                 "post_category": "cuaca",
                 "thumbnail": "https://i.dummyjson.com/data/products/1/thumbnail.jpg",
                 "medium_thumbnail": "https://i.dummyjson.com/data/products/1/1.jpg",
-                "post_url": "/2",
+                "post_slug": "Sedia+Payung+Sebelum+Hujan+Inilah+Prakiraan+Cuaca+Untuk+Wilayah+Riau",
                 "post_date": "selasa, 5 september 2023"
               },
               {
@@ -2715,7 +3020,7 @@
                 "post_category": "acara",
                 "thumbnail": "https://i.dummyjson.com/data/products/1/thumbnail.jpg",
                 "medium_thumbnail": "https://i.dummyjson.com/data/products/1/1.jpg",
-                "post_url": "/3",
+                "post_slug": "HPN+2023+di+Medan+PWI+Riau+akan+Berangkatkan+Ratusan+Wartawan",
                 "post_date": "senin, 4 september 2023"
               },
               {
@@ -2725,7 +3030,7 @@
                 "post_category": "cuaca",
                 "thumbnail": "https://i.dummyjson.com/data/products/1/thumbnail.jpg",
                 "medium_thumbnail": "https://i.dummyjson.com/data/products/1/1.jpg",
-                "post_url": "/4",
+                "post_slug": "Sedia+Payung+Sebelum+Hujan+Inilah+Prakiraan+Cuaca+Untuk+Wilayah+Riau",
                 "post_date": "selasa, 5 september 2023"
               }
             ],
@@ -2748,7 +3053,7 @@
                 "post_category": "acara",
                 "thumbnail": "https://i.dummyjson.com/data/products/1/thumbnail.jpg",
                 "medium_thumbnail": "https://i.dummyjson.com/data/products/1/1.jpg",
-                "post_url": "/1",
+                "post_slug": "HPN+2023+di+Medan+PWI+Riau+akan+Berangkatkan+Ratusan+Wartawan",
                 "post_date": "senin, 4 september 2023"
               },
               {
@@ -2758,7 +3063,7 @@
                 "post_category": "cuaca",
                 "thumbnail": "https://i.dummyjson.com/data/products/1/thumbnail.jpg",
                 "medium_thumbnail": "https://i.dummyjson.com/data/products/1/1.jpg",
-                "post_url": "/2",
+                "post_slug": "Sedia+Payung+Sebelum+Hujan+Inilah+Prakiraan+Cuaca+Untuk+Wilayah+Riau",
                 "post_date": "selasa, 5 september 2023"
               },
               {
@@ -2768,7 +3073,7 @@
                 "post_category": "acara",
                 "thumbnail": "https://i.dummyjson.com/data/products/1/thumbnail.jpg",
                 "medium_thumbnail": "https://i.dummyjson.com/data/products/1/1.jpg",
-                "post_url": "/3",
+                "post_slug": "HPN+2023+di+Medan+PWI+Riau+akan+Berangkatkan+Ratusan+Wartawan",
                 "post_date": "senin, 4 september 2023"
               },
               {
@@ -2778,7 +3083,7 @@
                 "post_category": "cuaca",
                 "thumbnail": "https://i.dummyjson.com/data/products/1/thumbnail.jpg",
                 "medium_thumbnail": "https://i.dummyjson.com/data/products/1/1.jpg",
-                "post_url": "/4",
+                "post_slug": "Sedia+Payung+Sebelum+Hujan+Inilah+Prakiraan+Cuaca+Untuk+Wilayah+Riau",
                 "post_date": "selasa, 5 september 2023"
               },
               {
@@ -2788,7 +3093,7 @@
                 "post_category": "acara",
                 "thumbnail": "https://i.dummyjson.com/data/products/1/thumbnail.jpg",
                 "medium_thumbnail": "https://i.dummyjson.com/data/products/1/1.jpg",
-                "post_url": "/5",
+                "post_slug": "/5",
                 "post_date": "senin, 4 september 2023"
               },
               {
@@ -2798,7 +3103,7 @@
                 "post_category": "cuaca",
                 "thumbnail": "https://i.dummyjson.com/data/products/1/thumbnail.jpg",
                 "medium_thumbnail": "https://i.dummyjson.com/data/products/1/1.jpg",
-                "post_url": "/6",
+                "post_slug": "/6",
                 "post_date": "selasa, 5 september 2023"
               }
             ],
@@ -2829,7 +3134,7 @@
             {
               "poll_id": 1,
               "poll_title": "polling & survey calon bupati dan wakil bupati indragiri hulu 2023",
-              "poll_url": "/1",
+              "poll_slug": "polling+&+survey+calon+bupati+dan+wakil+bupati+indragiri+hulu+2023",
               "poll_start": "2 januari 2023",
               "poll_end": "3 januari 2023",
               "poll_active": true,
@@ -2923,7 +3228,7 @@
             {
               "poll_id": 2,
               "poll_title": "polling & survey calon bupati dan wakil bupati bengkalis 2024",
-              "poll_url": "/2",
+              "poll_slug": "polling+&+survey+calon+bupati+dan+wakil+bupati+bengkalis+2024",
               "poll_start": "5 februari 2023",
               "poll_end": "6 februari 2023",
               "poll_active": true,
@@ -3018,15 +3323,15 @@
         }
       },
       "200-polling-get-one": {
-        "description": "Contoh response berhasil mendapatkan semua data survey",
+        "description": "Contoh response berhasil mendapatkan 1 data survey",
         "value": {
           "code": 200,
           "success": true,
-          "message": "Sukses mendapatkan semua data survey",
+          "message": "Sukses mendapatkan 1 data survey",
           "data": {
             "poll_id": 1,
-            "poll_title": "polling & survey calon bupati dan wakin bupati indragiri hulu 2023",
-            "poll_url": "/1",
+            "poll_title": "polling & survey calon bupati dan wakil bupati indragiri hulu 2023",
+            "poll_slug": "polling+&+survey+calon+bupati+dan+wakil+bupati+indragiri+hulu+2023",
             "poll_start": "2 januari 2023",
             "poll_end": "3 januari 2023",
             "poll_active": true,

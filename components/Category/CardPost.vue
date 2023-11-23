@@ -1,6 +1,6 @@
 <template>
   <div class="card w-100">
-    <NuxtLink :to="'/post' + data.post_url" class="d-block">
+    <NuxtLink :to="'/post/' + data.post_slug" class="d-block">
       <img
         :src="data.medium_thumbnail"
         class="card-img-top d-lg-block d-md-none d-sm-none d-none"
@@ -27,13 +27,19 @@
           />{{ data.post_date }}</span
         >
       </div>
-      <NuxtLink :to="'/post' + data.post_url">
+      <NuxtLink :to="'/post/' + data.post_slug">
         <h5 class="card-title textEclipse">{{ data.post_title }}</h5>
       </NuxtLink>
       <p class="card-text textEclipse">
         {{ data.post_content }}
       </p>
-      <NuxtLink :to="'/post' + data.post_url" class="btn btn-primary"
+      <NuxtLink
+        :to="
+          directori === 'lokasi'
+            ? '/lokasi/post/' + data.post_slug
+            : '/post/' + data.post_slug
+        "
+        class="btn btn-primary"
         >Selengkapnya</NuxtLink
       >
     </div>
@@ -41,8 +47,9 @@
 </template>
 
 <script setup>
-const props = defineProps(["data"]);
+const props = defineProps(["data", "directori"]);
 const data = props.data;
+const directori = props.directori;
 </script>
 
 <style>

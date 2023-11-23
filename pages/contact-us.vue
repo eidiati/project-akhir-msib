@@ -226,19 +226,14 @@ const loading = ref(false);
 async function handleSubmit(e) {
   e.preventDefault();
   loading.value = true;
-  try {
-    const res = await postData("contact-us", form.value);
-    alert(res.message);
-    loading.value = false;
-    form.value = {
-      username: "",
-      email: "",
-      subject: "",
-      message: "",
-    };
-  } catch (error) {
-    console.log(error);
-  }
+  const res = await postData("contact-us", form.value);
+  loading.value = res.loading;
+  form.value = {
+    username: "",
+    email: "",
+    subject: "",
+    message: "",
+  };
 }
 onMounted(async () => {
   contact.value = await getData("contact");

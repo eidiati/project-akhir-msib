@@ -31,12 +31,12 @@
                           />
                           <li
                             v-else
-                            v-if="menu.parent_id < 1"
+                            v-if="menu.parent_id < 1 && menu.menu_active"
                             class="dropdown dropdown-full-color dropdown-light"
                           >
                             <NuxtLink
                               class="dropdown-item dropdown-toggle"
-                              :to="'/kategori' + menu.menu_url"
+                              :to="menu.menu_url"
                             >
                               {{ menu.menu_name }}
                             </NuxtLink>
@@ -50,7 +50,15 @@
                         <li class="dropdown dropdown-full-color dropdown-light">
                           <NuxtLink
                             class="dropdown-item dropdown-toggle"
-                            to="/"
+                            to="/lokasi"
+                          >
+                            lokasi
+                          </NuxtLink>
+                        </li>
+                        <li class="dropdown dropdown-full-color dropdown-light">
+                          <NuxtLink
+                            class="dropdown-item dropdown-toggle"
+                            to="/index-berita"
                           >
                             index berita
                           </NuxtLink>
