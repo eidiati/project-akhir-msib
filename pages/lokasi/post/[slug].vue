@@ -153,16 +153,14 @@ onMounted(async () => {
   });
   article.value = res;
 
-  isPolling.value = postContent.includes("[polling=");
-  isQuiz.value = postContent.includes("[quiz=");
-  if (isPolling) {
+  if (postContent.includes("[polling=")) {
+    isPolling.value = true;
     const decrypt = await getPoll_or_Quiz(/\[polling=(.*?)=\]/, postContent);
-    console.log(isPolling);
     content.value = postContent.replace(/\[polling=[^\]]*\]/, "");
     poll_id.value = decrypt;
-  } else if (isQuiz) {
+  } else if (postContent.includes("[quiz=")) {
+    isQuiz.value = true;
     const decrypt = await getPoll_or_Quiz(/\[quiz=(.*?)=\]/, postContent);
-    console.log(isQuiz);
     content.value = postContent.replace(/\[quiz=[^\]]*\]/, "");
     console.log(decrypt);
   } else {

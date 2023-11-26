@@ -1115,6 +1115,165 @@
           }
         }
       }
+    },
+    "/quiz": {
+      "get": {
+        "tags": ["quiz"],
+        "summary": "Ambil semua data quiz",
+        "description": "Dapatkan semua data quiz",
+        "responses": {
+          "200": {
+            "description": "Sukses mendapatkan semua data quiz",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/200-quiz"
+                },
+                "examples": {
+                  "success": {
+                    "$ref": "#/components/examples/200-quiz"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/404"
+                },
+                "examples": {
+                  "failed": {
+                    "$ref": "#/components/examples/404"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["quiz"],
+        "summary": "Menambah jawaban quiz",
+        "description": "Menambah jawaban quiz dengan nama lengkap dan no telepon",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/adit"
+              },
+              "examples": {
+                "adit": {
+                  "$ref": "#/components/examples/adit"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Sukses menambah survey",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/201-quiz-answer"
+                },
+                "examples": {
+                  "success": {
+                    "$ref": "#/components/examples/201-quiz-answer"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/quiz/{id}": {
+      "get": {
+        "tags": ["quiz"],
+        "summary": "Ambil satu data quiz",
+        "description": "Dapatkan satu data quiz",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Sukses mendapatkan satu data quiz",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/200-quiz-question"
+                },
+                "examples": {
+                  "success": {
+                    "$ref": "#/components/examples/200-quiz-question"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/404"
+                },
+                "examples": {
+                  "failed": {
+                    "$ref": "#/components/examples/404"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/participant": {
+      "post": {
+        "tags": ["participant"],
+        "summary": "Menambah partisipasi quiz",
+        "description": "Menambah partisipasi quiz dengan nama lengkap dan no telepon",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/participant_adit"
+              },
+              "examples": {
+                "adit": {
+                  "$ref": "#/components/examples/participant_adit"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Sukses menambah survey",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/201-participant"
+                },
+                "examples": {
+                  "success": {
+                    "$ref": "#/components/examples/201-participant"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -2025,6 +2184,64 @@
       "201-polling": {
         "type": "object",
         "properties": {
+          "ip_address": {
+            "type": "string"
+          },
+          "poll_id": {
+            "type": "integer"
+          },
+          "opt_id": {
+            "type": "integer"
+          }
+        },
+        "required": ["ip_address"]
+      },
+      "200-quiz": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer"
+          },
+          "success": {
+            "type": "boolean"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "quiz_id": {
+                  "type": "integer"
+                },
+                "quiz_title": {
+                  "type": "string"
+                },
+                "quiz_image": {
+                  "type": "string"
+                },
+                "quiz_slug": {
+                  "type": "string"
+                },
+                "quiz_start": {
+                  "type": "string"
+                },
+                "quiz_end": {
+                  "type": "string"
+                },
+                "quiz_active": {
+                  "type": "boolean"
+                }
+              }
+            }
+          }
+        }
+      },
+      "200-quiz-question": {
+        "type": "object",
+        "properties": {
           "code": {
             "type": "integer"
           },
@@ -2037,20 +2254,128 @@
           "data": {
             "type": "object",
             "properties": {
-              "poll_ip_id": {
+              "quiz_id": {
                 "type": "integer"
               },
-              "ip_address": {
+              "quiz_title": {
                 "type": "string"
               },
-              "poll_id": {
+              "quiz_active": {
+                "type": "boolean"
+              },
+              "quiz_question": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "question_id": {
+                      "type": "integer"
+                    },
+                    "question_text": {
+                      "type": "string"
+                    },
+                    "question_opt": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "opt_id": {
+                            "type": "integer"
+                          },
+                          "opt_text": {
+                            "type": "string"
+                          },
+                          "opt_image": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "201-quiz-answer": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer"
+          },
+          "success": {
+            "type": "boolean"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "result_text": {
                 "type": "integer"
               },
-              "opt_id": {
-                "type": "integer"
+              "incorect_answer": {
+                "type": "string"
+              },
+              "quiz_question": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "result_text": {
+                      "type": "string"
+                    },
+                    "incorect_answer": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "question_id": {
+                            "type": "integer"
+                          },
+                          "question_text": {
+                            "type": "string"
+                          },
+                          "your_answer": {
+                            "type": "string"
+                          },
+                          "correct_answer": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
               }
-            },
-            "required": ["poll_ip_id"]
+            }
+          }
+        }
+      },
+      "201-participant": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer"
+          },
+          "success": {
+            "type": "boolean"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "participant_name": {
+                "type": "string"
+              },
+              "participant_phone": {
+                "type": "string"
+              }
+            }
           }
         }
       },
@@ -2101,6 +2426,42 @@
           }
         },
         "required": ["poll_id"]
+      },
+      "participant_adit": {
+        "type": "object",
+        "properties": {
+          "participant_name": {
+            "type": "string"
+          },
+          "participant_phone": {
+            "type": "string"
+          }
+        }
+      },
+      "adit": {
+        "type": "object",
+        "properties": {
+          "participant_name": {
+            "type": "string"
+          },
+          "participant_phone": {
+            "type": "string"
+          },
+          "answer": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "question_id": {
+                  "type": "number"
+                },
+                "your_answer": {
+                  "type": "number"
+                }
+              }
+            }
+          }
+        }
       },
       "404": {
         "type": "object",
@@ -3436,6 +3797,238 @@
             "poll_id": 1,
             "opt_id": 1
           }
+        }
+      },
+      "200-quiz": {
+        "description": "Contoh response berhasil mendapatkan semua data quiz",
+        "value": {
+          "code": 200,
+          "success": true,
+          "message": "Sukses mendapatkan semua data survey",
+          "data": [
+            {
+              "quiz_id": 1,
+              "quiz_title": "Tantangan Tebak Gubernur",
+              "quiz_image": "https://kalesang.id/wp-content/uploads/2023/04/0E26E690-CBFE-4A82-8B69-AB0401B7CF93.jpeg",
+              "quiz_slug": "tantangan+tebak+gubernur",
+              "quiz_start": "2 januari 2023",
+              "quiz_end": "3 januari 2023",
+              "quiz_active": true
+            },
+            {
+              "quiz_id": 2,
+              "quiz_title": "Tantangan Tebak Nama Ibu Kota",
+              "quiz_image": "https://i.pinimg.com/564x/57/72/a0/5772a01462911d2e8383908dbce4fa61.jpg",
+              "quiz_slug": "tantangan+tebak+nama+ibu+kota",
+              "quiz_start": "5 februari 2023",
+              "quiz_end": "6 februari 2023",
+              "quiz_active": true
+            },
+            {
+              "quiz_id": 3,
+              "quiz_title": "Tantangan Tebak Pahlawan",
+              "quiz_slug": "tantangan+tebak+pahlawan",
+              "quiz_image": "https://upload.wikimedia.org/wikipedia/id/3/31/Pahlawan_revolusi2.png",
+              "quiz_start": "5 februari 2023",
+              "quiz_end": "6 februari 2023",
+              "quiz_active": true
+            }
+          ]
+        }
+      },
+      "200-quiz-question": {
+        "description": "Contoh response berhasil mendapatkan semua data quiz",
+        "value": {
+          "code": 200,
+          "success": true,
+          "message": "Sukses mendapatkan semua data survey",
+          "data": {
+            "quiz_id": 1,
+            "quiz_title": "Tantangan Tebak Gubernur",
+            "quiz_slug": "tantangan+tebak+gubernur",
+            "quiz_active": true,
+            "quiz_question": [
+              {
+                "question_id": 1,
+                "question_text": "Siapa presiden pertama Indonesia?",
+                "question_opt": [
+                  {
+                    "opt_id": 1,
+                    "opt_text": "Jokowi",
+                    "opt_image": "https://kalesang.id/wp-content/uploads/2023/04/0E26E690-CBFE-4A82-8B69-AB0401B7CF93.jpeg"
+                  },
+                  {
+                    "opt_id": 2,
+                    "opt_text": "Megawati",
+                    "opt_image": "https://kalesang.id/wp-content/uploads/2023/04/0E26E690-CBFE-4A82-8B69-AB0401B7CF93.jpeg"
+                  },
+                  {
+                    "opt_id": 3,
+                    "opt_text": "SBY",
+                    "opt_image": "https://kalesang.id/wp-content/uploads/2023/04/0E26E690-CBFE-4A82-8B69-AB0401B7CF93.jpeg"
+                  },
+                  {
+                    "opt_id": 4,
+                    "opt_text": "Kaesang",
+                    "opt_image": "https://kalesang.id/wp-content/uploads/2023/04/0E26E690-CBFE-4A82-8B69-AB0401B7CF93.jpeg"
+                  }
+                ]
+              },
+              {
+                "question_id": 2,
+                "question_text": "Siapa gubernur jakarta barat?",
+                "question_opt": [
+                  {
+                    "opt_id": 1,
+                    "opt_text": "Madara",
+                    "opt_image": "https://kalesang.id/wp-content/uploads/2023/04/0E26E690-CBFE-4A82-8B69-AB0401B7CF93.jpeg"
+                  },
+                  {
+                    "opt_id": 2,
+                    "opt_text": "Sasuke",
+                    "opt_image": "https://kalesang.id/wp-content/uploads/2023/04/0E26E690-CBFE-4A82-8B69-AB0401B7CF93.jpeg"
+                  },
+                  {
+                    "opt_id": 3,
+                    "opt_text": "Kabuto",
+                    "opt_image": "https://kalesang.id/wp-content/uploads/2023/04/0E26E690-CBFE-4A82-8B69-AB0401B7CF93.jpeg"
+                  },
+                  {
+                    "opt_id": 4,
+                    "opt_text": "Hinata",
+                    "opt_image": "https://kalesang.id/wp-content/uploads/2023/04/0E26E690-CBFE-4A82-8B69-AB0401B7CF93.jpeg"
+                  }
+                ]
+              },
+              {
+                "question_id": 3,
+                "question_text": "Siapa gubernur jawa timur?",
+                "question_opt": [
+                  {
+                    "opt_id": 1,
+                    "opt_text": "Itachi",
+                    "opt_image": "https://kalesang.id/wp-content/uploads/2023/04/0E26E690-CBFE-4A82-8B69-AB0401B7CF93.jpeg"
+                  },
+                  {
+                    "opt_id": 2,
+                    "opt_text": "Ichigo",
+                    "opt_image": "https://kalesang.id/wp-content/uploads/2023/04/0E26E690-CBFE-4A82-8B69-AB0401B7CF93.jpeg"
+                  },
+                  {
+                    "opt_id": 3,
+                    "opt_text": "Susanoo",
+                    "opt_image": "https://kalesang.id/wp-content/uploads/2023/04/0E26E690-CBFE-4A82-8B69-AB0401B7CF93.jpeg"
+                  },
+                  {
+                    "opt_id": 4,
+                    "opt_text": "Ganjar",
+                    "opt_image": "https://kalesang.id/wp-content/uploads/2023/04/0E26E690-CBFE-4A82-8B69-AB0401B7CF93.jpeg"
+                  }
+                ]
+              },
+              {
+                "question_id": 4,
+                "question_text": "Siapa presiden Kelima Indonesia?",
+                "question_opt": [
+                  {
+                    "opt_id": 1,
+                    "opt_text": "Prabowo",
+                    "opt_image": "https://kalesang.id/wp-content/uploads/2023/04/0E26E690-CBFE-4A82-8B69-AB0401B7CF93.jpeg"
+                  },
+                  {
+                    "opt_id": 2,
+                    "opt_text": "Putin",
+                    "opt_image": "https://kalesang.id/wp-content/uploads/2023/04/0E26E690-CBFE-4A82-8B69-AB0401B7CF93.jpeg"
+                  },
+                  {
+                    "opt_id": 3,
+                    "opt_text": "Alexander",
+                    "opt_image": "https://kalesang.id/wp-content/uploads/2023/04/0E26E690-CBFE-4A82-8B69-AB0401B7CF93.jpeg"
+                  },
+                  {
+                    "opt_id": 4,
+                    "opt_text": "Kim Jong Unch",
+                    "opt_image": "https://kalesang.id/wp-content/uploads/2023/04/0E26E690-CBFE-4A82-8B69-AB0401B7CF93.jpeg"
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      },
+      "201-quiz-answer": {
+        "description": "Contoh response berhasil mengirimkan jawaban quiz",
+        "value": {
+          "code": 200,
+          "success": true,
+          "message": "Sukses mengirimkan jawaban quiz",
+          "data": {
+            "result_text": "Score yang diperoleh: 3/6",
+            "incorect_answer": [
+              {
+                "question_id": 1,
+                "question_text": "Siapa pemimpin jawa timur?",
+                "your_answer": "Madara",
+                "correct_answer": "Hashirama"
+              },
+              {
+                "question_id": 2,
+                "question_text": "Siapa pemimpin akatsuki?",
+                "your_answer": "Ichigo",
+                "correct_answer": "Pain"
+              },
+              {
+                "question_id": 3,
+                "question_text": "Siapa pemimpin korea utara?",
+                "your_answer": "Albert",
+                "correct_answer": "Kim Jong Unch"
+              }
+            ]
+          }
+        }
+      },
+      "201-participant": {
+        "description": "Contoh response berhasil menambahkan participant",
+        "value": {
+          "code": 200,
+          "success": true,
+          "message": "Sukses menambahkan participant",
+          "data": {
+            "participant_name": "adit",
+            "participant_phone": "083344556677"
+          }
+        }
+      },
+      "participant_adit": {
+        "description": "Contoh request body dengan nama lengkap adit",
+        "value": {
+          "participant_name": "adit",
+          "participant_phone": "083344556677"
+        }
+      },
+      "adit": {
+        "description": "Contoh request body dengan nama lengkap adit",
+        "value": {
+          "participant_name": "adit",
+          "participant_phone": "083344556677",
+          "answer": [
+            {
+              "question_id": 1,
+              "your_answer": 4
+            },
+            {
+              "question_id": 2,
+              "your_answer": 3
+            },
+            {
+              "question_id": 3,
+              "your_answer": 4
+            },
+            {
+              "question_id": 4,
+              "your_answer": 1
+            }
+          ]
         }
       },
       "iwal": {

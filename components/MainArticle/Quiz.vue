@@ -4,6 +4,7 @@
   </div>
 </template>
 
-<script setup></script>
-
-<style lang="scss" scoped></style>
+<script setup>
+const props = defineProps(["quiz_id"]);
+const quiz_id = ref(props.quiz_id);
+</script>

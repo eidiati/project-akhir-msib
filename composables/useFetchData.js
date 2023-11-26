@@ -58,13 +58,16 @@ export const useFetchData = async () => {
   const getPoll_or_Quiz = async (regex, postContent) => {
     const matches = postContent.match(regex);
     const extractedString = matches ? matches[1] : null;
+    if (matches) {
+      const decrypt = CryptoJS.AES.decrypt(
+        extractedString.toString(),
+        "lancangkuning2"
+      ).toString(CryptoJS.enc.Utf8);
 
-    const decrypt = CryptoJS.AES.decrypt(
-      extractedString.toString(),
-      "lancangkuning2"
-    ).toString(CryptoJS.enc.Utf8);
-
-    return decrypt;
+      return decrypt;
+    } else {
+      return null;
+    }
   };
   return {
     getData,
