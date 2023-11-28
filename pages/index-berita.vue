@@ -51,4 +51,8 @@ const { getData } = await useFetchData();
 onMounted(async () => {
   category.value = await getData(`post-category/${slug}`);
 });
+
+useHead({
+  title: "Index Berita | Lancang Kuning",
+});
 </script>

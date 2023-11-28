@@ -35,7 +35,7 @@ import { NuxtLink } from '#build/components';
         >
           <div class="row">
             <div class="col">
-              <NuxtLink :to="'/post/' + post.post_slug">
+              <NuxtLink :to="'/post/' + encodeURIComponent(post.post_slug)">
                 <img
                   :src="post.thumbnail"
                   class="img-fluid border-radius-0"
@@ -49,7 +49,7 @@ import { NuxtLink } from '#build/components';
               <div class="thumb-info-caption-text">
                 <div class="d-inline-block text-default text-1 mt-2 float-none">
                   <NuxtLink
-                    :to="'/post/' + post.post_slug"
+                    :to="'/post/' + encodeURIComponent(post.post_slug)"
                     class="text-decoration-none text-color-default text-capitalize"
                     >{{ post.post_date }}</NuxtLink
                   >
@@ -58,7 +58,7 @@ import { NuxtLink } from '#build/components';
                   class="d-block line-height-2 text-4 text-dark font-weight-bold mb-0"
                 >
                   <NuxtLink
-                    :to="'/post/' + post.post_slug"
+                    :to="'/post/' + encodeURIComponent(post.post_slug)"
                     class="text-decoration-none text-color-dark text-color-hover-primary"
                     >{{ post.post_title }}</NuxtLink
                   >

@@ -14,7 +14,16 @@
                   >
                     <nav class="collapse">
                       <ul class="nav nav-pills align-items-center" id="mainNav">
-                        <li class="dropdown dropdown-full-color dropdown-light">
+                        <AnimationSkleton
+                          v-if="menus.loading"
+                          width_="70px"
+                          height_="12px"
+                          class_="d-inline-block m-2"
+                        />
+                        <li
+                          v-else
+                          class="dropdown dropdown-full-color dropdown-light"
+                        >
                           <NuxtLink
                             class="dropdown-item dropdown-toggle"
                             to="/"
@@ -47,30 +56,25 @@
                             />
                           </li>
                         </template>
-                        <li class="dropdown dropdown-full-color dropdown-light">
-                          <NuxtLink
-                            class="dropdown-item dropdown-toggle"
-                            to="/lokasi"
+                        <template v-for="(menu, i) in menus_static" :key="i">
+                          <AnimationSkleton
+                            v-if="menus.loading"
+                            width_="70px"
+                            height_="12px"
+                            class_="d-inline-block m-2"
+                          />
+                          <li
+                            v-else
+                            class="dropdown dropdown-full-color dropdown-light"
                           >
-                            lokasi
-                          </NuxtLink>
-                        </li>
-                        <li class="dropdown dropdown-full-color dropdown-light">
-                          <NuxtLink
-                            class="dropdown-item dropdown-toggle"
-                            to="/index-berita"
-                          >
-                            index berita
-                          </NuxtLink>
-                        </li>
-                        <li class="dropdown dropdown-full-color dropdown-light">
-                          <NuxtLink
-                            class="dropdown-item dropdown-toggle"
-                            to="/quiz"
-                          >
-                            Kuiz
-                          </NuxtLink>
-                        </li>
+                            <NuxtLink
+                              class="dropdown-item dropdown-toggle"
+                              :to="menu.menu_url"
+                            >
+                              {{ menu.menu_name }}
+                            </NuxtLink>
+                          </li>
+                        </template>
                       </ul>
                     </nav>
                   </div>
@@ -124,9 +128,24 @@ async function handleSearch() {
 
 const keyword = ref("");
 const menus = ref({
-  data: 6,
+  data: 3,
   loading: true,
 });
+const menus_static = [
+  {
+    menu_url: "/lokasi",
+    menu_name: "lokasi",
+  },
+
+  {
+    menu_url: "/kuis",
+    menu_name: "kuis",
+  },
+  {
+    menu_url: "/index-berita",
+    menu_name: "index berita",
+  },
+];
 const { getData } = await useFetchData();
 
 onMounted(async () => {

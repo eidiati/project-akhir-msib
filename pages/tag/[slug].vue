@@ -49,6 +49,10 @@ const tag = ref({
 const numberPost = 6;
 const { getData } = await useFetchData();
 onMounted(async () => {
-  tag.value = await getData(`tags/${slug}`);
+  const res = await getData(`tags/${slug}`);
+  tag.value = res;
+  useHead({
+    title: `${res.data.tag_name} | Lancang Kuning`,
+  });
 });
 </script>

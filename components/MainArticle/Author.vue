@@ -1,5 +1,5 @@
 <template>
-  <h4 class="mb-3">Author</h4>
+  <h4 class="mb-3">Jurnalis</h4>
   <div class="img-thumbnail img-thumbnail-no-borders d-block pb-3">
     <AnimationSkleton
       v-if="loading"
@@ -8,7 +8,7 @@
       class_="me-3"
     />
     <NuxtLink v-else to="/">
-      <img :src="author.author_thumbnail" :alt="author.author_name" />
+      <img :src="user.user_photo" :alt="user.user_name" />
     </NuxtLink>
   </div>
   <div v-if="loading" class="pt-2" style="margin-left: 100px">
@@ -21,26 +21,22 @@
     <p>
       <strong class="name text-capitalize">
         <NuxtLink
-          :to="'/author' + author.author_url"
+          :to="'/author/' + encodeURIComponent(encrypted(user.user_id))"
           class="text-4 pb-2 pt-2 d-block"
-          >{{ author.author_name }}</NuxtLink
+          >{{ user.user_name }}</NuxtLink
         >
       </strong>
     </p>
     <p>
-      {{ author.author_description }}
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra
-      euismod odio, gravida pellentesque urna varius vitae. Sed dui lorem,
-      adipiscing in adipiscing et, interdum nec metus. Mauris ultricies, justo
-      eu convallis placerat, felis enim ornare nisi, vitae mattis nulla ante id
-      dui.
+      {{ user.user_bio }}
     </p>
   </template>
 </template>
 
 <script setup>
 defineProps({
-  author: Object,
+  user: Object,
   loading: Boolean,
 });
+const { encrypted } = useFunction();
 </script>

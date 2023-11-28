@@ -28,7 +28,7 @@
             :key="index"
             class="col"
           >
-            <LazyCategoryCardPost :data="data" directori="lokasi" />
+            <LazyCategoryCardPost :data="data" directory="lokasi" />
           </div>
         </div>
       </div>
@@ -45,5 +45,8 @@ const numberPost = 6;
 const { getData } = await useFetchData();
 onMounted(async () => {
   location.value = await getData(`post-location`);
+});
+useHead({
+  title: `Lokasi | Lancang Kuning`,
 });
 </script>

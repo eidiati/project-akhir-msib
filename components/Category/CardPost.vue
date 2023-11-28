@@ -1,23 +1,30 @@
 <template>
   <div class="card w-100">
-    <NuxtLink :to="'/post/' + data.post_slug" class="d-block">
+    <NuxtLink
+      :to="
+        directory === 'lokasi'
+          ? '/lokasi/post/' + encodeURIComponent(data.post_slug)
+          : '/post/' + encodeURIComponent(data.post_slug)
+      "
+      class="d-block"
+    >
       <img
         :src="data.medium_thumbnail"
         class="card-img-top d-lg-block d-md-none d-sm-none d-none"
         style="height: 200px; object-fit: contain"
-        :alt="data.author_name"
+        :alt="data.user_name"
       />
       <img
         :src="data.medium_thumbnail"
         class="card-img-top d-lg-none d-md-block d-sm-block d-block"
         style="height: 100px; object-fit: contain"
-        :alt="data.author_name"
+        :alt="data.user_name"
       />
     </NuxtLink>
     <div class="card-body">
       <div class="d-flex justify-content-between text-default text-1 mb-2">
         <span class="text-capitalize"
-          ><i class="far fa-user me-1"></i>{{ data.author_name }}</span
+          ><i class="far fa-user me-1"></i>{{ data.user_name }}</span
         >
         <span class="text-capitalize"
           ><img
@@ -27,7 +34,7 @@
           />{{ data.post_date }}</span
         >
       </div>
-      <NuxtLink :to="'/post/' + data.post_slug">
+      <NuxtLink :to="'/post/' + encodeURIComponent(data.post_slug)">
         <h5 class="card-title textEclipse">{{ data.post_title }}</h5>
       </NuxtLink>
       <p class="card-text textEclipse">
@@ -35,9 +42,9 @@
       </p>
       <NuxtLink
         :to="
-          directori === 'lokasi'
-            ? '/lokasi/post/' + data.post_slug
-            : '/post/' + data.post_slug
+          directory === 'lokasi'
+            ? '/lokasi/post/' + encodeURIComponent(data.post_slug)
+            : '/post/' + encodeURIComponent(data.post_slug)
         "
         class="btn btn-primary"
         >Selengkapnya</NuxtLink
@@ -47,9 +54,9 @@
 </template>
 
 <script setup>
-const props = defineProps(["data", "directori"]);
+const props = defineProps(["data", "directory"]);
 const data = props.data;
-const directori = props.directori;
+const directory = props.directory;
 </script>
 
 <style>

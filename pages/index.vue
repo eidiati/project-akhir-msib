@@ -4,40 +4,42 @@
       <HomePostByCategory />
     </div>
     <div class="row pb-1 pt-2">
-      <div class="col-md-9">
+      <div class="col-lg-9 col-md-8">
         <LazyHomePost />
         <!-- advertising -->
-        <LazyHomeAdvertising />
+        <div class="d-flex mb-3 justify-content-center">
+          <Advertising position="bawah" />
+        </div>
         <div class="row pb-1 pt-3">
           <!-- popular post -->
           <div class="col-md-6">
             <h3 class="font-weight-bold text-3 mb-0">Postingan Populer</h3>
-            <LazyListPosts directori="popular-posts" />
+            <LazyListPosts directory="popular-posts" />
           </div>
           <!-- recent post -->
           <div class="col-md-6">
             <h3 class="font-weight-bold text-3 mb-0 mt-4 mt-md-0">
               Postingan Terkini
             </h3>
-            <LazyListPosts directori="recent-posts" />
+            <LazyListPosts directory="recent-posts" />
           </div>
         </div>
       </div>
-      <div class="col-md-3">
+      <div class="col-lg-3 col-md-4">
         <LazyHomeNewPost />
         <aside class="sidebar pb-4">
           <LazyHomePollingCard />
-          <NuxtLink to="/" class="my-4 pt-3 d-block">
-            <img
-              alt="Porto"
-              class="img-fluid"
-              src="~/assets/img/blog/blog-ad-1-medium.jpg"
-            />
-          </NuxtLink>
+          <div class="d-flex mt-4 justify-content-center">
+            <Advertising position="bawah" />
+          </div>
         </aside>
       </div>
     </div>
   </div>
 </template>
 
-<script setup></script>
+<script setup>
+useHead({
+  title: "Beranda | Lancang Kuning",
+});
+</script>

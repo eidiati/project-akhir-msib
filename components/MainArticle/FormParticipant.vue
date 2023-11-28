@@ -44,13 +44,9 @@
 </template>
 
 <script setup>
-const props = defineProps({
-  quiz_id: Number,
-});
-const { quiz_id } = toRefs(props);
 const { postData } = await useFetchData();
-const { encrypted } = useFunction();
 const participant = useParticipant();
+const isParticipant = useIsParticipant();
 const loading = ref(false);
 
 const handleSubmit = async (e) => {
@@ -59,11 +55,9 @@ const handleSubmit = async (e) => {
 
   const res = await postData("participant", participant.value);
   if (res.data.success) {
-    const encrypt = encrypted(quiz_id.value);
     localStorage.setItem("participant", JSON.stringify(participant.value));
-    window.location.href = `/kuis/${encodeURIComponent(encrypt)}`;
-
     loading.value = false;
+    isParticipant.value = true;
     participant.value = {
       fullname: "",
       phone: "",

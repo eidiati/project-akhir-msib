@@ -10,7 +10,10 @@
       />
     </div>
 
-    <NuxtLink v-else :to="'/post/' + posts.data[0].post_slug">
+    <NuxtLink
+      v-else
+      :to="'/post/' + encodeURIComponent(posts.data[0].post_slug)"
+    >
       <article
         class="thumb-info thumb-info-no-borders thumb-info-bottom-info thumb-info-bottom-info-dark thumb-info-bottom-info-show-more thumb-info-no-zoom border-radius-0"
       >
@@ -87,7 +90,7 @@
       >
         <div class="row align-items-center pb-1">
           <div class="col-sm-5">
-            <NuxtLink :to="'/post/' + post.post_slug">
+            <NuxtLink :to="'/post/' + encodeURIComponent(post.post_slug)">
               <div class="position-relative w-100" style="padding-top: 55%">
                 <div class="position-absolute top-0 start-0 end-0 bottom-0">
                   <img
@@ -105,7 +108,7 @@
                 class="thumb-info-type text-light text-uppercase d-inline-block bg-color-dark px-2 m-0 mb-1 float-none"
               >
                 <NuxtLink
-                  :to="'/post/' + post.post_slug"
+                  :to="'/post/' + encodeURIComponent(post.post_slug)"
                   class="text-decoration-none text-color-light"
                   >{{ post.post_category }}</NuxtLink
                 >
@@ -114,7 +117,7 @@
                 class="d-block line-height-2 text-4 text-dark font-weight-bold mt-1 mb-0"
               >
                 <NuxtLink
-                  :to="'/post/' + post.post_slug"
+                  :to="'/post/' + encodeURIComponent(post.post_slug)"
                   class="text-decoration-none text-color-dark text-color-hover-primary"
                   >{{ post.post_title }}</NuxtLink
                 >

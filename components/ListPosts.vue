@@ -22,7 +22,7 @@
         <article>
           <div class="post-image">
             <div class="img-thumbnail img-thumbnail-no-borders d-block">
-              <NuxtLink :to="'/post/' + post.post_slug">
+              <NuxtLink :to="'/post/' + encodeURIComponent(post.post_slug)">
                 <img
                   :src="post.thumbnail"
                   class="border-radius-0"
@@ -37,7 +37,7 @@
             <div class="post-meta text-capitalize">{{ post.post_date }}</div>
             <h4 class="font-weight-normal text-3 mb-0">
               <NuxtLink
-                :to="'/post/' + post.post_slug"
+                :to="'/post/' + encodeURIComponent(post.post_slug)"
                 class="text-dark"
                 style="
                   display: -webkit-box;
@@ -57,8 +57,8 @@
 </template>
 
 <script setup>
-const props = defineProps(["directori"]);
-const directori = ref(props.directori);
+const props = defineProps(["directory"]);
+const directory = ref(props.directory);
 
 const posts = ref({
   data: 6,
@@ -66,6 +66,7 @@ const posts = ref({
 });
 const { getData } = await useFetchData();
 onMounted(async () => {
-  posts.value = await getData(directori.value);
+  const res = await getData(directory.value);
+  posts.value = res;
 });
 </script>

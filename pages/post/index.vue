@@ -1,5 +1,3 @@
 <template>
-  <div>
-    <h1 class="text-center">Not Found Page</h1>
-  </div>
+  <NotFoundPage />
 </template>

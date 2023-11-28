@@ -1,7 +1,7 @@
 <template>
   <main class="d-flex">
     <template v-for="(data, i) in datas" :key="i">
-      <NuxtLink :to="data.link">
+      <NuxtLink :to="data.link" target="_blank">
         <div
           :style="{ backgroundColor: data.color }"
           class="d-flex justify-content-center align-items-center bgIconShare"
@@ -14,29 +14,33 @@
 </template>
 
 <script setup>
+const props = defineProps({
+  url: String,
+});
+const { url } = toRefs(props);
 const datas = [
   {
     label: "facebook",
     icon: "https://api.iconify.design/ion:social-facebook.svg?color=%23ffffff",
-    link: "https://www.facebook.com/sharer/sharer.php?u=URL_TO_SHARE",
+    link: `https://www.facebook.com/sharer/sharer.php?u=${url.value}`,
     color: "#3b5998",
   },
   {
     label: "twitter",
     icon: "https://api.iconify.design/mdi:twitter.svg?color=%23ffffff",
-    link: "https://twitter.com/intent/tweet?url=URL_TO_SHARE",
+    link: `https://twitter.com/intent/tweet?url=${url.value}`,
     color: "#55acee",
   },
   {
     label: "linkedin",
     icon: "https://api.iconify.design/basil:linkedin-solid.svg?color=%23ffffff",
-    link: "https://www.linkedin.com/sharing/share-offsite/?url=URL_TO_SHARE",
+    link: `https://www.linkedin.com/sharing/share-offsite/?url=${url.value}`,
     color: "#0077b5",
   },
   {
     label: "whatsapp",
     icon: "https://api.iconify.design/ri:whatsapp-fill.svg?color=%23ffffff",
-    link: "https://api.whatsapp.com/send?text=url=URL_TO_SHARE",
+    link: `https://api.whatsapp.com/send?text=url=${url.value}`,
     color: "#25D366",
   },
 ];

@@ -44,8 +44,9 @@
 }
 </style>
 <script setup>
-const props = defineProps(["route_api"]);
-const route_api = props.route_api;
+const props = defineProps(["directory"]);
+const directory = props.directory;
+const totalPostSearch = useTotalPostSearch();
 
 const posts = ref({
   data: {
@@ -57,6 +58,8 @@ const posts = ref({
 const { getData } = await useFetchData();
 
 onMounted(async () => {
-  posts.value = await getData(route_api);
+  const res = await getData(directory);
+  posts.value = res;
+  totalPostSearch.value = res.data.total;
 });
 </script>

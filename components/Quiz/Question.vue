@@ -114,7 +114,7 @@
           class="d-flex justify-content-between align-items-center border-top py-2 px-3"
         >
           <button class="btn btn-success" @click="replay">Mainkan lagi</button>
-          <NuxtLink class="btn btn-primary" to="/quiz"> Kuis Lainnya </NuxtLink>
+          <NuxtLink class="btn btn-primary" to="/kuis"> Kuis Lainnya </NuxtLink>
         </section>
       </main>
     </div>
@@ -125,20 +125,18 @@
 </template>
 
 <script setup>
-const { getData, postData } = await useFetchData();
-const router = useRouter();
-const quiz = ref({
-  data: [],
-  loading: true,
+const props = defineProps({
+  quiz: Object,
+  user: Object,
 });
+const { quiz, user } = toRefs(props);
+const { postData } = await useFetchData();
+
 const result = ref({
   data: {},
   loading: true,
 });
-const user = ref({
-  fullname: "",
-  phone: "",
-});
+
 const question = ref(1);
 const choice = ref(["A", "B", "C", "D"]);
 const isDone = ref(false);
@@ -180,14 +178,4 @@ const replay = () => {
   data_answer.value = [];
   isDone.value = false;
 };
-
-onMounted(async () => {
-  const participant = localStorage.getItem("participant");
-  if (!participant) {
-    router.push("/quiz");
-  } else {
-    user.value = JSON.parse(participant);
-    quiz.value = await getData("quiz/1");
-  }
-});
 </script>

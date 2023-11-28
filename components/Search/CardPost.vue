@@ -2,18 +2,21 @@
   <div class="card w-100 border-0">
     <div class="row">
       <div class="col-lg-4 col-md-4">
-        <NuxtLink :to="'/post/' + data.post_slug" class="d-block">
+        <NuxtLink
+          :to="'/post/' + encodeURIComponent(data.post_slug)"
+          class="d-block"
+        >
           <img
             :src="data.medium_thumbnail"
             class="card-img-top d-lg-block d-md-none d-sm-none d-none"
             style="height: 200px; object-fit: contain"
-            :alt="data.author_name"
+            :alt="data.user_name"
           />
           <img
             :src="data.medium_thumbnail"
             class="card-img-top d-lg-none d-md-block d-sm-block d-block"
             style="height: 100px; object-fit: contain"
-            :alt="data.author_name"
+            :alt="data.user_name"
           />
         </NuxtLink>
       </div>
@@ -33,7 +36,7 @@
               />{{ data.post_date }}</span
             >
           </div>
-          <NuxtLink :to="'/post/' + data.post_slug">
+          <NuxtLink :to="'/post/' + encodeURIComponent(data.post_slug)">
             <h5 class="card-title textEclipse">{{ data.post_title }}</h5>
           </NuxtLink>
           <p class="card-text textEclipse">
@@ -42,7 +45,9 @@
             laborum, vero placeat repellat provident quod libero porro illum
             quidem aliquam exercitationem itaque asperiores minima eligendi?
           </p>
-          <NuxtLink :to="'/post/' + data.post_slug" class="btn btn-primary"
+          <NuxtLink
+            :to="'/post/' + encodeURIComponent(data.post_slug)"
+            class="btn btn-primary"
             >Selengkapnya</NuxtLink
           >
         </div>

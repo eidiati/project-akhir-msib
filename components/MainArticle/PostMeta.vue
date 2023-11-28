@@ -8,9 +8,7 @@
       height_="12px"
       class_="d-inline-block"
     />
-    <NuxtLink v-else :to="/author/ + article.post_author.author_name">{{
-      article.post_author.author_name
-    }}</NuxtLink>
+    <span v-else class="text-primary">{{ article.post_user.user_name }}</span>
   </span>
   <!-- folder -->
   <span class="me-2 text-capitalize"
@@ -21,9 +19,7 @@
       height_="12px"
       class_="d-inline-block"
     />
-    <NuxtLink v-else :to="/kategori/ + article.post_category">{{
-      article.post_category
-    }}</NuxtLink>
+    <span v-else class="text-primary">{{ article.post_category }}</span>
   </span>
   <!-- comments -->
   <span class="text-capitalize">

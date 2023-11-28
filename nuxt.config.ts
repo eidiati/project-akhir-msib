@@ -3,7 +3,9 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   runtimeConfig: {
     public: {
+      base_url: process.env.BASE_URL,
       url_api: process.env.URL_API,
+      secret_key: process.env.SECRET_KEY,
     },
   },
   app: {

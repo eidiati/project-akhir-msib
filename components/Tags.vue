@@ -9,7 +9,7 @@
       </div>
     </template>
     <template v-else v-for="(tag, i) in tags" :key="tag.tag_id">
-      <NuxtLink v-if="i < 6" :to="'/tag' + tag.tag_url"
+      <NuxtLink v-if="i < 6" :to="'/tag/' + tag.tag_slug"
         ><span
           class="badge badge-dark badge-sm rounded-pill text-uppercase px-2 py-1 me-1"
           >{{ tag.tag_name }}</span

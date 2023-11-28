@@ -1,19 +1,19 @@
 <template>
-  <div class="row pb-1 pt-2">
-    <section class="mt-5 mb-4">
+  <div
+    v-if="polling.loading"
+    class="d-flex justify-content-center align-items-center"
+  >
+    <AnimationEllipsis />
+  </div>
+  <div v-else v-if="polling.data.poll_active" class="row">
+    <section class="my-4">
       <div class="row row-cols-2 row-cols-lg-4 g-2 g-lg-3">
         <div
           v-for="(opt, index) in polling.data.poll_opt"
           :key="index"
           class="col"
         >
-          <AnimationSkleton
-            v-if="polling.loading"
-            width_="100%"
-            height_="300px"
-          />
           <LazyPollingCard
-            v-else
             :poll_id="polling.data.poll_id"
             :opt="opt"
             :bgColor="bgColor[index]"

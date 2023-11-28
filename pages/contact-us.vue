@@ -239,4 +239,7 @@ onMounted(async () => {
   contact.value = await getData("contact");
   visi_misi.value = await getData("visi-misi");
 });
+useHead({
+  title: "Kontak Kami | Lancang Kuning",
+});
 </script>

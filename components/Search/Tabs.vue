@@ -33,6 +33,20 @@
           Terbaru
         </button>
       </li>
+      <li class="nav-item mb-3" role="presentation">
+        <button
+          class="btn btn-outline-dark rounded-0 border-0 p-2"
+          id="lokasi-tab"
+          data-bs-toggle="tab"
+          data-bs-target="#lokasi"
+          type="button"
+          role="tab"
+          aria-controls="lokasi"
+          aria-selected="false"
+        >
+          Lokasi
+        </button>
+      </li>
     </ul>
     <div class="tab-content" id="myTabContent">
       <div
@@ -41,7 +55,7 @@
         role="tabpanel"
         aria-labelledby="home-tab"
       >
-        <SearchListPosts :route_api="'relevant-search?keyword=' + keyword" />
+        <SearchListPosts :directory="'relevant-search?keyword=' + keyword" />
       </div>
       <div
         class="tab-pane fade"
@@ -49,7 +63,15 @@
         role="tabpanel"
         aria-labelledby="profile-tab"
       >
-        <SearchListPosts :route_api="'recent-search?keyword=' + keyword" />
+        <SearchListPosts :directory="'recent-search?keyword=' + keyword" />
+      </div>
+      <div
+        class="tab-pane fade"
+        id="lokasi"
+        role="tabpanel"
+        aria-labelledby="lokasi-tab"
+      >
+        <SearchListPosts :directory="'location-search?keyword=' + keyword" />
       </div>
     </div>
   </div>

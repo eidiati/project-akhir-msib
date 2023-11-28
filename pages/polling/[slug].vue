@@ -16,56 +16,62 @@
               class_="mt-2"
             />
             <template v-else>
-              {{ polling.data.poll_title }}
+              <template v-if="polling.data.poll_active">
+                {{ polling.data.poll_title }}
+              </template>
             </template>
           </h1>
         </section>
-        <section class="mt-5 mb-4">
-          <div class="row row-cols-2 row-cols-lg-4 g-2 g-lg-3">
-            <div
-              v-for="(opt, index) in polling.data.poll_opt"
-              :key="index"
-              class="col"
-            >
-              <AnimationSkleton
-                v-if="polling.loading"
-                width_="100%"
-                height_="300px"
+        <div
+          v-if="polling.loading"
+          class="d-flex justify-content-center align-items-center"
+        >
+          <AnimationEllipsis />
+        </div>
+        <main v-else v-if="polling.data.poll_active">
+          <section class="mt-5 mb-4">
+            <div class="row row-cols-2 row-cols-lg-4 g-2 g-lg-3">
+              <div
+                v-for="(opt, index) in polling.data.poll_opt"
+                :key="index"
+                class="col"
+              >
+                <LazyPollingCard
+                  :poll_id="polling.data.poll_id"
+                  :opt="opt"
+                  :bgColor="bgColor[index]"
+                />
+              </div>
+            </div>
+          </section>
+
+          <section class="mt-5 mb-4">
+            <h3 class="font-weight-bold text-capitalize text-center text-dark">
+              Grafik Perolehan Suara
+            </h3>
+            <div class="row row-cols-1 row-cols-lg-2 g-5">
+              <LazyPollingChart
+                :chartData="chartData"
+                :chartOptions="chartOptions"
+                :loading="polling.loading"
+                label="bar"
               />
-              <LazyPollingCard
-                v-else
-                :poll_id="polling.data.poll_id"
-                :opt="opt"
-                :bgColor="bgColor[index]"
+              <LazyPollingChart
+                :chartData="chartData"
+                :chartOptions="chartOptions"
+                :loading="polling.loading"
+                label="pie"
               />
             </div>
-          </div>
-        </section>
-
-        <section class="mt-5 mb-4">
-          <h3 class="font-weight-bold text-capitalize text-center text-dark">
-            Grafik Perolehan Suara
-          </h3>
-          <div class="row row-cols-1 row-cols-lg-2 g-5">
-            <LazyPollingChart
-              :chartData="chartData"
-              :chartOptions="chartOptions"
-              :loading="polling.loading"
-              label="bar"
-            />
-            <LazyPollingChart
-              :chartData="chartData"
-              :chartOptions="chartOptions"
-              :loading="polling.loading"
-              label="pie"
-            />
-          </div>
-        </section>
+          </section>
+        </main>
       </div>
     </div>
   </div>
 </template>
 <script setup>
+const route = useRoute();
+const slug = route.params.slug;
 const chartData = ref({
   labels: [""],
   datasets: [
@@ -83,6 +89,7 @@ const chartOptions = ref({
 });
 
 const { getData } = await useFetchData();
+const { decrypted } = useFunction();
 const polling = ref({
   data: {
     poll_opt: 10,
@@ -93,7 +100,8 @@ const polling = ref({
 const bgColor = ref([""]);
 
 onMounted(async () => {
-  const res = await getData(`polling/1`);
+  const decrypt = decrypted(slug);
+  const res = await getData(`polling/${Number(decrypt)}`);
   polling.value = res;
 
   const candidates = res.data.poll_opt.map((data) => data.opt_text);
@@ -105,5 +113,9 @@ onMounted(async () => {
   chartData.value.datasets[0].data = count;
   chartData.value.datasets[0].backgroundColor = color;
   bgColor.value = color;
+
+  useHead({
+    title: `${res.data.poll_title} | Lancang Kuning`,
+  });
 });
 </script>

@@ -41,7 +41,7 @@
       role="tabpanel"
       aria-labelledby="home-tab"
     >
-      <ListPosts directori="popular-posts" />
+      <ListPosts directory="popular-posts" />
     </div>
     <div
       class="tab-pane fade"
@@ -49,7 +49,7 @@
       role="tabpanel"
       aria-labelledby="profile-tab"
     >
-      <ListPosts directori="recent-posts" />
+      <ListPosts directory="recent-posts" />
     </div>
   </div>
 </template>

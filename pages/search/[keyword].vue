@@ -11,8 +11,8 @@
             Berita tentang {{ route.params.keyword }}
           </h1>
           <span
-            >Hasil pencarian "{{ route.params.keyword }}", {{ total }} hasil
-            ditemukan</span
+            >Hasil pencarian "{{ route.params.keyword }}",
+            {{ totalPostSearch }} hasil ditemukan</span
           >
         </section>
         <div class="row mx-auto">
@@ -29,20 +29,10 @@
 </template>
 
 <script setup>
-import axios from "axios";
-
 const route = useRoute();
-const total = ref(0);
+const totalPostSearch = useTotalPostSearch();
 
-onMounted(async () => {
-  const url = useRuntimeConfig().public.url_api;
-  try {
-    const res = await axios.get(
-      `${url}/recent-search?keyword=${route.params.keyword}`
-    );
-    total.value = res.data.data.total;
-  } catch (error) {
-    console.log(error);
-  }
+useHead({
+  title: `${route.params.keyword} | Lancang Kuning`,
 });
 </script>

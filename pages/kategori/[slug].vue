@@ -5,11 +5,16 @@
         <section class="mb-4">
           <ul class="breadcrumb d-block">
             <li><NuxtLink to="/">Beranda</NuxtLink></li>
-            <li class="active">{{ slug }}</li>
+            <li v-if="!category.loading" class="active">
+              {{ category.data.category_name }}
+            </li>
           </ul>
 
-          <h1 class="text-dark text-capitalize font-weight-bold text-8 m-0">
-            Info {{ slug }}
+          <h1
+            v-if="!category.loading"
+            class="text-dark text-capitalize font-weight-bold text-8 m-0"
+          >
+            {{ category.data.category_name }}
           </h1>
         </section>
 
@@ -28,7 +33,7 @@
             :key="index"
             class="col"
           >
-            <LazyCategoryCardPost :data="data" directori="kategori" />
+            <LazyCategoryCardPost :data="data" directory="kategori" />
           </div>
         </div>
       </div>
@@ -49,6 +54,11 @@ const category = ref({
 const numberPost = 6;
 const { getData } = await useFetchData();
 onMounted(async () => {
-  category.value = await getData(`post-category/${slug}`);
+  const res = await getData(`post-category/${slug}`);
+  category.value = res;
+
+  useHead({
+    title: `${res.data.category_name} | Lancang Kuning`,
+  });
 });
 </script>

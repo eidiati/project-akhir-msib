@@ -20,7 +20,7 @@
                 {{ location.data[0].location_province }}
               </span>
             </div>
-            <div class="col-3 border-start border-light">
+            <div class="col-4 border-start border-light">
               <AnimationSkleton
                 v-if="tanggalWaktu.loading"
                 width_="80%"
@@ -31,7 +31,7 @@
                 {{ tanggalWaktu.data }}
               </span>
             </div>
-            <div class="col-3 border-start border-light">
+            <div class="col-2 border-start border-light">
               <NuxtLink to="/contact-us" class="text-decoration-none text-light"
                 >Kontak</NuxtLink
               >
@@ -77,39 +77,9 @@
               />
             </NuxtLink>
           </div>
+          <!-- ads -->
           <div class="col-8 d-flex align-items-center justify-content-end">
-            <template v-if="advertising.loading">
-              <AnimationSkleton
-                width_="100%"
-                height_="90px"
-                class="d-none d-lg-block d-md-block d-sm-none"
-              />
-              <AnimationSkleton
-                width_="100%"
-                height_="70px"
-                class="d-block d-lg-none d-md-none d-sm-block"
-              />
-            </template>
-            <template
-              v-else
-              v-for="(ads, index) in advertising.data"
-              :key="ads.ads_id"
-            >
-              <NuxtLink v-if="index < 1" :to="ads.ads_link" class="d-block">
-                <img
-                  :src="ads.ads_image"
-                  alt="ADS LG"
-                  style="height: 90px"
-                  class="img-fluid d-none d-lg-block d-md-block d-sm-none"
-                />
-                <img
-                  :src="ads.ads_mobile_image"
-                  alt="ADS XS"
-                  style="height: 70px"
-                  class="img-fluid d-block d-lg-none d-md-none d-sm-block"
-                />
-              </NuxtLink>
-            </template>
+            <Advertising position="atas" />
           </div>
         </div>
       </div>
@@ -126,10 +96,6 @@ const tanggalWaktu = ref({
 });
 const sosmed = ref({
   data: 4,
-  loading: true,
-});
-const advertising = ref({
-  data: 1,
   loading: true,
 });
 const location = ref({
@@ -191,7 +157,6 @@ onMounted(async () => {
     updateDateTime();
   }, 1000);
   sosmed.value = await getData("social-media");
-  advertising.value = await getData("advertising");
   location.value = await getData("location");
 });
 </script>

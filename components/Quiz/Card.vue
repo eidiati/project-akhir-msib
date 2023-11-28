@@ -14,7 +14,7 @@
       </div>
       <NuxtLink
         v-if="isParticipant"
-        :to="'/quiz/' + quiz.quiz_slug"
+        :to="'/kuis/' + encodeURIComponent(encrypt)"
         class="mt-3 btn btn-primary w-100"
       >
         Mulai
@@ -51,7 +51,7 @@
             ></button>
           </div>
           <div class="modal-body">
-            <QuizFormData :quiz_slug="quiz.quiz_slug" />
+            <QuizFormData :quiz_id="quiz.quiz_id" />
           </div>
         </div>
       </div>
@@ -64,7 +64,9 @@ const props = defineProps({
   quiz: Object,
 });
 const { quiz } = toRefs(props);
-const isParticipant = ref(false);
+const { encrypted } = useFunction();
+const isParticipant = useIsParticipant();
+const encrypt = encrypted(quiz.value.quiz_id);
 
 onMounted(() => {
   const participant = localStorage.getItem("participant");

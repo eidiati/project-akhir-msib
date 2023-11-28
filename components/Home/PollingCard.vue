@@ -30,31 +30,38 @@
           v-for="(poll, index) in polling.data"
           :key="index"
           :class="index === 0 ? 'carousel-item active' : 'carousel-item'"
+          data-bs-interval="3000"
         >
-          <div class="card shadow-sm text-center">
-            <h4
-              class="d-block line-height-2 text-4 text-dark font-weight-bold my-3 px-2"
-            >
+          <template v-if="poll.poll_active">
+            <div class="card shadow-sm text-center">
+              <h4
+                class="d-block line-height-2 text-4 text-dark font-weight-bold my-3 px-2"
+              >
+                <NuxtLink
+                  :to="
+                    '/polling/' + encodeURIComponent(encrypted(poll.poll_id))
+                  "
+                  class="text-decoration-none text-color-dark text-color-hover-primary"
+                >
+                  {{ poll.poll_title }}</NuxtLink
+                >
+              </h4>
+              <section class="overflow-auto" style="max-height: 200px">
+                <div
+                  class="row shadow-sm p-1 mx-4 mb-1"
+                  v-for="opt in poll.poll_opt"
+                  :key="opt.opt_id"
+                >
+                  <HomeListCandidate :opt="opt" :poll_id="poll.poll_id" />
+                </div>
+              </section>
               <NuxtLink
-                :to="'/polling/' + poll.poll_slug"
-                class="text-decoration-none text-color-dark text-color-hover-primary"
+                :to="'/polling/' + encodeURIComponent(encrypted(poll.poll_id))"
+                class="card-button"
+                >Selengkapnya</NuxtLink
               >
-                {{ poll.poll_title }}</NuxtLink
-              >
-            </h4>
-            <section class="overflow-auto" style="max-height: 200px">
-              <div
-                class="row shadow-sm p-1 mx-4 mb-1"
-                v-for="opt in poll.poll_opt"
-                :key="opt.opt_id"
-              >
-                <HomeListCandidate :opt="opt" :poll_id="poll.poll_id" />
-              </div>
-            </section>
-            <NuxtLink :to="'/polling/' + poll.poll_slug" class="card-button"
-              >Selengkapnya</NuxtLink
-            >
-          </div>
+            </div>
+          </template>
         </div>
       </div>
       <button
@@ -89,6 +96,7 @@
 
 <script setup>
 const { getData } = await useFetchData();
+const { encrypted } = useFunction();
 
 const polling = ref({
   data: 1,

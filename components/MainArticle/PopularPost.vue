@@ -17,7 +17,7 @@
         >
           <div class="row">
             <div class="col">
-              <NuxtLink :to="'/post/' + post.post_slug">
+              <NuxtLink :to="'/post/' + encodeURIComponent(post.post_slug)">
                 <img
                   :src="post.thumbnail"
                   class="img-fluid border-radius-0"
@@ -31,7 +31,7 @@
               <div class="thumb-info-caption-text">
                 <div class="d-inline-block text-default text-1 mt-2 float-none">
                   <NuxtLink
-                    :to="'/post/' + post.post_slug"
+                    :to="'/post/' + encodeURIComponent(post.post_slug)"
                     class="text-decoration-none text-color-default text-capitalize"
                     >{{ post.post_date }}</NuxtLink
                   >
@@ -40,7 +40,7 @@
                   class="d-block line-height-2 text-4 text-dark font-weight-bold mb-0"
                 >
                   <NuxtLink
-                    :to="'/post/' + post.post_slug"
+                    :to="'/post/' + encodeURIComponent(post.post_slug)"
                     class="text-decoration-none text-color-dark text-color-hover-primary"
                     >{{ post.post_title }}</NuxtLink
                   >
@@ -55,7 +55,7 @@
           <article>
             <div class="post-image">
               <div class="img-thumbnail img-thumbnail-no-borders d-block">
-                <NuxtLink :to="'/post/' + post.post_slug">
+                <NuxtLink :to="'/post/' + encodeURIComponent(post.post_slug)">
                   <img
                     :src="post.thumbnail"
                     class="border-radius-0"
@@ -70,7 +70,7 @@
               <div class="post-meta text-capitalize">{{ post.post_date }}</div>
               <h4 class="font-weight-normal text-3 mb-0">
                 <NuxtLink
-                  :to="'/post/' + post.post_slug"
+                  :to="'/post/' + encodeURIComponent(post.post_slug)"
                   class="text-dark"
                   style="
                     display: -webkit-box;

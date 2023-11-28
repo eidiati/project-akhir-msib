@@ -55,4 +55,8 @@ const handleScroll = () => {
 onMounted(async () => {
   quiz.value = await getData("quiz");
 });
+
+useHead({
+  title: "Kuis | Lancang Kuning",
+});
 </script>

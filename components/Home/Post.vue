@@ -35,7 +35,9 @@
         >
           <div class="row">
             <div class="col">
-              <NuxtLink :to="'/post/' + post.data[0].post_slug">
+              <NuxtLink
+                :to="'/post/' + encodeURIComponent(post.data[0].post_slug)"
+              >
                 <div class="position-relative w-100" style="padding-top: 55%">
                   <div class="position-absolute top-0 start-0 end-0 bottom-0">
                     <img
@@ -53,7 +55,7 @@
               <div class="thumb-info-caption-text">
                 <div class="d-inline-block text-default text-1 mt-2 float-none">
                   <NuxtLink
-                    :to="'/post/' + post.data[0].post_slug"
+                    :to="'/post/' + encodeURIComponent(post.data[0].post_slug)"
                     class="text-decoration-none text-color-default text-capitalize"
                     >{{ post.data[0].post_date }}</NuxtLink
                   >
@@ -62,7 +64,7 @@
                   class="d-block line-height-2 text-4 text-dark font-weight-bold mb-0"
                 >
                   <NuxtLink
-                    :to="'/post/' + post.data[0].post_slug"
+                    :to="'/post/' + encodeURIComponent(post.data[0].post_slug)"
                     class="text-decoration-none text-color-dark text-color-hover-primary"
                     >{{ post.data[0].post_title }}</NuxtLink
                   >
@@ -106,7 +108,9 @@
           >
             <div class="row align-items-center pb-1">
               <div class="col-sm-4">
-                <NuxtLink :to="'/post/' + article.post_slug">
+                <NuxtLink
+                  :to="'/post/' + encodeURIComponent(article.post_slug)"
+                >
                   <div class="position-relative w-100" style="padding-top: 55%">
                     <div class="position-absolute top-0 start-0 end-0 bottom-0">
                       <img
@@ -122,7 +126,7 @@
                 <div class="thumb-info-caption-text">
                   <div class="d-inline-block text-default text-1 float-none">
                     <NuxtLink
-                      :to="'/post/' + article.post_slug"
+                      :to="'/post/' + encodeURIComponent(article.post_slug)"
                       class="text-decoration-none text-color-default text-capitalize"
                       >{{ article.post_date }}</NuxtLink
                     >
@@ -131,7 +135,7 @@
                     class="d-block pb-2 line-height-2 text-3 text-dark font-weight-bold mb-0"
                   >
                     <NuxtLink
-                      :to="'/post/' + article.post_slug"
+                      :to="'/post/' + encodeURIComponent(article.post_slug)"
                       class="text-decoration-none text-color-dark text-color-hover-primary"
                       >{{ article.post_title }}</NuxtLink
                     >
