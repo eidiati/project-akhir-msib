@@ -23,7 +23,7 @@
               <img
                 :src="posts.data[0].medium_thumbnail"
                 style="width: 100%; height: 100%; object-fit: cover"
-                alt="How To Take Better Concert Pictures in 30 Seconds"
+                :alt="posts.data[0].post_title"
               />
             </div>
           </div>

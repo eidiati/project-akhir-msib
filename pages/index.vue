@@ -8,7 +8,7 @@
         <LazyHomePost />
         <!-- advertising -->
         <div class="d-flex mb-3 justify-content-center">
-          <Advertising position="bawah" />
+          <LazyAdvertising position="bawah" />
         </div>
         <div class="row pb-1 pt-3">
           <!-- popular post -->
@@ -30,7 +30,7 @@
         <aside class="sidebar pb-4">
           <LazyHomePollingCard />
           <div class="d-flex mt-4 justify-content-center">
-            <Advertising position="bawah" />
+            <LazyAdvertising position="bawah" />
           </div>
         </aside>
       </div>

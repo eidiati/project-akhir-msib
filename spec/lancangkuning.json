@@ -1448,7 +1448,7 @@
       "position": {
         "name": "position",
         "in": "query",
-        "required": true,
+        "required": false,
         "description": "filter ads berdasarkan posisi",
         "schema": {
           "type": "string",
@@ -3455,7 +3455,7 @@
             "ads_desc": "Lorem ipsum dolor sit amet.",
             "ads_image": "https://www.wordstream.com/wp-content/uploads/2021/07/persuasive-ads-coca-cola-1.jpg",
             "ads_mobile_image": "https://lauralee60.files.wordpress.com/2011/09/coca-cola.jpg",
-            "ads_url": "https://advertising/1",
+            "ads_url": "https://ayo.coca-cola.co.id/login",
             "ads_start": "2023-11-28",
             "ads_end": "2023-12-10",
             "ads_sequence": 1

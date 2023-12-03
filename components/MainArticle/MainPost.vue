@@ -84,8 +84,8 @@
                     "
                   />
                 </div>
-                <div class="mt-4 d-flex justify-content-center">
-                  <Advertising position="atas" />
+                <div class="mt-5 d-flex justify-content-center">
+                  <LazyAdvertising position="atas" />
                 </div>
                 <div class="post-block mt-4 pt-2 post-author">
                   <LazyMainArticleAuthor
@@ -111,8 +111,8 @@
               :tags="article.data.post_tags"
               :loading="article.loading"
             />
-            <div class="my-4 pt-3">
-              <Advertising position="bawah" />
+            <div class="my-4 pt-3 d-flex justify-content-center">
+              <LazyAdvertising position="bawah" />
             </div>
           </div>
           <LazyMainArticlePopularRecentPost />

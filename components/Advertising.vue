@@ -12,7 +12,7 @@
     />
   </template>
   <template v-else>
-    <template>
+    <template v-if="isAdsActive">
       <NuxtLink :to="advertising.data.ads_link" class="d-block">
         <img
           :src="advertising.data.ads_image"
@@ -46,12 +46,12 @@ const { getData } = await useFetchData();
 
 onMounted(async () => {
   const res = await getData("advertising?position=" + position.value);
-  console.log("advertising?position=" + position.value);
-  advertising.value = res;
-  //   const curr_date = new Date();
-  //   const ads_start = new Date(res.data.ads_start);
-  //   const ads_end = new Date(res.data.ads_end);
 
-  //   isAdsActive.value = curr_date >= ads_start && curr_date <= ads_end;
+  advertising.value = res;
+  const curr_date = new Date();
+  const ads_start = new Date(res.data.ads_start);
+  const ads_end = new Date(res.data.ads_end);
+
+  isAdsActive.value = curr_date >= ads_start && curr_date <= ads_end;
 });
 </script>

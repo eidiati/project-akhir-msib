@@ -13,12 +13,31 @@ export default defineNuxtConfig({
       title: "Lancang Kuning",
       charset: "utf-8",
       viewport: "width=device-width, initial-scale=1",
+      meta: [
+        { charset: "utf-8" },
+        {
+          name: "viewport",
+          content: "width=device-width,minimum-scale=1,initial-scale=1",
+        },
+        {
+          hid: "description",
+          name: "description",
+          content: "Lancang Kuning - AMP",
+        },
+        { name: "og:title", content: "Lancang Kuning - AMP" },
+        { name: "og:description", content: "Lancang Kuning - AMP" },
+        { name: "og:url", content: "http://localhost:3000" },
+      ],
       link: [
         {
           id: "googleFonts",
           href: "https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800%7CShadows+Into+Light%7CPlayfair+Display:400&display=swap",
           rel: "stylesheet",
           type: "text/css",
+        },
+        {
+          rel: "canonical",
+          href: "https://amp.dev/documentation/guides-and-tutorials/start/create/basic_markup/",
         },
       ],
       script: [
@@ -40,6 +59,7 @@ export default defineNuxtConfig({
             "sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF",
           crossorigin: "anonymous",
         },
+        { async: true, src: "https://cdn.ampproject.org/v0.js" },
         // {
         //   src: "/_nuxt/assets/vendor/modernizr/modernizr.min.js",
         // },
@@ -55,6 +75,17 @@ export default defineNuxtConfig({
         // {
         //   src: "/_nuxt/assets/js/theme.init.js",
         // },
+      ],
+      style: [
+        {
+          innerHTML:
+            "body{-webkit-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-moz-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-ms-animation:-amp-start 8s steps(1,end) 0s 1 normal both;animation:-amp-start 8s steps(1,end) 0s 1 normal both}@-webkit-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-moz-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-ms-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-o-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}",
+        },
+        {
+          "data-noscript": "",
+          innerHTML:
+            "body{-webkit-animation:none;-moz-animation:none;-ms-animation:none;animation:none}",
+        },
       ],
     },
   },
